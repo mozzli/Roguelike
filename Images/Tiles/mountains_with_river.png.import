@@ -2,19 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/woods.png-c37097ab26716a861803d427f9b08422.stex"
+path="res://.import/mountains_with_river.png-2173e291d0d00a09963c5eaaf16ffe8e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/woods.png"
-dest_files=[ "res://.import/woods.png-c37097ab26716a861803d427f9b08422.stex" ]
+source_file="res://Images/Tiles/mountains_with_river.png"
+dest_files=[ "res://.import/mountains_with_river.png-2173e291d0d00a09963c5eaaf16ffe8e.stex" ]
 
 [params]
 
-compress/mode=0
+compress/mode=3
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
@@ -24,12 +24,11 @@ flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
-process/fix_alpha_border=true
+process/fix_alpha_border=false
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
-process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0
