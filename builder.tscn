@@ -1,8 +1,12 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Images/Characters/builder/idle/Sprite-0003.png" type="Texture" id=1]
 [ext_resource path="res://Images/Characters/builder/idle/Sprite-0002.png" type="Texture" id=2]
 [ext_resource path="res://builder.gd" type="Script" id=3]
+[ext_resource path="res://WalkCode.gd" type="Script" id=4]
+
+[sub_resource type="CanvasItemMaterial" id=3]
+light_mode = 1
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -21,10 +25,12 @@ animations = [ {
 extents = Vector2( 10, 15.5 )
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
+light_mask = 0
 input_pickable = true
 script = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+material = SubResource( 3 )
 frames = SubResource( 1 )
 frame = 1
 playing = true
@@ -33,6 +39,9 @@ playing = true
 position = Vector2( 1, 0.5 )
 z_index = 1
 shape = SubResource( 2 )
+
+[node name="WalkCode" type="Node" parent="."]
+script = ExtResource( 4 )
 
 [connection signal="input_event" from="." to="." method="_on_KinematicBody2D_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_KinematicBody2D_mouse_entered"]

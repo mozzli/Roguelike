@@ -4,11 +4,9 @@ extends KinematicBody2D
 var mouse_floats = false
 var selected = false
 
-
-
 func _ready():
-	pass # Replace with function body.
-
+	$WalkCode.get_movement_distance(get_global_position())
+	pass
 
 func _on_KinematicBody2D_mouse_entered():
 	mouse_floats = true
@@ -27,6 +25,7 @@ func _on_KinematicBody2D_input_event(_viewport, event, _shape_idx):
 func _on_KinematicBody2D_mouse_exited():
 	mouse_floats = false
 
+
 func _input(event):
 	if event is InputEventMouseButton && mouse_floats == false:
 		if event.is_action_pressed("mouse_click_left"):
@@ -36,5 +35,6 @@ func _input(event):
 			GameVariables.selected_unit = null
 	if event is InputEventMouseButton && selected == true:
 		if event.is_action_pressed("mouse_click_right"):
+			self.global_position = $WalkCode.change_position(event.position)
 			print("yeah, I'm going")
 		
