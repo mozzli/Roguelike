@@ -14,13 +14,12 @@ func _on_KinematicBody2D_mouse_entered():
 
 func _on_KinematicBody2D_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
-		if event.is_action_pressed("mouse_click_left") && end_of_turn == false:
+		if event.is_action_pressed("mouse_click_left") && end_of_turn == false && selected == false :
 			old_position = global_position
 			selected = true
 			WalkCode.get_movement_distance(MovementUtils.map.world_to_map(global_position),
 				 movement_value, null)
-			$AnimatedSprite.speed_scale = 3
-			$AnimatedSprite.modulate.r = 1.9
+			ColorManager.change_color_selected($AnimatedSprite)
 			input_pickable = false
 
 func _on_KinematicBody2D_mouse_exited():
@@ -28,16 +27,18 @@ func _on_KinematicBody2D_mouse_exited():
 
 func _input(event):
 	if event is InputEventMouseButton && mouse_floats == false:
-		if event.is_action_pressed("mouse_click_left") && selected == true:
+		print(MovementUtils.map.world_to_map(global_position))
+		print(WalkCode.mouse_position)
+		if event.is_action_pressed("mouse_click_left") && selected == true && MovementUtils.map.world_to_map(old_position) != WalkCode.mouse_position:
 			selected = false
 			$AnimatedSprite.speed_scale = 1
-			$AnimatedSprite.modulate.r = 1
 			input_pickable = true
-			if (MovementUtils.map2.get_cell(WalkCode.mouse_position[0],WalkCode.mouse_position[1]) == 0):
+			if (WalkCode.get_movement_cell() == 0):
 				global_position = MovementUtils.map2.map_to_world(WalkCode.mouse_position)+Vector2(32,24)
 				end_of_turn = true
-				$AnimatedSprite.modulate.r = 0.1
-			elif (MovementUtils.map2.get_cell(WalkCode.mouse_position[0],WalkCode.mouse_position[1]) == -1):
+				ColorManager.change_color_end_turn($AnimatedSprite)
+			elif (WalkCode.get_movement_cell() == -1 ||
+			MovementUtils.map.world_to_map(global_position) == WalkCode.mouse_position):
 				global_position = old_position
 			WalkCode.reset_movement()
 	if event is InputEventMouseButton && selected == true:
@@ -51,4 +52,4 @@ func _process(delta):
 
 func new_turn():
 	end_of_turn = false
-	$AnimatedSprite.modulate.r = 1
+	ColorManager.change_color_default($AnimatedSprite)

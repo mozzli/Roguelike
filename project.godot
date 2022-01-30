@@ -23,6 +23,7 @@ config/icon="res://icon.png"
 MovementUtils="*res://MovementUtils.gd"
 GameVariables="*res://GameVariables.gd"
 WalkCode="*res://WalkCode.gd"
+ColorManager="*res://ColorManager.gd"
 
 [display]
 
