@@ -1,7 +1,7 @@
 extends TileMap
 
-var map_rows = 21
-var map_columns = 16
+var map_rows = GameVariables.map_rows
+var map_columns = GameVariables.map_columns
 var mountains = 50
 var towns = 3
 var forest = 115
