@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Builder.gd" type="Script" id=1]
 [ext_resource path="res://Images/Characters/builder/idle/Sprite-0003.png" type="Texture" id=2]
 [ext_resource path="res://Images/Characters/builder/idle/Sprite-0002.png" type="Texture" id=3]
+[ext_resource path="res://Equipment.gd" type="Script" id=4]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 light_mode = 1
@@ -32,6 +33,7 @@ script = ExtResource( 1 )
 material = SubResource( 1 )
 z_index = 2
 frames = SubResource( 2 )
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -39,6 +41,9 @@ position = Vector2( 1, 0.5 )
 z_index = 2
 z_as_relative = false
 shape = SubResource( 3 )
+
+[node name="Equipment" type="Node2D" parent="."]
+script = ExtResource( 4 )
 
 [connection signal="input_event" from="." to="." method="_on_KinematicBody2D_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_KinematicBody2D_mouse_entered"]

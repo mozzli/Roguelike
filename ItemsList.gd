@@ -1,9 +1,22 @@
 extends Node
 
 enum items{
-	BOOTS = 0,
-LEATHER_CAP = 1,
-IRON_SWORD = 2,
-LEATHER_GLOVES = 3,
-LEATHER_ARMOR = 4
+	LEATHER_BOOTS,
+LEATHER_CAP,
+IRON_SWORD,
+LEATHER_GLOVES,
+LEATHER_ARMOR
 }
+
+var item_keys = {0:"Leather Boots",
+	1:"Leather Cap",
+	2:"Iron Sword",
+	3:"Leather Gloves",
+	4:"Leather Armor"
+	}
+
+func get_item_name(number):
+	return item_keys.get(number)
+
+func get_random_item_lvl1():
+	return items.values()[randi()%items.size()]

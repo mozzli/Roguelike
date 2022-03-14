@@ -77,7 +77,7 @@ func get_new_movement_tile(next_tile, even):
 				new_column = 1
 			new_row = -1
 		"LEFT":
-			new_column = -1
+				new_column = -1
 		"RIGHT":
 			new_column = 1
 		"DOWN_LEFT": 

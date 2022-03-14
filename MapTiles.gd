@@ -56,7 +56,6 @@ func place_tiles(tiles, column, row, repeat_number, current_repeat):
 			MovementUtils.get_neighbor_tiles(column, row, self), column, row
 		)
 		if (new_tile != null):
-<<<<<<< HEAD
 			place_tiles(tiles, new_tile[0], new_tile[1],repeat_number,current_repeat_number)
 
 func create_map():
@@ -64,6 +63,3 @@ func create_map():
 	create_plains()
 	create_mountains()
 	create_forest()
-=======
-			place_tiles(tiles, new_tile[0], new_tile[1], repeat_number, current_repeat_number)
->>>>>>> a80179df6317dfaf3a0aa99fbc6944dc8bd5dcc1
