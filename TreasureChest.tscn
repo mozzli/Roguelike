@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://TreasureChest.gd" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 17.0703, 16.5134 )
+
+[node name="TreasureChest" type="Area2D"]
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0.862745, 0.545098, 0.172549, 1 )
+position = Vector2( -1.62125e-05, -9.53674e-07 )
+scale = Vector2( 0.695656, 0.742478 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[connection signal="body_entered" from="." to="." method="_on_TreasureChest_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_TreasureChest_body_exited"]

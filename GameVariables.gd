@@ -2,6 +2,8 @@ extends Node
 
 enum day_cycle {MORNING = 0, NOON = 1, EVENING = 2, NIGHT = 3}
 
+var object_under_player = null
+var map_on = false
 var selected_unit
 var time_of_the_day = Color(1,1,1,1)
 var map_columns = 16

@@ -1,27 +1,30 @@
 extends Node2D
 
-const Util = preload("MovementUtils.gd")
+var pos_cell_global
 
 func _ready():
+	randomize()
 	MovementUtils.map = $Map
 	MovementUtils.map2 = $MovementTiles
-	randomize()
 	spawn_builder(0,0)
 	spawn_builder(8,20)
 	spawn_builder(10,10)
-	create_map()
-
-func create_map():
-	$Map.clear()
-	$Map.create_plains()
-	$Map.create_mountains()
-	$Map.create_forest()
+	spawn_treasure(12,12)
+	spawn_treasure(11,11)
+	$Map.create_map()
+	GameVariables.object_under_player = null
 
 func spawn_builder(column, row):
-	var pos_cell_global = get_node("Map").map_to_world(Vector2(column,row))
+	pos_cell_global = get_node("Map").map_to_world(Vector2(column,row))
 	var builder = $ResourcePreloader.builder_res.instance()
 	builder.position = pos_cell_global + Vector2(32,24)
 	add_child(builder) 
+
+func spawn_treasure(column, row):
+	pos_cell_global = get_node("Map").map_to_world(Vector2(column,row))
+	var treasure_chest = $ResourcePreloader.treasure_res.instance()
+	treasure_chest.position = pos_cell_global + Vector2(32,24)
+	add_child(treasure_chest)
 
 func _input(event):
 	if event is InputEventKey:

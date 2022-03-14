@@ -4,7 +4,6 @@ var map = MovementUtils.map
 var mouse_position
 
 func get_movement_distance(placement, distance_value, direction):
-	var movement_number = distance_value
 	MovementUtils.map2.set_cell(placement[0],placement[1],0)
 	var last_tile = direction
 	var new_tile
@@ -14,7 +13,6 @@ func get_movement_distance(placement, distance_value, direction):
 			var coordinates = MovementUtils.get_new_movement_tile(neighbour, even)
 			new_tile = [int(placement[0]) + coordinates[0], int(placement[1]) + coordinates[1]]
 			var value_to_subtract = get_movement_subtract(MovementUtils.map.get_cell(new_tile[0], new_tile[1]))
-#			print(placement, "||", neighbour, ": ", value_to_subtract, " || ", distance_value - value_to_subtract)
 			if (!value_to_subtract == -1 && distance_value - value_to_subtract>=0 ):
 				get_movement_distance(new_tile, distance_value - value_to_subtract, neighbour)
 
@@ -47,8 +45,9 @@ func get_movement_subtract(new_tile_cell):
 		3: return 3
 		-1: return -1
 
-func _process(delta):
-	mouse_position = MovementUtils.map.world_to_map(get_viewport().get_mouse_position())
+func _process(_delta):
+	if(GameVariables.map_on == true):
+		mouse_position = MovementUtils.map.world_to_map(get_viewport().get_mouse_position())
 
 func get_movement_cell():
-	return MovementUtils.map2.get_cell(WalkCode.mouse_position[0],WalkCode.mouse_position[1])
+	return MovementUtils.map2.get_cell(mouse_position[0],mouse_position[1])

@@ -51,3 +51,9 @@ func place_tiles(tiles, column, row, repeat_number, current_repeat):
 		var new_tile = MovementUtils.get_random_free_tile(MovementUtils.get_neighbor_tiles(column, row, self),column,row)
 		if (new_tile != null):
 			place_tiles(tiles, new_tile[0], new_tile[1],repeat_number,current_repeat_number)
+
+func create_map():
+	clear()
+	create_plains()
+	create_mountains()
+	create_forest()
