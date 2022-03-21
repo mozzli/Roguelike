@@ -5,6 +5,7 @@ var pos_cell_global
 func _ready():
 	randomize()
 	MovementUtils.map = $Map
+	GameVariables.current_map = self
 	MovementUtils.map2 = $MovementTiles
 	spawn_builder(0,0)
 	spawn_builder(8,20)

@@ -9,6 +9,7 @@ var time_of_the_day = Color(1,1,1,1)
 var map_columns = 16
 var map_rows = 21
 var active_units = []
+var current_map
 
 
 func change_day_color(day_enum):
