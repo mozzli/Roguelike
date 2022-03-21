@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Images/Tiles/town.png" type="Texture" id=1]
 [ext_resource path="res://Images/Tiles/plains.png" type="Texture" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://DaytimeControl.gd" type="Script" id=9]
 [ext_resource path="res://MovementTiles.gd" type="Script" id=10]
 [ext_resource path="res://Images/Tiles/blue/new_animatedtexture.tres" type="Texture" id=11]
+[ext_resource path="res://Images/Events/treasure_box_event.png" type="Texture" id=12]
+[ext_resource path="res://TreasureControl.gd" type="Script" id=15]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 
@@ -180,6 +182,8 @@ light_mode = 1
 0/shapes = [  ]
 0/z_index = 0
 
+[sub_resource type="Theme" id=17]
+
 [node name="Map" type="Node2D"]
 script = ExtResource( 3 )
 
@@ -214,3 +218,55 @@ cell_half_offset = 0
 centered_textures = true
 format = 1
 script = ExtResource( 10 )
+
+[node name="TreasureControl" type="Control" parent="."]
+margin_left = -459.0
+margin_top = -375.0
+margin_right = -4.0
+margin_bottom = 7.0
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Popup" type="Popup" parent="TreasureControl"]
+margin_left = 2.0
+margin_top = 67.0
+margin_right = 453.0
+margin_bottom = 374.0
+theme = SubResource( 17 )
+popup_exclusive = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="TreasureControl/Popup"]
+position = Vector2( 225.179, 155.805 )
+texture = ExtResource( 12 )
+
+[node name="Button" type="Button" parent="TreasureControl/Popup"]
+margin_left = 171.851
+margin_top = 221.378
+margin_right = 278.851
+margin_bottom = 261.378
+focus_mode = 0
+mouse_default_cursor_shape = 2
+input_pass_on_modal_close_click = false
+enabled_focus_mode = 0
+text = "Got it!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="TreasureControl/Popup"]
+margin_left = 52.4441
+margin_top = 91.5417
+margin_right = 404.444
+margin_bottom = 192.542
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="button_up" from="TreasureControl/Popup/Button" to="TreasureControl" method="_on_Button_button_up"]
