@@ -43,7 +43,7 @@ func get_new_tile(free_tiles, random_free_tile, new_column, new_row):
 		neighbour_tiles.RIGHT:
 			new_column += 1
 		neighbour_tiles.DOWN_LEFT: 
-			if (new_row % 2==0):
+			if (new_row % 2 == 0):
 				new_column -= 1
 			new_row += 1
 		neighbour_tiles.DOWN_RIGHT:
@@ -88,5 +88,4 @@ func get_new_movement_tile(next_tile, even):
 			if (not even):
 				new_column = 1
 			new_row = 1
-
 	return [new_column, new_row]

@@ -28,7 +28,14 @@ ItemsList="*res://ItemsList.gd"
 
 [display]
 
-window/size/height=1024
+window/size/height=936
+window/size/resizable=false
+
+[importer_defaults]
+
+texture={
+"flags/filter": false
+}
 
 [input]
 

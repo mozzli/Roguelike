@@ -10,6 +10,7 @@ var map_columns = 16
 var map_rows = 21
 var active_units = []
 var current_map
+var camera_zoom = 1
 
 
 func change_day_color(day_enum):
