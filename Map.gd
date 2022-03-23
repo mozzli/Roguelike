@@ -14,12 +14,13 @@ func _ready():
 	spawn_treasure(11,11)
 	$Map.create_map()
 	GameVariables.object_under_player = null
+	$Camera2D.activate_camera()
 
 func spawn_builder(column, row):
 	pos_cell_global = get_node("Map").map_to_world(Vector2(column,row))
 	var builder = $ResourcePreloader.builder_res.instance()
 	builder.position = pos_cell_global + Vector2(32,24)
-	add_child(builder) 
+	add_child(builder)
 
 func spawn_treasure(column, row):
 	pos_cell_global = get_node("Map").map_to_world(Vector2(column,row))

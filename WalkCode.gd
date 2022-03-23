@@ -46,7 +46,7 @@ func get_movement_subtract(new_tile_cell):
 
 func _process(_delta):
 	if(GameVariables.map_on == true):
-		mouse_position = MovementUtils.map.world_to_map(get_viewport().get_mouse_position())
+		mouse_position = MovementUtils.map.world_to_map(GameVariables.current_map.get_global_mouse_position())
 
 func get_movement_cell():
 	return MovementUtils.map2.get_cell(WalkCode.mouse_position[0], WalkCode.mouse_position[1])
