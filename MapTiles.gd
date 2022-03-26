@@ -20,30 +20,26 @@ func create_plains():
 			set_cell(columns, rows, MovementUtils.tiles.PLAINS)
 
 func create_mountains():
-	var row
-	var column
-	var current_tile
+
 	current_number_of_tiles = 0
 	while (current_number_of_tiles < mountains):
-		create_custom_random_tiles(MovementUtils.tiles.MOUNTAINS, 1, 5, row, column, current_tile)
+		create_custom_random_tiles(MovementUtils.tiles.MOUNTAINS, 1, 5)
 
 func create_forest():
-	var row
-	var column
-	var current_tile
+
 	current_number_of_tiles = 0
 	while (current_number_of_tiles < forest):
-		create_custom_random_tiles(MovementUtils.tiles.FOREST, 4, 8, row, column, current_tile)
+		create_custom_random_tiles(MovementUtils.tiles.FOREST, 4, 8)
 
 func create_wall():
 	create_vertical_walls()
 	create_horizontal_walls()
 
 func create_custom_random_tiles(type_of_tile, minimum_amount_of_neighbours, 
-extra_neighbours, row, column, current_tile):
-	row = randi() % map_rows
-	column = randi() % map_columns
-	current_tile = get_cell(column, row)
+extra_neighbours):
+	var row = randi() % map_rows
+	var column = randi() % map_columns
+	var current_tile = get_cell(column, row)
 	var neighbour_tiles = MovementUtils.get_neighbor_tiles(column, row, self).values()
 	if (
 		not neighbour_tiles.has(type_of_tile)
