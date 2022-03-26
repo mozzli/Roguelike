@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Images/Tiles/town.png" type="Texture" id=1]
 [ext_resource path="res://Images/Tiles/plains.png" type="Texture" id=2]
@@ -13,7 +13,9 @@
 [ext_resource path="res://Images/Tiles/blue/new_animatedtexture.tres" type="Texture" id=11]
 [ext_resource path="res://Images/Events/treasure_box_event.png" type="Texture" id=12]
 [ext_resource path="res://PlayerCamera.gd" type="Script" id=13]
+[ext_resource path="res://Images/Tiles/wall.png" type="Texture" id=14]
 [ext_resource path="res://TreasureControl.gd" type="Script" id=15]
+[ext_resource path="res://Background.gd" type="Script" id=16]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 
@@ -163,6 +165,20 @@ points = PoolVector2Array( 62.0045, 17.0522, 62.1391, 46.9307, 62.1391, 46.9307,
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 4/z_index = 0
+5/name = "wall.png 5"
+5/texture = ExtResource( 14 )
+5/tex_offset = Vector2( 0, 0 )
+5/modulate = Color( 1, 1, 1, 1 )
+5/region = Rect2( 0, 0, 64, 64 )
+5/tile_mode = 0
+5/occluder_offset = Vector2( 0, 0 )
+5/navigation_offset = Vector2( 0, 0 )
+5/shape_offset = Vector2( 0, 0 )
+5/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+5/shape_one_way = false
+5/shape_one_way_margin = 0.0
+5/shapes = [  ]
+5/z_index = 0
 
 [sub_resource type="CanvasItemMaterial" id=13]
 light_mode = 1
@@ -241,6 +257,8 @@ margin_left = -700.033
 margin_top = -690.23
 margin_right = -245.033
 margin_bottom = -308.23
+focus_mode = 2
+mouse_filter = 2
 script = ExtResource( 15 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -338,11 +356,12 @@ shape = SubResource( 19 )
 
 [node name="Background" type="Node2D" parent="."]
 z_index = -11
+script = ExtResource( 16 )
 
 [node name="ColorRect" type="ColorRect" parent="Background"]
 margin_left = -832.0
 margin_top = -648.0
-margin_right = 1908.0
+margin_right = 1916.0
 margin_bottom = 1496.0
 mouse_filter = 2
 color = Color( 0.0666667, 0.109804, 0.0823529, 1 )

@@ -9,9 +9,18 @@ var scrolling_speed = 6
 func _ready():
 	zoom.x = GameVariables.camera_zoom
 	zoom.y = GameVariables.camera_zoom
+	limit_right = GameVariables.map_columns*65 + 250
+	limit_bottom = GameVariables.map_rows*48.5 + 200
 	
 
 func _process(_delta):
+	if !GameVariables.gui_is_on:
+		check_if_camera_can_be_moved()
+
+func activate_camera():
+	position = GameVariables.active_units[2].get_position()
+
+func check_if_camera_can_be_moved():
 	if mouse_down == true:
 		position += Vector2(0,scrolling_speed)
 	if mouse_left == true:
@@ -20,11 +29,6 @@ func _process(_delta):
 		position += Vector2(0,-scrolling_speed)
 	if mouse_right == true:
 		position += Vector2(scrolling_speed,0)
-	
-
-func activate_camera():
-	position = GameVariables.active_units[2].get_position()
-
 
 func _on_ScrollingDownArea_mouse_entered():
 	mouse_down = true

@@ -1,7 +1,7 @@
 extends Node
 
-enum tiles {PLAINS = 0, TOWN = 1, FOREST = 2, MOUNTAINS = 3}
-enum tiles_mov_value {PLAINS = 1, FOREST = 2, MOUNTAINS = 5, TOWN = 1}
+enum tiles {PLAINS = 0, TOWN = 1, FOREST = 2, MOUNTAINS = 3, WALL = 5}
+enum tiles_mov_value {PLAINS = 1, FOREST = 2, MOUNTAINS = 5, TOWN = 1, Wall = 99}
 enum neighbour_tiles {UP_LEFT = 0, UP_RIGHT = 1, LEFT = 2, RIGHT = 3, DOWN_LEFT = 4, DOWN_RIGHT = 5}
 
 var map

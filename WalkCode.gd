@@ -13,10 +13,8 @@ func get_movement_distance(placement, distance_value, direction):
 			var coordinates = MovementUtils.get_new_movement_tile(neighbour, even)
 			new_tile = [int(placement[0]) + coordinates[0], int(placement[1]) + coordinates[1]]
 			var value_to_subtract = get_movement_subtract(MovementUtils.map.get_cell(new_tile[0], new_tile[1]))
-			if (!value_to_subtract == -1 && distance_value - value_to_subtract>=0 ):
-#			print(placement, "||", neighbour, ": ", value_to_subtract, " || ", distance_value - value_to_subtract)
-				if (!value_to_subtract == -1 && distance_value - value_to_subtract >= 0 ):
-					get_movement_distance(new_tile, distance_value - value_to_subtract, neighbour)
+			if (!value_to_subtract == -1 && distance_value - value_to_subtract >= 0 ):
+				get_movement_distance(new_tile, distance_value - value_to_subtract, neighbour)
 
 func change_position(newPosition):
 	var tile_placement = map.world_to_map(newPosition)
@@ -39,10 +37,11 @@ func reset_movement():
 
 func get_movement_subtract(new_tile_cell):
 	match (new_tile_cell):
-		0: return 1
-		2: return 2
-		3: return 3
-		-1: return -1
+		MovementUtils.tiles.PLAINS: return 1
+		MovementUtils.tiles.FOREST: return 2
+		MovementUtils.tiles.MOUNTAINS: return 3
+		MovementUtils.tiles.WALL: return -1
+		_: return -1
 
 func _process(_delta):
 	if(GameVariables.map_on == true):
