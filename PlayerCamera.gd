@@ -53,3 +53,13 @@ func _on_ScrollingRightArea_mouse_entered():
 
 func _on_ScrollingRightArea_mouse_exited():
 	mouse_right = false
+
+func _input(event):
+	if event is InputEventKey:
+		if event.is_action_pressed("zoom"):
+			if zoom.x == 0.5:
+				zoom.x = 1
+				zoom.y = 1
+			else:
+				zoom.x = 0.5
+				zoom.y = 0.5

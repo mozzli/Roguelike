@@ -315,6 +315,7 @@ __meta__ = {
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 672.303, 492.562 )
 current = true
+zoom = Vector2( 0.5, 0.5 )
 process_mode = 0
 limit_left = -250
 limit_top = -250
@@ -325,33 +326,30 @@ drag_margin_top = 1.0
 drag_margin_right = 1.0
 drag_margin_bottom = 1.0
 script = ExtResource( 13 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="ScrollingDownArea" type="Area2D" parent="Camera2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/ScrollingDownArea"]
-position = Vector2( -12.6872, 542.438 )
+position = Vector2( -0.79511, 352.165 )
 shape = SubResource( 16 )
 
 [node name="ScrollingLeftArea" type="Area2D" parent="Camera2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/ScrollingLeftArea"]
 use_parent_material = true
-position = Vector2( -601.784, -13.6798 )
+position = Vector2( -404.376, 57.6726 )
 shape = SubResource( 17 )
 
 [node name="ScrollingUpArea" type="Area2D" parent="Camera2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/ScrollingUpArea"]
-position = Vector2( 16.4232, -587.05 )
+position = Vector2( 9.28795, -382.506 )
 shape = SubResource( 18 )
 
 [node name="ScrollingRightArea" type="Area2D" parent="Camera2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/ScrollingRightArea"]
-position = Vector2( 588.671, 6.55817 )
+position = Vector2( 388.884, 30.3424 )
 shape = SubResource( 19 )
 
 [node name="Background" type="Node2D" parent="."]

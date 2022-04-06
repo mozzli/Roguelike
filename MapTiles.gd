@@ -20,13 +20,11 @@ func create_plains():
 			set_cell(columns, rows, MovementUtils.tiles.PLAINS)
 
 func create_mountains():
-
 	current_number_of_tiles = 0
 	while (current_number_of_tiles < mountains):
 		create_custom_random_tiles(MovementUtils.tiles.MOUNTAINS, 1, 5)
 
 func create_forest():
-
 	current_number_of_tiles = 0
 	while (current_number_of_tiles < forest):
 		create_custom_random_tiles(MovementUtils.tiles.FOREST, 4, 8)
@@ -54,8 +52,7 @@ func place_tiles(tiles, column, row, repeat_number, current_repeat):
 	current_repeat_number += 1
 	if (current_repeat_number < repeat_number):
 		var new_tile = MovementUtils.get_random_free_tile(
-			MovementUtils.get_neighbor_tiles(column, row, self), column, row
-		)
+			MovementUtils.get_neighbor_tiles(column, row, self), column, row)
 		if (new_tile != null):
 			place_tiles(tiles, new_tile[0], new_tile[1],repeat_number,current_repeat_number)
 

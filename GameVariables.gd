@@ -7,12 +7,11 @@ var map_on = false
 var selected_unit
 var time_of_the_day = Color(1,1,1,1)
 var map_columns = 16
-var map_rows = 16
+var map_rows = 23
 var active_units = []
 var current_map
-var camera_zoom = 1
+var camera_zoom = 0.5
 var gui_is_on = false
-
 
 func change_day_color(day_enum):
 	match day_enum:
