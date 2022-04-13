@@ -43,11 +43,13 @@ func reset_movement_tiles():
 	MovementUtils.map_tiles.clear()
 
 func get_movement_subtract(new_tile_cell):
+	if MovementUtils.RIVER_TILES.has(new_tile_cell):
+		return MovementUtils.tiles_mov_value.RIVER
 	match (new_tile_cell):
-		MovementUtils.tiles.PLAINS: return 1
-		MovementUtils.tiles.FOREST: return 2
-		MovementUtils.tiles.MOUNTAINS: return 3
-		MovementUtils.tiles.WALL: return -1
+		MovementUtils.tiles.PLAINS: return MovementUtils.tiles_mov_value.PLAINS
+		MovementUtils.tiles.FOREST: return MovementUtils.tiles_mov_value.FOREST
+		MovementUtils.tiles.MOUNTAINS: return MovementUtils.tiles_mov_value.MOUNTAINS
+		MovementUtils.tiles.WALL: return MovementUtils.tiles_mov_value.WALL
 		_: return -1
 
 func get_movement_cell():

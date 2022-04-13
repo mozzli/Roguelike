@@ -2,31 +2,40 @@ extends TileMap
 
 var map_rows = GameVariables.map_rows
 var map_columns = GameVariables.map_columns
-var mountains = 50
+var mountains_amount = 50
 var towns = 3
-var forest = 115
+var river_amount = 2
+var forest_amount = 115
 var current_number_of_tiles = 0
 
 func create_map():
 	clear()
 	create_plains()
-	create_mountains()
+	create_single_river(40)
+	create_single_river(40)
+	create_mountains(5)
 	create_forest()
 	create_wall()
+	
 
 func create_plains():
 	for rows in map_rows:
 		for columns in map_columns:
 			set_cell(columns, rows, MovementUtils.tiles.PLAINS)
 
-func create_mountains():
+func create_rivers():
 	current_number_of_tiles = 0
-	while (current_number_of_tiles < mountains):
-		create_custom_random_tiles(MovementUtils.tiles.MOUNTAINS, 1, 5)
+	for i in range(river_amount - 1):
+		create_single_river(12)
+
+func create_mountains(maximum_mountains_amount):
+	current_number_of_tiles = 0
+	while (current_number_of_tiles < mountains_amount):
+		create_custom_random_tiles(MovementUtils.tiles.MOUNTAINS, 1, maximum_mountains_amount)
 
 func create_forest():
 	current_number_of_tiles = 0
-	while (current_number_of_tiles < forest):
+	while (current_number_of_tiles < forest_amount):
 		create_custom_random_tiles(MovementUtils.tiles.FOREST, 4, 8)
 
 func create_wall():
@@ -41,7 +50,7 @@ extra_neighbours):
 	var neighbour_tiles = MovementUtils.get_neighbor_tiles(column, row, self).values()
 	if (
 		not neighbour_tiles.has(type_of_tile)
-		&& current_tile != type_of_tile):
+		&& current_tile == MovementUtils.tiles.PLAINS):
 		var number_of_repeat = randi() % extra_neighbours + minimum_amount_of_neighbours
 		place_tiles(type_of_tile, column, row,number_of_repeat,0)
 
@@ -69,3 +78,35 @@ func create_horizontal_walls():
 		else:
 			place_tiles(MovementUtils.tiles.WALL, column - 1, -1, 1, 0)
 			place_tiles(MovementUtils.tiles.WALL, column, map_rows, 1, 0)
+
+func create_single_river(river_lenght):
+	var row = randi() % (map_rows - 1)
+	var column = randi() % (map_columns - 1)
+	print("row: ", row , " column: ", column)
+	var river_expand_direction = RiverCreator.sides.DRIGHT
+	place_tiles(MovementUtils.tiles.MOUNTAINS_WITH_RIVER,column,row,0,0)
+	for i in range(river_lenght):
+		var loop = true
+		var loop_time = 0
+		while loop:
+			loop_time += 1
+			if loop_time == 10:
+				loop = false
+			var x = place_river_tile(river_expand_direction, row, column)
+			if x != null:
+				row = x[0]
+				column = x[1]
+				river_expand_direction = x[2]
+				loop = false
+
+func place_river_tile(river_expand_direction, old_row, old_column):
+	var new_river_type_cell = RiverCreator.get_random_matching_tile(river_expand_direction)
+	var new_cell_placement = RiverCreator.get_next_river_position(old_row,old_column,river_expand_direction)
+	var second_step_tile_placement = RiverCreator.get_next_river_position(new_cell_placement[0], new_cell_placement[1],new_river_type_cell[1])
+	var second_step_tile_type = get_cell(second_step_tile_placement[1], second_step_tile_placement[0])
+	if(second_step_tile_type == MovementUtils.tiles.PLAINS):
+		old_row = new_cell_placement[0]
+		old_column = new_cell_placement[1]
+		place_tiles(new_river_type_cell[0],old_column,old_row,0,0)
+		river_expand_direction = new_river_type_cell[1]
+		return [old_row, old_column, river_expand_direction]

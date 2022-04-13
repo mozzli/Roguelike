@@ -3,7 +3,7 @@ extends KinematicBody2D
 var mouse_floats = false
 var selected = false
 var end_of_turn = false
-var movement_value = 3
+var movement_value = 4
 var old_position
 
 

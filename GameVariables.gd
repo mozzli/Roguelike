@@ -6,8 +6,8 @@ var object_under_player = null
 var map_on = false
 var selected_unit
 var time_of_the_day = Color(1,1,1,1)
-var map_columns = 16
-var map_rows = 23
+var map_columns = 23
+var map_rows = 21
 var active_units = []
 var current_map
 var camera_zoom = 0.5

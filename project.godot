@@ -25,10 +25,12 @@ GameVariables="*res://GameVariables.gd"
 WalkCode="*res://WalkCode.gd"
 ColorManager="*res://ColorManager.gd"
 ItemsList="*res://ItemsList.gd"
+RiverCreator="*res://RiverCreator.gd"
 
 [display]
 
-window/size/height=936
+window/size/width=1298
+window/size/height=1118
 window/size/resizable=false
 
 [importer_defaults]
