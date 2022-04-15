@@ -1,12 +1,12 @@
 extends Node
 
 enum sides {
-ULEFT = 1,
-URIGHT = 2,
-LEFT = 3,
-RIGHT = 4,
-DLEFT = 5,
-DRIGHT = 6,
+ULEFT = 0,
+URIGHT = 1,
+LEFT = 2,
+RIGHT = 3,
+DLEFT = 4,
+DRIGHT = 5,
 }
 
 enum tiles {
@@ -24,7 +24,7 @@ DLEFT_RIGHT = 10,
 URIGHT_DRIGHT = 9,
 ULEFT_DRIGHT = 8,
 URIGHT_DLEFT = 7,
-ULEFT_DLEFT = 6}
+ULEFT_DLEFT = 6 }
 
 var river_sides = {tiles.ULEFT_URIGHT : [sides.ULEFT, sides.URIGHT],
 tiles.URIGHT_LEFT : [sides.URIGHT, sides.LEFT],
@@ -59,9 +59,7 @@ func get_random_matching_tile(expand_direction):
 	var new_tile = matching_tiles[rand_range(0,matching_tiles.size())]
 	var ending_direction = []
 	ending_direction.append_array(river_sides.get(new_tile))
-	print(ending_direction)
 	ending_direction.erase(starting_side)
-	print(ending_direction)
 	return [new_tile, ending_direction[0]]
 
 func get_opposite_river_side(direction):

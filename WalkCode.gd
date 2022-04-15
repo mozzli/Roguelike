@@ -10,15 +10,14 @@ func _process(_delta):
 func get_movement_distance(placement, distance_value, direction):
 	MovementUtils.map_tiles.set_cell(placement[0],placement[1],0)
 	var last_tile = direction
-	var new_tile
 	for neighbour in MovementUtils.neighbour_tiles: 
-		check_neighbour_tiles(neighbour, last_tile, placement, new_tile, distance_value)
+		check_neighbour_tiles(neighbour, last_tile, placement, distance_value)
 
-func check_neighbour_tiles(neighbour, last_tile, placement, new_tile, distance_value):
+func check_neighbour_tiles(neighbour, last_tile, placement, distance_value):
 	if (neighbour != get_last_used_tile(last_tile)):
 		var even = check_if_even(placement[1])
 		var coordinates = MovementUtils.get_new_movement_tile(neighbour, even)
-		new_tile = [int(placement[0]) + coordinates[0], int(placement[1]) + coordinates[1]]
+		var new_tile = [int(placement[0]) + coordinates[0], int(placement[1]) + coordinates[1]]
 		var value_to_subtract = get_movement_subtract(MovementUtils.map.get_cell(new_tile[0], new_tile[1]))
 		if (!value_to_subtract == -1 && distance_value - value_to_subtract >= 0 ):
 			get_movement_distance(new_tile, distance_value - value_to_subtract, neighbour)
@@ -36,8 +35,8 @@ func get_last_used_tile(last_used_tile):
 		"LEFT": return "RIGHT"
 		"RIGHT": return "LEFT"
 	
-func check_if_even(row):
-	return int(row) % 2 == 0
+func check_if_even(row: int):
+	return row% 2 == 0
 
 func reset_movement_tiles():
 	MovementUtils.map_tiles.clear()

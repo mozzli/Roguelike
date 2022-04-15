@@ -25,7 +25,7 @@ func create_plains():
 
 func create_rivers():
 	current_number_of_tiles = 0
-	for i in range(river_amount - 1):
+	for _i in range(river_amount - 1):
 		create_single_river(12)
 
 func create_mountains(maximum_mountains_amount):
@@ -82,10 +82,9 @@ func create_horizontal_walls():
 func create_single_river(river_lenght):
 	var row = randi() % (map_rows - 1)
 	var column = randi() % (map_columns - 1)
-	print("row: ", row , " column: ", column)
 	var river_expand_direction = RiverCreator.sides.DRIGHT
 	place_tiles(MovementUtils.tiles.MOUNTAINS_WITH_RIVER,column,row,0,0)
-	for i in range(river_lenght):
+	for _i in range(river_lenght):
 		var loop = true
 		var loop_time = 0
 		while loop:

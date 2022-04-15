@@ -29,9 +29,8 @@ RiverCreator="*res://RiverCreator.gd"
 
 [display]
 
-window/size/width=1298
-window/size/height=1118
-window/size/resizable=false
+window/size/width=1920
+window/size/height=1080
 
 [importer_defaults]
 

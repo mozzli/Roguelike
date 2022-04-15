@@ -21,7 +21,7 @@ func spawn_builder(column, row):
 	builder.position = pos_cell_global + Vector2(32,24)
 	add_child(builder)
 
-func spawn_treasure(column, row):
+func spawn_treasure(column: int, row: int):
 	pos_cell_global = MovementUtils.map_tiles.map_to_world(Vector2(column,row))
 	var treasure_chest = $ResourcePreloader.treasure_res.instance()
 	treasure_chest.position = pos_cell_global + Vector2(32,24)

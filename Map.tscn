@@ -427,16 +427,16 @@ light_mode = 1
 [sub_resource type="Theme" id=15]
 
 [sub_resource type="RectangleShape2D" id=16]
-extents = Vector2( 1351.33, 135.326 )
+extents = Vector2( 1351.33, 5.75543 )
 
 [sub_resource type="RectangleShape2D" id=17]
-extents = Vector2( 169.661, 1170.62 )
+extents = Vector2( 7.0466, 1170.62 )
 
 [sub_resource type="RectangleShape2D" id=18]
-extents = Vector2( 1235.8, 169.272 )
+extents = Vector2( 1235.8, 5.56519 )
 
 [sub_resource type="RectangleShape2D" id=19]
-extents = Vector2( 154.916, 1146.98 )
+extents = Vector2( 6.63184, 1146.98 )
 
 [node name="Map" type="Node2D"]
 script = ExtResource( 3 )
@@ -478,26 +478,22 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -700.033
+margin_left = -726.461
 margin_top = -690.23
-margin_right = -245.033
+margin_right = -271.461
 margin_bottom = -308.23
 focus_mode = 2
 mouse_filter = 2
 script = ExtResource( 15 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
 [node name="Popup" type="Popup" parent="TreasureControl"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -233.277
-margin_top = -165.379
-margin_right = 217.723
-margin_bottom = 131.621
+margin_left = -225.5
+margin_top = -148.5
+margin_right = 225.5
+margin_bottom = 148.5
 theme = SubResource( 15 )
 popup_exclusive = true
 __meta__ = {
@@ -538,43 +534,48 @@ __meta__ = {
 }
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 672.303, 492.562 )
+position = Vector2( 589.665, 560.368 )
 current = true
-zoom = Vector2( 0.5, 0.5 )
-process_mode = 0
 limit_left = -250
 limit_top = -250
 limit_right = 1250
 limit_bottom = 1250
+limit_smoothed = true
 drag_margin_left = 1.0
 drag_margin_top = 1.0
 drag_margin_right = 1.0
 drag_margin_bottom = 1.0
+editor_draw_limits = true
+editor_draw_drag_margin = true
 script = ExtResource( 13 )
 
 [node name="ScrollingDownArea" type="Area2D" parent="Camera2D"]
+position = Vector2( -82.6381, 82.6381 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/ScrollingDownArea"]
-position = Vector2( -16.3515, 376.207 )
+position = Vector2( -3.87897, 322.809 )
 shape = SubResource( 16 )
 
 [node name="ScrollingLeftArea" type="Area2D" parent="Camera2D"]
+position = Vector2( -63.5677, 61.4489 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/ScrollingLeftArea"]
 use_parent_material = true
-position = Vector2( -472.258, 57.6726 )
+position = Vector2( -530.525, -13.6073 )
 shape = SubResource( 17 )
 
 [node name="ScrollingUpArea" type="Area2D" parent="Camera2D"]
+position = Vector2( 27.546, 59.3299 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/ScrollingUpArea"]
-position = Vector2( 6.45958, -413.619 )
+position = Vector2( 27.2444, -348.974 )
 shape = SubResource( 18 )
 
 [node name="ScrollingRightArea" type="Area2D" parent="Camera2D"]
+position = Vector2( -16.9514, 91.1138 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/ScrollingRightArea"]
-position = Vector2( 459.595, 31.7566 )
+position = Vector2( 561.842, 38.8837 )
 shape = SubResource( 19 )
 
 [node name="Background" type="Node2D" parent="."]

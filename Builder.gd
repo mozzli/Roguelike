@@ -6,7 +6,6 @@ var end_of_turn = false
 var movement_value = 4
 var old_position
 
-
 func _ready():
 	GameVariables.active_units.append(self)
 

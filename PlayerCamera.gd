@@ -7,13 +7,14 @@ var mouse_up = false
 var scrolling_speed = 6
 
 func _ready():
-	zoom.x = GameVariables.camera_zoom
-	zoom.y = GameVariables.camera_zoom
+	drag_margin_left = 1
+	zoom = GameVariables.camera_zoom
 	limit_right = GameVariables.map_columns*65 + 250
 	limit_bottom = GameVariables.map_rows*48.5 + 200
-	
 
 func _process(_delta):
+	change_border_hitboxes()
+	global_position = get_camera_screen_center()
 	if !GameVariables.gui_is_on:
 		check_if_camera_can_be_moved()
 
@@ -58,8 +59,15 @@ func _input(event):
 	if event is InputEventKey:
 		if event.is_action_pressed("zoom"):
 			if zoom.x == 0.5:
-				zoom.x = 1
-				zoom.y = 1
+				GameVariables.camera_zoom = Vector2(1,1)
 			else:
-				zoom.x = 0.5
-				zoom.y = 0.5
+				GameVariables.camera_zoom = Vector2(0.5,0.5)
+			zoom = GameVariables.camera_zoom
+
+func change_border_hitboxes():
+	var camera_position = global_position
+	$ScrollingDownArea/CollisionShape2D.global_position = Vector2(camera_position.x, camera_position.y + (OS.window_size.y/2) * zoom.y)
+	$ScrollingUpArea/CollisionShape2D.global_position = Vector2(camera_position.x, camera_position.y - (OS.window_size.y/2) * zoom.y)
+	$ScrollingLeftArea/CollisionShape2D.global_position = Vector2(camera_position.x - (OS.window_size.x/2) * zoom.x, camera_position.y)
+	$ScrollingRightArea/CollisionShape2D.global_position = Vector2(camera_position.x + (OS.window_size.x/2) * zoom.x, camera_position.y)
+	

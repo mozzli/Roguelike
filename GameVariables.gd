@@ -10,7 +10,7 @@ var map_columns = 23
 var map_rows = 21
 var active_units = []
 var current_map
-var camera_zoom = 0.5
+var camera_zoom = Vector2(0.5,0.5)
 var gui_is_on = false
 
 func change_day_color(day_enum):
