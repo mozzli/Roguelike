@@ -26,6 +26,8 @@ WalkCode="*res://WalkCode.gd"
 ColorManager="*res://ColorManager.gd"
 ItemsList="*res://ItemsList.gd"
 RiverCreator="*res://RiverCreator.gd"
+CellsContainers="*res://CellsContainers.gd"
+EnemyMovement="*res://EnemyMovement.gd"
 
 [display]
 

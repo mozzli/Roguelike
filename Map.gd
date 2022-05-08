@@ -7,19 +7,46 @@ func _ready():
 	MovementUtils.map = $Map
 	GameVariables.current_map = self
 	MovementUtils.map_tiles = $MovementTiles
+	$Map.create_map()
 	spawn_builder(0,0)
 	spawn_builder(8,20)
 	spawn_builder(10,10)
 	spawn_treasure(12,12)
 	spawn_treasure(11,11)
-	$Map.create_map()
+	spawn_boar_random()
+	spawn_boar_random()
+	spawn_boar_random()
+	spawn_boar_random()
 	$Camera2D.activate_camera()
+	print(CellsContainers.cellsContainers[[0,0]])
+	print(CellsContainers.cellsContainers[[20,8]])
+	print(CellsContainers.cellsContainers[[10,10]])
 
 func spawn_builder(column, row):
 	pos_cell_global = MovementUtils.map_tiles.map_to_world(Vector2(column,row))
 	var builder = $ResourcePreloader.builder_res.instance()
 	builder.position = pos_cell_global + Vector2(32,24)
+	CellsContainers.set_cell_container(row,column,builder)
 	add_child(builder)
+
+func spawn_boar(column, row):
+	pos_cell_global = MovementUtils.map_tiles.map_to_world(Vector2(column,row))
+	var boar = $ResourcePreloader.boar_res.instance()
+	boar.position = pos_cell_global + Vector2(32,24)
+	CellsContainers.set_cell_container(row,column,boar)
+	GameVariables.enemies.append(boar)
+	add_child(boar)
+
+func spawn_boar_random():
+	var rand_forest_tile = GameVariables.get_random_forest_tile()
+	var row = rand_forest_tile[0]
+	var column = rand_forest_tile[1]
+	pos_cell_global = MovementUtils.map_tiles.map_to_world(Vector2(column,row))
+	var boar = $ResourcePreloader.boar_res.instance()
+	boar.position = pos_cell_global + Vector2(32,24)
+	CellsContainers.set_cell_container(row,column,boar)
+	GameVariables.enemies.append(boar)
+	add_child(boar)
 
 func spawn_treasure(column: int, row: int):
 	pos_cell_global = MovementUtils.map_tiles.map_to_world(Vector2(column,row))

@@ -16,7 +16,7 @@ func get_movement_distance(placement, distance_value, direction):
 func check_neighbour_tiles(neighbour, last_tile, placement, distance_value):
 	if (neighbour != get_last_used_tile(last_tile)):
 		var even = check_if_even(placement[1])
-		var coordinates = MovementUtils.get_new_movement_tile(neighbour, even)
+		var coordinates = MovementUtils.get_new_movement_tile(tile_string_to_tile(neighbour), even)
 		var new_tile = [int(placement[0]) + coordinates[0], int(placement[1]) + coordinates[1]]
 		var value_to_subtract = get_movement_subtract(MovementUtils.map.get_cell(new_tile[0], new_tile[1]))
 		if (!value_to_subtract == -1 && distance_value - value_to_subtract >= 0 ):
@@ -34,7 +34,17 @@ func get_last_used_tile(last_used_tile):
 		"UP_RIGHT": return "DOWN_LEFT"
 		"LEFT": return "RIGHT"
 		"RIGHT": return "LEFT"
-	
+
+func tile_string_to_tile(tile_str):
+	match tile_str:
+		"DOWN_LEFT": return MovementUtils.neighbour_tiles.DOWN_LEFT
+		"DOWN_RIGHT": return MovementUtils.neighbour_tiles.DOWN_RIGHT
+		"UP_LEFT": return MovementUtils.neighbour_tiles.UP_LEFT
+		"UP_RIGHT": return MovementUtils.neighbour_tiles.UP_RIGHT
+		"LEFT": return MovementUtils.neighbour_tiles.LEFT
+		"RIGHT": return MovementUtils.neighbour_tiles.RIGHT
+		
+
 func check_if_even(row: int):
 	return row% 2 == 0
 
@@ -49,6 +59,8 @@ func get_movement_subtract(new_tile_cell):
 		MovementUtils.tiles.FOREST: return MovementUtils.tiles_mov_value.FOREST
 		MovementUtils.tiles.MOUNTAINS: return MovementUtils.tiles_mov_value.MOUNTAINS
 		MovementUtils.tiles.WALL: return MovementUtils.tiles_mov_value.WALL
+		MovementUtils.tiles.TOWN: return MovementUtils.tiles_mov_value.TOWN
+		MovementUtils.tiles.LAKE: return MovementUtils.tiles_mov_value.LAKE
 		_: return -1
 
 func get_movement_cell():
