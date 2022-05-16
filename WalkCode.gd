@@ -1,11 +1,12 @@
-extends Node
+extends Node2D
 
 var map = MovementUtils.map
 var mouse_position
 
 func _process(_delta):
-	if(GameVariables.map_on == true):
+	if(GameVariables.map_on && !GameVariables.gui_is_on):
 		mouse_position = MovementUtils.map.world_to_map(GameVariables.current_map.get_global_mouse_position())
+		GameVariables.current_map.get_node("SelectedTile").global_position = MovementUtils.map.map_to_world(mouse_position) + Vector2(31,23)
 
 func get_movement_distance(placement, distance_value, direction):
 	MovementUtils.map_tiles.set_cell(placement[0],placement[1],0)

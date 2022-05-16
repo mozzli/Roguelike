@@ -18,9 +18,6 @@ func _ready():
 	spawn_boar_random()
 	spawn_boar_random()
 	$Camera2D.activate_camera()
-	print(CellsContainers.cellsContainers[[0,0]])
-	print(CellsContainers.cellsContainers[[20,8]])
-	print(CellsContainers.cellsContainers[[10,10]])
 
 func spawn_builder(column, row):
 	pos_cell_global = MovementUtils.map_tiles.map_to_world(Vector2(column,row))
@@ -41,18 +38,16 @@ func spawn_boar_random():
 	var rand_forest_tile = GameVariables.get_random_forest_tile()
 	var row = rand_forest_tile[0]
 	var column = rand_forest_tile[1]
-	pos_cell_global = MovementUtils.map_tiles.map_to_world(Vector2(column,row))
-	var boar = $ResourcePreloader.boar_res.instance()
-	boar.position = pos_cell_global + Vector2(32,24)
-	CellsContainers.set_cell_container(row,column,boar)
-	GameVariables.enemies.append(boar)
-	add_child(boar)
+	spawn_boar(column, row)
 
 func spawn_treasure(column: int, row: int):
 	pos_cell_global = MovementUtils.map_tiles.map_to_world(Vector2(column,row))
 	var treasure_chest = $ResourcePreloader.treasure_res.instance()
 	treasure_chest.position = pos_cell_global + Vector2(32,24)
 	add_child(treasure_chest)
+
+func spawn_town():
+	return $ResourcePreloader.town.instance()
 
 func _input(event):
 	if event is InputEventKey:
@@ -68,3 +63,11 @@ func check_key_event(event):
 	if event.is_action_pressed("ui_select"):
 		GameVariables.change_day_color(GameVariables.day_cycle.NIGHT)
 		print("It's night!")
+	if event.is_action_pressed("debug"):
+		GameVariables.map_on = false
+		GameVariables.current_scene = PackedScene.new()
+		print(GameVariables.base_map)
+		var result = GameVariables.current_scene.pack(get_tree().get_current_scene())
+		if result == OK:
+			ResourceSaver.save("res://name.scn", GameVariables.current_scene)
+		get_tree().change_scene("res://Town.tscn")

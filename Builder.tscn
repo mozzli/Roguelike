@@ -24,7 +24,7 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 21.5552, 19.3558 )
 
-[node name="KinematicBody2D" type="KinematicBody2D"]
+[node name="Builder" type="KinematicBody2D"]
 light_mask = 0
 input_pickable = true
 script = ExtResource( 1 )

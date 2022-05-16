@@ -14,6 +14,10 @@ var camera_zoom = Vector2(0.5,0.5)
 var gui_is_on = false
 var enemies = []
 var forest_tiles = []
+#var towns = {}
+var number_of_towns = 0
+var current_scene
+var base_map
 signal enemies_moved
 
 func change_day_color(day_enum):
@@ -34,7 +38,7 @@ func _input(event):
 
 func enemies_turn():
 	for enemy in enemies:
-		var en = enemy.enemy_turn()
+		enemy.enemy_turn()
 		yield(enemy, "boar_was_moved")
 	emit_signal("enemies_moved")
 

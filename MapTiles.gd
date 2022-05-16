@@ -17,7 +17,7 @@ func create_map():
 	create_forest()
 	create_towns()
 	create_wall()
-	print(GameVariables.forest_tiles)
+#	print(GameVariables.towns)
 	
 
 func create_plains():
@@ -43,7 +43,7 @@ func create_forest():
 func create_towns():
 	current_number_of_tiles = 0
 	while (current_number_of_tiles < towns):
-		create_custom_random_tiles(MovementUtils.tiles.TOWN, 1,1)
+		create_town()
 
 func create_wall():
 	create_vertical_walls()
@@ -60,6 +60,18 @@ extra_neighbours):
 		&& current_tile == MovementUtils.tiles.PLAINS):
 		var number_of_repeat = randi() % extra_neighbours + minimum_amount_of_neighbours
 		place_tiles(type_of_tile, column, row,number_of_repeat,0)
+
+func create_town():
+	var row = randi() % map_rows
+	var column = randi() % map_columns
+	var current_tile = get_cell(column, row)
+	if current_tile == MovementUtils.tiles.PLAINS:
+		place_tiles(MovementUtils.tiles.TOWN, column, row,1,0)
+		var town = GameVariables.current_map.spawn_town()
+		var pos_cell_global = MovementUtils.map_tiles.map_to_world(Vector2(column,row))
+		town.position = pos_cell_global + Vector2(32,24)
+		add_child(town)
+#		GameVariables.towns[[row,column]] = town
 
 func place_tiles(tiles, column, row, repeat_number, current_repeat):
 	divide_cells_by_type(tiles, [row,column])
@@ -105,7 +117,6 @@ func create_single_river(river_lenght):
 				column = x[1]
 				river_expand_direction = x[2]
 				loop = false
-	
 
 func place_river_tile(river_expand_direction, old_row, old_column):
 	var new_river_type_cell = RiverCreator.get_random_matching_tile(river_expand_direction)

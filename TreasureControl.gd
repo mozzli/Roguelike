@@ -6,7 +6,6 @@ func open_treasure_event(item_name):
 	$Popup.popup()
 	GameVariables.gui_is_on = true
 
-
 func _on_Button_button_up():
 	GameVariables.gui_is_on = false
 	$Popup.hide()
