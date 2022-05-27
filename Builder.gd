@@ -1,10 +1,14 @@
 extends KinematicBody2D
 
+var fog_of_war_class = GameVariables.current_map.get_node("FogOfWar")
 var mouse_floats = false
 var selected = false
 var end_of_turn = false
-var movement_value = 4
+var movement_value = 3
 var old_position
+var vision_range = 3
+var fog_of_war_visibility = []
+var movement_on = true
 
 func _ready():
 	GameVariables.active_units.append(self)
@@ -12,6 +16,9 @@ func _ready():
 func _process(_delta):
 	if (selected && MovementUtils.map_tiles.get_cell(WalkCode.mouse_position[0], WalkCode.mouse_position[1]) == 0):
 		self.global_position = MovementUtils.map_tiles.map_to_world(WalkCode.mouse_position)+Vector2(32,24)
+#	if !movement_on:
+	fog_of_war_class.show_tiles(fog_of_war_visibility)
+	
 
 func _on_KinematicBody2D_mouse_entered():
 	mouse_floats = true
@@ -49,12 +56,16 @@ func play_object_event():
 	GameVariables.object_under_player.play_event()
 	
 func move_player():
+	var tile = MovementUtils.map_tiles.world_to_map(global_position)
+	fog_of_war_class.hide_tiles(fog_of_war_visibility)
+	fog_of_war_class.set_visibility(tile.x, tile.y, self)
 	deselect_player()
 	global_position = MovementUtils.map_tiles.map_to_world(WalkCode.mouse_position)+Vector2(32,24)
 	end_of_turn = true
 	ColorManager.change_color_end_turn($AnimatedSprite)
 	if GameVariables.object_under_player != null:
 		play_object_event()
+#	movement_on = false
 
 func reset_player_position():
 	deselect_player()
@@ -62,6 +73,7 @@ func reset_player_position():
 	ColorManager.change_color_default($AnimatedSprite)
 
 func select_player():
+#	movement_on = true
 	old_position = global_position
 	selected = true
 	WalkCode.get_movement_distance(get_position_on_map(global_position),

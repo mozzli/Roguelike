@@ -6,6 +6,11 @@ var mouse_right = false
 var mouse_up = false
 var scrolling_speed = 6
 
+const FLOAT_EPSILON = 0.00001
+
+func compare_floats(a, b, epsilon = FLOAT_EPSILON):
+	return abs(a - b) <= epsilon
+
 func _ready():
 	drag_margin_left = 1
 	zoom = GameVariables.camera_zoom
@@ -17,6 +22,18 @@ func _process(_delta):
 	global_position = get_camera_screen_center()
 	if !GameVariables.gui_is_on:
 		check_if_camera_can_be_moved()
+	if !is_equal_approx(zoom.x, GameVariables.camera_zoom.x):
+		if zoom > GameVariables.camera_zoom:
+			if zoom.x != GameVariables.camera_zoom.x:
+				zoom.x += -0.01
+			if zoom.y != GameVariables.camera_zoom.y:
+				zoom.y += -0.01
+		else:
+			if zoom.x != GameVariables.camera_zoom.x:
+				zoom.x += 0.01
+			if zoom.y != GameVariables.camera_zoom.y:
+				zoom.y += 0.01
+	
 
 func activate_camera():
 	position = Vector2(250,250)
@@ -59,11 +76,15 @@ func _on_ScrollingRightArea_mouse_exited():
 func _input(event):
 	if event is InputEventKey:
 		if event.is_action_pressed("zoom"):
+			print(GameVariables.camera_zoom.y)
+			print(zoom.y)
 			if zoom.x == 0.5:
 				GameVariables.camera_zoom = Vector2(1,1)
 			else:
 				GameVariables.camera_zoom = Vector2(0.5,0.5)
-			zoom = GameVariables.camera_zoom
+#			zoom = GameVariables.camera_zoom
+			print(GameVariables.camera_zoom.y)
+			print(zoom.y)
 
 func change_border_hitboxes():
 	var camera_position = global_position

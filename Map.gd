@@ -8,6 +8,7 @@ func _ready():
 	GameVariables.current_map = self
 	MovementUtils.map_tiles = $MovementTiles
 	$Map.create_map()
+	$FogOfWar.create_fog_of_war()
 	spawn_builder(0,0)
 	spawn_builder(8,20)
 	spawn_builder(10,10)
@@ -25,6 +26,7 @@ func spawn_builder(column, row):
 	builder.position = pos_cell_global + Vector2(32,24)
 	CellsContainers.set_cell_container(row,column,builder)
 	add_child(builder)
+	$FogOfWar.set_visibility(column, row, builder)
 
 func spawn_boar(column, row):
 	pos_cell_global = MovementUtils.map_tiles.map_to_world(Vector2(column,row))
@@ -64,10 +66,4 @@ func check_key_event(event):
 		GameVariables.change_day_color(GameVariables.day_cycle.NIGHT)
 		print("It's night!")
 	if event.is_action_pressed("debug"):
-		GameVariables.map_on = false
-		GameVariables.current_scene = PackedScene.new()
-		print(GameVariables.base_map)
-		var result = GameVariables.current_scene.pack(get_tree().get_current_scene())
-		if result == OK:
-			ResourceSaver.save("res://name.scn", GameVariables.current_scene)
-		get_tree().change_scene("res://Town.tscn")
+		$FogOfWar.clear()

@@ -28,7 +28,7 @@ func _ready():
 	for i in range(6,20):
 		RIVER_TILES.append(i)
 
-func get_neighbor_tiles(column, row):
+func get_neighbor_tiles(column: int, row: int):
 	var tiles_list = {
 		MovementUtils.neighbour_tiles.UP_LEFT: null,
 		neighbour_tiles.UP_RIGHT: null,
@@ -113,3 +113,45 @@ func get_cell_in_position(position_of_next_tile, old_position):
 	else:
 		cell_coordinates = get_new_movement_tile(position_of_next_tile,false)
 	return [old_position.x + cell_coordinates[0], old_position.y + cell_coordinates[1]]
+
+func get_neighbors_position(column: int, row: int):
+	var neighbor_position_list = []
+	for side in neighbour_tiles:
+		var new_neighbor = []
+		var new_column = int(column)
+		var new_row = int(row)
+		match side:
+			"UP_LEFT":
+				if (new_row % 2 == 0):
+					new_column -= 1
+				new_row -= 1
+			"UP_RIGHT": 
+				if (new_row % 2 != 0):
+					new_column += 1
+				new_row -= 1 
+			"LEFT":
+				new_column -= 1
+			"RIGHT":
+				new_column += 1
+			"DOWN_LEFT": 
+				if (new_row % 2 == 0):
+					new_column -= 1
+				new_row += 1
+			"DOWN_RIGHT":
+				if (new_row % 2 != 0):
+					new_column += 1
+				new_row += 1
+		neighbor_position_list.append([new_column,new_row])
+	return neighbor_position_list
+	
+func get_neighbors_position_with_vision(column: int, row: int, vision: int ):
+	var tiles_to_check = [[column, row]]
+	for i in range(0,vision):
+		var new_array = []
+		for tile in tiles_to_check:
+			var array = get_neighbors_position(tile[0], tile[1])
+			for arrays in array:
+				if !tiles_to_check.has(arrays) && !new_array.has(arrays):
+					new_array.append(arrays)
+		tiles_to_check.append_array(new_array)
+	return tiles_to_check

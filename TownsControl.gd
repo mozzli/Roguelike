@@ -12,6 +12,7 @@ func _ready():
 func show_town():
 	GameVariables.gui_is_on = true
 	town_opened = true
+	get_parent().get_node("AudioStreamPlayer").volume_down()
 	$Popup.popup()
 
 func _process(delta):
@@ -20,6 +21,7 @@ func _process(delta):
 
 func _on_Button_button_up():
 	print("im on it")
+	get_parent().get_node("AudioStreamPlayer").volume_up()
 	$Popup.hide()
 	town_opened = false
 	GameVariables.gui_is_on = false

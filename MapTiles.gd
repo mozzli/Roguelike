@@ -117,6 +117,7 @@ func create_single_river(river_lenght):
 				column = x[1]
 				river_expand_direction = x[2]
 				loop = false
+	place_tiles(MovementUtils.tiles.LAKE,column,row,0,0)
 
 func place_river_tile(river_expand_direction, old_row, old_column):
 	var new_river_type_cell = RiverCreator.get_random_matching_tile(river_expand_direction)

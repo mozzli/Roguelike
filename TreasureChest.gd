@@ -1,6 +1,13 @@
 extends Area2D
 
 var object_body
+var column
+var row
+
+func _ready():
+	column = MovementUtils.map.world_to_map(global_position).x
+	row = MovementUtils.map.world_to_map(global_position).y
+	
 
 func _on_TreasureChest_body_entered(body):
 	GameVariables.object_under_player = self
@@ -17,3 +24,9 @@ func play_event():
 	object_body.get_node("Equipment").equipment.append(item_get)
 	current_map.get_node("TreasureControl").open_treasure_event(item_acquired)
 	self.queue_free()
+
+func _process(delta):
+	if GameVariables.current_map.get_node("FogOfWar").check_if_visible(column, row) == true:
+		visible = true
+	else:
+		visible = false
