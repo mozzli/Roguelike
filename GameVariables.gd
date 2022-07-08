@@ -14,7 +14,6 @@ var camera_zoom = Vector2(0.5,0.5)
 var gui_is_on = false
 var enemies = []
 var forest_tiles = []
-#var towns = {}
 var number_of_towns = 0
 var current_scene
 var base_map

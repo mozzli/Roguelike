@@ -9,10 +9,10 @@ enum tiles {PLAINS = 0,
  RIVER = 6,
  LAKE = 21}
 
-enum tiles_mov_value {RIVER = 2,
+enum tiles_mov_value {RIVER = 3,
  PLAINS = 1,
  FOREST = 2,
- MOUNTAINS = 3,
+ MOUNTAINS = 6,
  MOUNTAINS_WITH_RIVER = 5,
  TOWN = 1,
  WALL = -1,
@@ -20,13 +20,29 @@ enum tiles_mov_value {RIVER = 2,
 
 enum neighbour_tiles {UP_LEFT = 0, UP_RIGHT = 1, LEFT = 2, RIGHT = 3, DOWN_LEFT = 4, DOWN_RIGHT = 5}
 
+var cell = load("res://CellClass.gd")
 var map
-var map_tiles
+var movement_tiles
+var cell_cubed_list
+var cell_dictionary = {}
 const RIVER_TILES = []
 
 func _ready():
 	for i in range(6,20):
 		RIVER_TILES.append(i)
+
+func get_movement_value_by_index(index):
+	if RIVER_TILES.has(index):
+		return tiles_mov_value.RIVER
+	match(index):
+		tiles.PLAINS: return tiles_mov_value.PLAINS
+		tiles.TOWN: return tiles_mov_value.TOWN
+		tiles.FOREST: return tiles_mov_value.FOREST
+		tiles.MOUNTAINS: return tiles_mov_value.MOUNTAINS
+		tiles.MOUNTAINS_WITH_RIVER: return tiles_mov_value.MOUNTAINS_WITH_RIVER
+		tiles.LAKE: return tiles_mov_value.LAKE
+		[RIVER_TILES]: return tiles_mov_value.RIVER
+		_: return 99
 
 func get_neighbor_tiles(column: int, row: int):
 	var tiles_list = {
@@ -117,7 +133,6 @@ func get_cell_in_position(position_of_next_tile, old_position):
 func get_neighbors_position(column: int, row: int):
 	var neighbor_position_list = []
 	for side in neighbour_tiles:
-		var new_neighbor = []
 		var new_column = int(column)
 		var new_row = int(row)
 		match side:
@@ -144,9 +159,16 @@ func get_neighbors_position(column: int, row: int):
 		neighbor_position_list.append([new_column,new_row])
 	return neighbor_position_list
 	
+func get_neighbour_cells(main_cell: Node):
+	var cells = []
+	var coordinates_list = get_neighbors_position(main_cell.coordinates.x, main_cell.coordinates.y)
+	for data in coordinates_list:
+		cells.append(cell_dictionary.get(Vector2(data[0], data[1])))
+	return cells
+	
 func get_neighbors_position_with_vision(column: int, row: int, vision: int ):
 	var tiles_to_check = [[column, row]]
-	for i in range(0,vision):
+	for _i in range(0,vision):
 		var new_array = []
 		for tile in tiles_to_check:
 			var array = get_neighbors_position(tile[0], tile[1])
@@ -155,3 +177,35 @@ func get_neighbors_position_with_vision(column: int, row: int, vision: int ):
 					new_array.append(arrays)
 		tiles_to_check.append_array(new_array)
 	return tiles_to_check
+
+func create_cell_cubed_list():
+	cell_cubed_list = get_map_tiles_cube_coordinates_list()
+
+func get_map_tiles_cube_coordinates_list():
+	var tiles_cubed_list = []
+	var x = 0
+	var y = 0
+	for row in GameVariables.map_rows:
+		if row % 2 == 1:
+			x += 1
+		if (row % 2 == 0 && row != 0):
+			y += 1
+		for column in GameVariables.map_columns:
+			var coordinates = Vector2(column,row)
+			var cubed = Vector3(x + column,row * -1,y - column)
+			var new_cell = cell.new(coordinates, cubed)
+			tiles_cubed_list.append(new_cell)
+			cell_dictionary[coordinates] = new_cell
+	return tiles_cubed_list
+
+func update_cell_list():
+	add_tile_types_to_cell_list()
+	add_g_value_to_cells()
+
+func add_tile_types_to_cell_list():
+	for i_cell in cell_cubed_list:
+		i_cell.type = map.get_cell(i_cell.coordinates.x,i_cell.coordinates.y)
+
+func add_g_value_to_cells():
+	for i_cell in cell_cubed_list:
+		i_cell.g_value = get_movement_value_by_index(i_cell.type)

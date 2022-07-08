@@ -8,7 +8,7 @@ var current_volume
 func _ready():
 	current_volume = max_volume
 
-func _process(delta):
+func _process(_delta):
 	if volume_db != current_volume:
 		if current_volume < volume_db:
 			volume_db -= 0.1

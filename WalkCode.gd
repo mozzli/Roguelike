@@ -9,7 +9,7 @@ func _process(_delta):
 		GameVariables.current_map.get_node("SelectedTile").global_position = MovementUtils.map.map_to_world(mouse_position) + Vector2(31,23)
 
 func get_movement_distance(placement, distance_value, direction):
-	MovementUtils.map_tiles.set_cell(placement[0],placement[1],0)
+	MovementUtils.movement_tiles.set_cell(placement[0],placement[1],0)
 	var last_tile = direction
 	for neighbour in MovementUtils.neighbour_tiles: 
 		check_neighbour_tiles(neighbour, last_tile, placement, distance_value)
@@ -50,7 +50,7 @@ func check_if_even(row: int):
 	return row% 2 == 0
 
 func reset_movement_tiles():
-	MovementUtils.map_tiles.clear()
+	MovementUtils.movement_tiles.clear()
 
 func get_movement_subtract(new_tile_cell):
 	if MovementUtils.RIVER_TILES.has(new_tile_cell):
@@ -65,4 +65,4 @@ func get_movement_subtract(new_tile_cell):
 		_: return -1
 
 func get_movement_cell():
-	return MovementUtils.map_tiles.get_cell(WalkCode.mouse_position[0], WalkCode.mouse_position[1])
+	return MovementUtils.movement_tiles.get_cell(WalkCode.mouse_position[0], WalkCode.mouse_position[1])

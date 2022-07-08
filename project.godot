@@ -8,10 +8,6 @@
 
 config_version=4
 
-_global_script_classes=[  ]
-_global_script_class_icons={
-}
-
 [application]
 
 config/name="Roguelike_Project"
@@ -28,6 +24,7 @@ ItemsList="*res://ItemsList.gd"
 RiverCreator="*res://RiverCreator.gd"
 CellsContainers="*res://CellsContainers.gd"
 EnemyMovement="*res://EnemyMovement.gd"
+AStarMovement="*res://AStarMovement.gd"
 
 [display]
 

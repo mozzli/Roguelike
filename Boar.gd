@@ -43,7 +43,7 @@ func play_event():
 	print("BOAR FIGHT!")
 
 func _on_Boar_body_entered(_body):
-	GameVariables.object_under_player = self
+	play_event()
 
 func set_x_speed():
 	if !global_position.y >= movement_goal_position.y + 2 && !global_position.y <= movement_goal_position.y-2:

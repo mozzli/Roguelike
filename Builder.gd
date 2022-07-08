@@ -1,24 +1,30 @@
 extends KinematicBody2D
 
 var fog_of_war_class = GameVariables.current_map.get_node("FogOfWar")
+var path_creator = GameVariables.current_map.get_node("PathLineCreator")
 var mouse_floats = false
 var selected = false
 var end_of_turn = false
-var movement_value = 3
+var movement_value = 6
 var old_position
 var vision_range = 3
 var fog_of_war_visibility = []
 var movement_on = true
+var current_cell
 
+	
 func _ready():
 	GameVariables.active_units.append(self)
 
 func _process(_delta):
-	if (selected && MovementUtils.map_tiles.get_cell(WalkCode.mouse_position[0], WalkCode.mouse_position[1]) == 0):
-		self.global_position = MovementUtils.map_tiles.map_to_world(WalkCode.mouse_position)+Vector2(32,24)
-#	if !movement_on:
+	current_cell = WalkCode.mouse_position
+	var selected_cell
+	var movement_tiles = MovementUtils.movement_tiles.get_cell(WalkCode.mouse_position[0], WalkCode.mouse_position[1])
+	if(selected && current_cell != selected_cell && movement_tiles == 0):
+		var builder_position_cell = MovementUtils.movement_tiles.world_to_map(global_position)
+		path_creator.create_path(builder_position_cell,current_cell)
+		selected_cell = current_cell
 	fog_of_war_class.show_tiles(fog_of_war_visibility)
-	
 
 func _on_KinematicBody2D_mouse_entered():
 	mouse_floats = true
@@ -56,24 +62,24 @@ func play_object_event():
 	GameVariables.object_under_player.play_event()
 	
 func move_player():
-	var tile = MovementUtils.map_tiles.world_to_map(global_position)
-	fog_of_war_class.hide_tiles(fog_of_war_visibility)
-	fog_of_war_class.set_visibility(tile.x, tile.y, self)
+	if GameVariables.current_map.fog_on:
+		fog_of_war_class.hide_tiles(fog_of_war_visibility)
+	fog_of_war_class.set_visibility(current_cell.x, current_cell.y, self)
 	deselect_player()
-	global_position = MovementUtils.map_tiles.map_to_world(WalkCode.mouse_position)+Vector2(32,24)
+	path_creator.clear_points()
+	global_position = MovementUtils.movement_tiles.map_to_world(WalkCode.mouse_position)+Vector2(32,24)
 	end_of_turn = true
 	ColorManager.change_color_end_turn($AnimatedSprite)
 	if GameVariables.object_under_player != null:
 		play_object_event()
-#	movement_on = false
 
 func reset_player_position():
 	deselect_player()
+	path_creator.clear_points()
 	global_position = old_position
 	ColorManager.change_color_default($AnimatedSprite)
 
 func select_player():
-#	movement_on = true
 	old_position = global_position
 	selected = true
 	WalkCode.get_movement_distance(get_position_on_map(global_position),

@@ -9,7 +9,6 @@ func create_fog_of_war():
 
 func set_visibility(column, row, player):
 	var neighbours = MovementUtils.get_neighbors_position_with_vision(column, row, player.vision_range)
-#	neighbours.append([column, row])
 	for cell in neighbours:
 		set_cell(cell[0],cell[1],-1)
 	player.fog_of_war_visibility = neighbours

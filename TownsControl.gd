@@ -15,7 +15,7 @@ func show_town():
 	get_parent().get_node("AudioStreamPlayer").volume_down()
 	$Popup.popup()
 
-func _process(delta):
+func _process(_delta):
 	if town_opened:
 		$Popup.set_position(get_node("../Camera2D").get_camera_position() - Vector2(resolution/2))
 

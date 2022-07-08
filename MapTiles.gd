@@ -5,7 +5,7 @@ var map_columns = GameVariables.map_columns
 var mountains_amount = 50
 var towns = 3
 var river_amount = 2
-var forest_amount = 115
+var forest_amount = 150
 var current_number_of_tiles = 0
 
 func create_map():
@@ -17,8 +17,6 @@ func create_map():
 	create_forest()
 	create_towns()
 	create_wall()
-#	print(GameVariables.towns)
-	
 
 func create_plains():
 	for rows in map_rows:
@@ -68,10 +66,9 @@ func create_town():
 	if current_tile == MovementUtils.tiles.PLAINS:
 		place_tiles(MovementUtils.tiles.TOWN, column, row,1,0)
 		var town = GameVariables.current_map.spawn_town()
-		var pos_cell_global = MovementUtils.map_tiles.map_to_world(Vector2(column,row))
+		var pos_cell_global = MovementUtils.movement_tiles.map_to_world(Vector2(column,row))
 		town.position = pos_cell_global + Vector2(32,24)
 		add_child(town)
-#		GameVariables.towns[[row,column]] = town
 
 func place_tiles(tiles, column, row, repeat_number, current_repeat):
 	divide_cells_by_type(tiles, [row,column])

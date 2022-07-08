@@ -36,8 +36,8 @@ func _process(_delta):
 	
 
 func activate_camera():
-	position = Vector2(250,250)
-#	position = GameVariables.active_units[2].get_position()
+#	position = Vector2(250,250)
+	position = GameVariables.active_units[0].get_position()
 
 func check_if_camera_can_be_moved():
 	if mouse_down == true:
@@ -76,15 +76,10 @@ func _on_ScrollingRightArea_mouse_exited():
 func _input(event):
 	if event is InputEventKey:
 		if event.is_action_pressed("zoom"):
-			print(GameVariables.camera_zoom.y)
-			print(zoom.y)
 			if zoom.x == 0.5:
 				GameVariables.camera_zoom = Vector2(1,1)
 			else:
 				GameVariables.camera_zoom = Vector2(0.5,0.5)
-#			zoom = GameVariables.camera_zoom
-			print(GameVariables.camera_zoom.y)
-			print(zoom.y)
 
 func change_border_hitboxes():
 	var camera_position = global_position
