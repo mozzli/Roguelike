@@ -13,6 +13,6 @@ func _on_Town_body_entered(body):
 func _on_Town_body_exited(_body):
 	pass
 
-func play_event(body):
+func play_event(_body):
 	town_controller.show_town()
 	print("it's everyday bro with a chicken nugget flo'")

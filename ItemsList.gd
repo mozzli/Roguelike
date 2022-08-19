@@ -1,5 +1,14 @@
 extends Node
 
+enum types{
+	HEAD,
+	LEFT_HAND,
+	RIGHT_HAND,
+	BODY,
+	LEGS,
+	ACCESSORY
+}
+
 enum items{
 	LEATHER_BOOTS,
 LEATHER_CAP,

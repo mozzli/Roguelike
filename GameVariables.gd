@@ -17,6 +17,8 @@ var forest_tiles = []
 var number_of_towns = 0
 var current_scene
 var base_map
+var saved_node
+var main_menu = preload("res://Main.tscn")
 signal enemies_moved
 
 func change_day_color(day_enum):

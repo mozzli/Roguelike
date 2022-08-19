@@ -25,6 +25,8 @@ RiverCreator="*res://RiverCreator.gd"
 CellsContainers="*res://CellsContainers.gd"
 EnemyMovement="*res://EnemyMovement.gd"
 AStarMovement="*res://AStarMovement.gd"
+Utilities="*res://Utilities.gd"
+EnemiesList="*res://EnemiesList.gd"
 
 [display]
 

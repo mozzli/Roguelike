@@ -36,8 +36,8 @@ func _process(_delta):
 	
 
 func activate_camera():
-#	position = Vector2(250,250)
-	position = GameVariables.active_units[0].get_position()
+	if GameVariables.map_on:
+		position = GameVariables.active_units[0].get_position()
 
 func check_if_camera_can_be_moved():
 	if mouse_down == true:

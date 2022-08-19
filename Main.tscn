@@ -8,10 +8,10 @@
 script = ExtResource( 1 )
 
 [node name="Button" type="Button" parent="."]
-margin_left = -210.0
-margin_top = -55.0
-margin_right = 210.5
-margin_bottom = 55.0
+margin_left = -211.122
+margin_top = -180.716
+margin_right = 209.378
+margin_bottom = -70.7157
 grow_horizontal = 2
 grow_vertical = 2
 rect_pivot_offset = Vector2( 210.582, 54.5822 )

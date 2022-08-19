@@ -22,6 +22,7 @@ func _ready():
 	spawn_boar_random()
 	$Camera2D.activate_camera()
 
+
 func spawn_builder(column, row):
 	pos_cell_global = MovementUtils.movement_tiles.map_to_world(Vector2(column,row))
 	var builder = $ResourcePreloader.builder_res.instance()
@@ -37,6 +38,7 @@ func spawn_boar(column, row):
 	CellsContainers.set_cell_container(row,column,boar)
 	GameVariables.enemies.append(boar)
 	add_child(boar)
+	boar.set_owner(self)
 
 func spawn_boar_random():
 	var rand_forest_tile = GameVariables.get_random_forest_tile()

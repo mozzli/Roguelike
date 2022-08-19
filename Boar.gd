@@ -2,15 +2,21 @@ extends Area2D
 
 var type = "enemy"
 var movement_on = false
-var movement_amount = 2
+var movement_amount = 3
 var x_speed = 1.3
 var y_speed = 2
 var movement_next_tile
 var movement_goal_position = Vector2(1,1)
 var column
 var row
+
 signal boar_is_on_goal
 signal boar_was_moved
+
+
+func _ready():
+	$PartyNode.get_random_party()
+	print($PartyNode.party)
 
 func _process(_delta):
 	column = MovementUtils.map.world_to_map(global_position).x
@@ -28,10 +34,12 @@ func _process(_delta):
 		visible = false
 
 func enemy_turn():
+	$WalkingSound.play(0.0)
 	for _i in range(0,movement_amount):
 		move_boar()
 		yield(self, "boar_is_on_goal")
 	emit_signal("boar_was_moved")
+	$WalkingSound.stop()
 
 func move_boar():
 	movement_next_tile = EnemyMovement.boar_movement_tile(self)

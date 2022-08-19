@@ -15,7 +15,7 @@ func _process(_delta):
 		elif current_volume > volume_db:
 			volume_db += 0.1
 
-func volume_down():
+func volume_downj():
 	current_volume = min_volume
 
 func volume_up():
