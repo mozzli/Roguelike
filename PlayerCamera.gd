@@ -22,6 +22,10 @@ func _process(_delta):
 	global_position = get_camera_screen_center()
 	if !GameVariables.gui_is_on:
 		check_if_camera_can_be_moved()
+	if GameVariables.battle_on == false:
+		zoom_progressive()
+
+func zoom_progressive():
 	if !is_equal_approx(zoom.x, GameVariables.camera_zoom.x):
 		if zoom > GameVariables.camera_zoom:
 			if zoom.x != GameVariables.camera_zoom.x:
@@ -33,7 +37,6 @@ func _process(_delta):
 				zoom.x += 0.01
 			if zoom.y != GameVariables.camera_zoom.y:
 				zoom.y += 0.01
-	
 
 func activate_camera():
 	if GameVariables.map_on:
@@ -87,4 +90,12 @@ func change_border_hitboxes():
 	$ScrollingUpArea/CollisionShape2D.global_position = Vector2(camera_position.x, camera_position.y - (OS.window_size.y/2) * zoom.y)
 	$ScrollingLeftArea/CollisionShape2D.global_position = Vector2(camera_position.x - (OS.window_size.x/2) * zoom.x, camera_position.y)
 	$ScrollingRightArea/CollisionShape2D.global_position = Vector2(camera_position.x + (OS.window_size.x/2) * zoom.x, camera_position.y)
-	
+
+func get_camera_edge():
+	return get_camera_screen_center() - OS.window_size/2
+
+func zoom_out_camera():
+	zoom = Vector2(1,1)
+
+func zoom_in_camera():
+	zoom = Vector2(0.5,0.5)

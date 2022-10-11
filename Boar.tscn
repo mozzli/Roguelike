@@ -6,7 +6,7 @@
 [ext_resource path="res://BoarParty.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 18.6622, 18.3395 )
+extents = Vector2( 6.52679, 6.563 )
 
 [node name="Boar" type="Area2D"]
 script = ExtResource( 1 )
@@ -19,11 +19,11 @@ texture = ExtResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
+[node name="PartyNode" type="Node2D" parent="."]
+script = ExtResource( 4 )
+
 [node name="WalkingSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 volume_db = 10.0
-
-[node name="PartyNode" type="Node2D" parent="."]
-script = ExtResource( 4 )
 
 [connection signal="body_entered" from="." to="." method="_on_Boar_body_entered"]

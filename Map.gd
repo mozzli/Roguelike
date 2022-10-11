@@ -8,7 +8,7 @@ func _ready():
 	MovementUtils.map = $Map
 	GameVariables.current_map = self
 	MovementUtils.movement_tiles = $MovementTiles
-	$Map.create_map()
+	MovementUtils.map.create_map()
 	MovementUtils.create_cell_cubed_list()
 	$FogOfWar.create_fog_of_war()
 	spawn_builder(21,21)
@@ -21,7 +21,6 @@ func _ready():
 	spawn_boar_random()
 	spawn_boar_random()
 	$Camera2D.activate_camera()
-
 
 func spawn_builder(column, row):
 	pos_cell_global = MovementUtils.movement_tiles.map_to_world(Vector2(column,row))
@@ -70,9 +69,10 @@ func check_key_event(event):
 		GameVariables.change_day_color(GameVariables.day_cycle.NIGHT)
 		print("It's night!")
 	if event.is_action_pressed("debug"):
-		if fog_on:
-			$FogOfWar.clear()
-			fog_on = false
-		else:
-			$FogOfWar.create_fog_of_war()
-			fog_on = true
+#		if fog_on:
+#			$FogOfWar.clear()
+#			fog_on = false
+#		else:
+#			$FogOfWar.create_fog_of_war()
+#			fog_on = true
+		$BattleArena.show_forest()

@@ -1,9 +1,12 @@
-extends ColorRect
+extends CanvasLayer
 
-func _ready():
-	$AnimationPlayer.play("Fade_out")
-	$Timer.start()
+func play_shader():
+	$ColorRect/AnimationPlayer.play("Fade_out")
+
 
 func _on_Timer_timeout():
-	get_parent().layer = -2
-	$Timer.stop()
+	get_parent()
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	pass # Replace with function body.

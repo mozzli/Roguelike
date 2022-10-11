@@ -19,19 +19,8 @@ func _ready():
 	print($PartyNode.party)
 
 func _process(_delta):
-	column = MovementUtils.map.world_to_map(global_position).x
-	row = MovementUtils.map.world_to_map(global_position).y
-	var gp = global_position
-	var mgp = movement_goal_position
-	if movement_on && mgp != gp:
-		set_x_speed()
-		set_body_position()
-	if gp.x >= mgp.x - 2 && gp.x <= mgp.x + 2 && gp.y >= mgp.y - 2 && gp.y <= mgp.y + 2 && movement_on == true:
-		goal_achived()
-	if GameVariables.current_map.get_node("FogOfWar").check_if_visible(column, row) == true:
-		visible = true
-	else:
-		visible = false
+	if GameVariables.battle_on == false:
+		movement_process()
 
 func enemy_turn():
 	$WalkingSound.play(0.0)
@@ -47,11 +36,28 @@ func move_boar():
 	movement_goal_position = MovementUtils.map.map_to_world(Vector2(movement_goal_position[0], movement_goal_position[1])) + Vector2(32,24)
 	movement_on = true
 
-func play_event():
-	print("BOAR FIGHT!")
+func movement_process():
+	column = MovementUtils.map.world_to_map(global_position).x
+	row = MovementUtils.map.world_to_map(global_position).y
+	var gp = global_position
+	var mgp = movement_goal_position
+	if movement_on && mgp != gp:
+		set_x_speed()
+		set_body_position()
+	if gp.x >= mgp.x - 2 && gp.x <= mgp.x + 2 && gp.y >= mgp.y - 2 && gp.y <= mgp.y + 2 && movement_on == true:
+		goal_achived()
+	if GameVariables.current_map.get_node("FogOfWar").check_if_visible(column, row) == true:
+		visible = true
+	else:
+		visible = false
 
-func _on_Boar_body_entered(_body):
-	play_event()
+func play_event(player):
+	var terrain = MovementUtils.get_terrain_type(position)
+	GameVariables.battle_on = true
+	GameVariables.current_map.get_node("BattleArena").prepare_battle(player, self, terrain)
+
+func _on_Boar_body_entered(body):
+	play_event(body)
 
 func set_x_speed():
 	if !global_position.y >= movement_goal_position.y + 2 && !global_position.y <= movement_goal_position.y-2:

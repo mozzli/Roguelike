@@ -1,0 +1,210 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+
+[node name="BattlePanel" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+color = Color( 0.12549, 0.576471, 0.290196, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 408.0
+margin_bottom = 816.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="TextureRect"]
+margin_right = 408.0
+margin_bottom = 816.0
+color = Color( 0.509804, 0.203922, 0.109804, 1 )
+
+[node name="LeftPanel" type="Panel" parent="TextureRect"]
+margin_left = 40.0
+margin_top = 128.0
+margin_right = 361.0
+margin_bottom = 681.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackRow1" type="TextureRect" parent="TextureRect/LeftPanel"]
+margin_left = 22.123
+margin_top = 20.3293
+margin_right = 152.123
+margin_bottom = 178.329
+texture = ExtResource( 1 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FrontRow1" type="TextureRect" parent="TextureRect/LeftPanel"]
+margin_left = 168.274
+margin_top = 20.3293
+margin_right = 298.274
+margin_bottom = 178.329
+texture = ExtResource( 1 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackRow2" type="TextureRect" parent="TextureRect/LeftPanel"]
+margin_left = 19.6031
+margin_top = 194.198
+margin_right = 149.603
+margin_bottom = 352.198
+texture = ExtResource( 1 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FrontRow2" type="TextureRect" parent="TextureRect/LeftPanel"]
+margin_left = 168.274
+margin_top = 191.679
+margin_right = 298.274
+margin_bottom = 349.679
+texture = ExtResource( 1 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackRow3" type="TextureRect" parent="TextureRect/LeftPanel"]
+margin_left = 22.123
+margin_top = 373.107
+margin_right = 152.123
+margin_bottom = 531.107
+texture = ExtResource( 1 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FrontRow3" type="TextureRect" parent="TextureRect/LeftPanel"]
+margin_left = 170.794
+margin_top = 373.107
+margin_right = 300.794
+margin_bottom = 531.107
+texture = ExtResource( 1 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+margin_left = 1512.0
+margin_right = 1920.0
+margin_bottom = 816.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="TextureRect2"]
+margin_right = 408.0
+margin_bottom = 816.0
+color = Color( 0.509804, 0.203922, 0.109804, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LeftPanel2" type="Panel" parent="TextureRect2"]
+margin_left = 48.0
+margin_top = 128.0
+margin_right = 369.0
+margin_bottom = 681.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect2/LeftPanel2"]
+margin_left = 22.123
+margin_top = 20.3293
+margin_right = 152.123
+margin_bottom = 178.329
+texture = ExtResource( 1 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="TextureRect2/LeftPanel2"]
+margin_left = 168.274
+margin_top = 20.3293
+margin_right = 298.274
+margin_bottom = 178.329
+texture = ExtResource( 1 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect3" type="TextureRect" parent="TextureRect2/LeftPanel2"]
+margin_left = 19.6031
+margin_top = 194.198
+margin_right = 149.603
+margin_bottom = 352.198
+texture = ExtResource( 1 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect4" type="TextureRect" parent="TextureRect2/LeftPanel2"]
+margin_left = 168.274
+margin_top = 191.679
+margin_right = 298.274
+margin_bottom = 349.679
+texture = ExtResource( 1 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect5" type="TextureRect" parent="TextureRect2/LeftPanel2"]
+margin_left = 22.123
+margin_top = 373.107
+margin_right = 152.123
+margin_bottom = 531.107
+texture = ExtResource( 1 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect6" type="TextureRect" parent="TextureRect2/LeftPanel2"]
+margin_left = 170.794
+margin_top = 373.107
+margin_right = 300.794
+margin_bottom = 531.107
+texture = ExtResource( 1 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+margin_top = 816.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="TextureRect3"]
+margin_right = 1920.0
+margin_bottom = 264.0
+color = Color( 0.270588, 0.054902, 0.054902, 1 )

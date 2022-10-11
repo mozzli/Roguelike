@@ -20,7 +20,7 @@ void fragment()
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
-shader_param/cutoff = 0.0
+shader_param/cutoff = 1.0
 shader_param/smooth_size = 0.442
 shader_param/mask = ExtResource( 1 )
 
@@ -40,16 +40,22 @@ tracks/0/keys = {
 }
 
 [node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource( 2 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource( 2 )
 margin_right = 310.0
 margin_bottom = 215.0
+mouse_filter = 2
+input_pass_on_modal_close_click = false
 color = Color( 0, 0, 0, 1 )
-script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ColorRect"]
+pause_mode = 1
+playback_speed = 0.6
 anims/Fade_out = SubResource( 3 )
+
+[connection signal="animation_finished" from="ColorRect/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

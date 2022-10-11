@@ -19,6 +19,7 @@ var current_scene
 var base_map
 var saved_node
 var main_menu = preload("res://Main.tscn")
+var battle_on = false
 signal enemies_moved
 
 func change_day_color(day_enum):

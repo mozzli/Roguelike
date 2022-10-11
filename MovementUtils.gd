@@ -31,6 +31,10 @@ func _ready():
 	for i in range(6,20):
 		RIVER_TILES.append(i)
 
+func get_terrain_type(position):
+	var cell_position = MovementUtils.map.world_to_map(position)
+	return MovementUtils.map.get_cell(cell_position.x, cell_position.y)
+
 func get_movement_value_by_index(index):
 	if RIVER_TILES.has(index):
 		return tiles_mov_value.RIVER
