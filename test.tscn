@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://test.gd" type="Script" id=1]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+margin_right = 488.0
+margin_bottom = 384.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 360.0
+margin_bottom = 192.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Popup" type="Popup" parent="."]
+visible = true
+margin_right = 760.0
+margin_bottom = 512.0
+mouse_filter = 1
+popup_exclusive = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Popup"]
+margin_left = 392.0
+margin_top = 160.0
+margin_right = 640.0
+margin_bottom = 288.0
+text = "dasasd
+
+
+
+
+
+
+
+
+
+
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}

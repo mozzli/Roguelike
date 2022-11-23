@@ -8,6 +8,106 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "BaseBattleUnit",
+"language": "GDScript",
+"path": "res://battle_units/BaseBattleUnit.gd"
+}, {
+"base": "BaseParty",
+"class": "BaseMonsterParty",
+"language": "GDScript",
+"path": "res://party_nodes/monster_party/BaseMonsterParty.gd"
+}, {
+"base": "BaseBattleUnit",
+"class": "BaseMonsterUnit",
+"language": "GDScript",
+"path": "res://battle_units/Enemies/BaseMonsterUnit.gd"
+}, {
+"base": "Node",
+"class": "BaseParty",
+"language": "GDScript",
+"path": "res://party_nodes/BaseParty.gd"
+}, {
+"base": "Control",
+"class": "BattleArena",
+"language": "GDScript",
+"path": "res://battle_arena/BattleArena.gd"
+}, {
+"base": "BaseMonsterUnit",
+"class": "BattleBoar",
+"language": "GDScript",
+"path": "res://battle_units/Enemies/BoarEnemy.gd"
+}, {
+"base": "BaseMonsterParty",
+"class": "BoarParty",
+"language": "GDScript",
+"path": "res://party_nodes/monster_party/BoarParty.gd"
+}, {
+"base": "Weapons",
+"class": "BronzeSword",
+"language": "GDScript",
+"path": "res://items/specific_items/BronzeSword.gd"
+}, {
+"base": "BaseBattleUnit",
+"class": "BuilderHero",
+"language": "GDScript",
+"path": "res://battle_units/Heroes/BuilderHero.gd"
+}, {
+"base": "Weapons",
+"class": "IronSword",
+"language": "GDScript",
+"path": "res://items/specific_items/IronSword.gd"
+}, {
+"base": "Node",
+"class": "Items",
+"language": "GDScript",
+"path": "res://items/Items.gd"
+}, {
+"base": "BaseBattleUnit",
+"class": "MonsterName",
+"language": "GDScript",
+"path": "res://script_templates/MonsterBattleTemplate.gd"
+}, {
+"base": "BaseParty",
+"class": "PlayerParty",
+"language": "GDScript",
+"path": "res://party_nodes/player_party/PlayerParty.gd"
+}, {
+"base": "Weapons",
+"class": "SilverSword",
+"language": "GDScript",
+"path": "res://items/specific_items/SilverSword.gd"
+}, {
+"base": "Weapons",
+"class": "Weapon",
+"language": "GDScript",
+"path": "res://script_templates/WeaponTemplate.gd"
+}, {
+"base": "Items",
+"class": "Weapons",
+"language": "GDScript",
+"path": "res://items/Weapon.gd"
+} ]
+_global_script_class_icons={
+"BaseBattleUnit": "",
+"BaseMonsterParty": "",
+"BaseMonsterUnit": "",
+"BaseParty": "",
+"BattleArena": "",
+"BattleBoar": "",
+"BoarParty": "",
+"BronzeSword": "",
+"BuilderHero": "",
+"IronSword": "",
+"Items": "",
+"MonsterName": "",
+"PlayerParty": "",
+"SilverSword": "",
+"Weapon": "",
+"Weapons": ""
+}
+
 [application]
 
 config/name="Roguelike_Project"
@@ -20,13 +120,17 @@ MovementUtils="*res://MovementUtils.gd"
 GameVariables="*res://GameVariables.gd"
 WalkCode="*res://WalkCode.gd"
 ColorManager="*res://ColorManager.gd"
-ItemsList="*res://ItemsList.gd"
+GlobalItems="*res://items/ItemsList.gd"
 RiverCreator="*res://RiverCreator.gd"
 CellsContainers="*res://CellsContainers.gd"
 EnemyMovement="*res://EnemyMovement.gd"
 AStarMovement="*res://AStarMovement.gd"
 Utilities="*res://Utilities.gd"
 EnemiesList="*res://EnemiesList.gd"
+BattleUtilities="*res://battle_arena/BattleUtilities.gd"
+BattleEnums="*res://battle_arena/BattleEnums.gd"
+StatEnums="*res://battle_units/StatEnums.gd"
+Attacks="*res://battle_units/attacks/Attacks.gd"
 
 [display]
 

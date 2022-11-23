@@ -1,0 +1,4 @@
+extends Node
+
+enum BattleSide {PLAYER, ENEMY}
+enum BattleRows {FIRST_BACK, FIRST_FRONT, SECOND_BACK, SECOND_FRONT, THIRD_BACK, THIRD_FRONT}

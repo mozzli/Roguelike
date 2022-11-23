@@ -1,210 +1,947 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://images/Battle/unit_box.png" type="Texture" id=1]
+[ext_resource path="res://battle_arena/BattleFirstRow.gd" type="Script" id=2]
+[ext_resource path="res://battle_arena/BattleColumns.gd" type="Script" id=3]
+[ext_resource path="res://battle_arena/FightersRect.gd" type="Script" id=4]
+[ext_resource path="res://fonts/ren_regular.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://LowerGuiRect.gd" type="Script" id=6]
+[ext_resource path="res://icon.png" type="Texture" id=7]
+[ext_resource path="res://PlayerRect.gd" type="Script" id=8]
+[ext_resource path="res://Row.gd" type="Script" id=9]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+signal player_attacked
+signal pictures_reseted
+signal close_arena
+
+onready var battle_arena: BattleArena = get_node(\"../../..\")
+var attack_mode = false
+var attack_chosen
+var target_chosen
+var current_unit
+
+func change_unit_hp(unit_side, unit_position, percent: int):
+	match(unit_side):
+		BattleEnums.BattleSide.PLAYER:
+			change_player_hp(unit_position, percent)
+		BattleEnums.BattleSide.ENEMY:
+			change_enemy_hp(unit_position, percent)
+
+func change_player_hp(player_position, percent: int) -> void:
+	($PlayerRect as TextureRect).change_hp(player_position, percent)
+
+func refresh_units_hp(player_units: Dictionary, enemy_units: Dictionary):
+	for unit in player_units:
+		var player = player_units.get(unit)
+		if player != null:
+			change_player_hp(player.get_current_battle_position(), player.get_percent_of_hp())
+	for unit in enemy_units:
+		var enemy = enemy_units.get(unit)
+		if enemy != null:
+			change_enemy_hp(enemy.get_current_battle_position(), enemy.get_percent_of_hp())
+
+func change_enemy_hp(player_position, percent: int) -> void:
+	$EnemyRect.change_hp(player_position, percent)
+
+func prepare_player_pics(position: Dictionary):
+	for pos in position:
+		if position.get(pos) != null:
+			change_player_pic(pos, position.get(pos))
+
+func reset_pictures() -> void:
+	var pic_places = get_tree().get_nodes_in_group(\"Unit_GUI_positions\")
+	for picture in pic_places:
+		picture.reset_picture()
+
+func change_player_pic(position, player):
+	match(position):
+		BattleEnums.BattleRows.FIRST_BACK:
+			$PlayerRect/Columns/FirstRow/BackRow.texture = load(player.get_unit_picture())
+		BattleEnums.BattleRows.FIRST_FRONT:
+			$PlayerRect/Columns/FirstRow/FrontRow.texture = load(player.get_unit_picture())
+		BattleEnums.BattleRows.SECOND_BACK:
+			$PlayerRect/Columns/SecondRow/BackRow.texture = load(player.get_unit_picture())
+		BattleEnums.BattleRows.SECOND_FRONT:
+			$PlayerRect/Columns/SecondRow/FrontRow.texture = load(player.get_unit_picture())
+		BattleEnums.BattleRows.THIRD_BACK:
+			$PlayerRect/Columns/ThirdRow/BackRow.texture = load(player.get_unit_picture())
+		BattleEnums.BattleRows.THIRD_FRONT:
+			$PlayerRect/Columns/ThirdRow/FrontRow.texture = load(player.get_unit_picture())
+
+func prepare_enemy_pics(position: Dictionary):
+	for pos in position:
+		if position.get(pos) != null:
+			change_enemy_pic(pos, position.get(pos))
+
+func change_enemy_pic(position, enemy):
+	match(position):
+		BattleEnums.BattleRows.FIRST_BACK:
+			$EnemyRect/Columns/FirstRow/BackRow.texture = load(enemy.get_unit_picture())
+		BattleEnums.BattleRows.FIRST_FRONT:
+			$EnemyRect/Columns/FirstRow/FrontRow.texture = load(enemy.get_unit_picture())
+		BattleEnums.BattleRows.SECOND_BACK:
+			$EnemyRect/Columns/SecondRow/BackRow.texture = load(enemy.get_unit_picture())
+		BattleEnums.BattleRows.SECOND_FRONT:
+			$EnemyRect/Columns/SecondRow/FrontRow.texture = load(enemy.get_unit_picture())
+		BattleEnums.BattleRows.THIRD_BACK:
+			$EnemyRect/Columns/ThirdRow/BackRow.texture = load(enemy.get_unit_picture())
+		BattleEnums.BattleRows.THIRD_FRONT:
+			$EnemyRect/Columns/ThirdRow/FrontRow.texture = load(enemy.get_unit_picture())
+
+func change_selected_unit(unit) -> void:
+	current_unit = unit
+	if unit.get_unit_type() == \"player\":
+		$PlayerRect/Columns.change_visibility(unit)
+	elif unit.get_unit_type() == \"enemy\":
+		$EnemyRect/Columns.change_visibility(unit)
+
+func set_selected_unit_portrait(unit):
+	$LowerGuiRect/UnitPortrait.texture = load(unit.get_unit_picture())
+	$LowerGuiRect/ProgressBar.max_value = unit.get_stat(StatEnums.stat_enums.HP)
+	$LowerGuiRect/ProgressBar.value = unit.get_stat(StatEnums.stat_enums.CURRENT_HP)
+	$LowerGuiRect/ProgressBar/Label.text = \"hp: \" + str(unit.get_stat(StatEnums.stat_enums.CURRENT_HP)) + \"/\" + str(unit.get_stat(StatEnums.stat_enums.HP))
+
+func add_battle_text(text: String):
+	$LowerGuiRect/TextBox/TextLable.append_bbcode(\"\\n\" + String(text) + \"\\n\")
+
+func reset_battle_text() -> void:
+	$LowerGuiRect/TextBox/TextLable.clear()
+
+func reset_battle_selectors() -> void:
+	pass
+
+func hide_player_gui_buttons() -> void:
+	$LowerGuiRect/AttackButton.visible = false
+
+func show_player_gui_buttons() -> void:
+	$LowerGuiRect/AttackButton.visible = true
+
+func show_exit_button() -> void:
+	$LowerGuiRect/ExitButton.visible = true
+
+func hide_exit_button() -> void:
+	$LowerGuiRect/ExitButton.visible = false
+
+func _on_AttackButton_button_up():
+	$EnemyRect.enemy_party = battle_arena.get_enemy_party()
+	attack_mode = true
+	attack_chosen = Attacks.attack_enums.BASIC_ATTACK
+
+func set_target(target: int):
+	target_chosen = target
+
+func attack_selected():
+	battle_arena.player_attack(attack_chosen, target_chosen, current_unit)
+	emit_signal(\"player_attacked\")
+	attack_mode = false
+	$EnemyRect.turn_off_attack_selection()
+
+func get_attack_mode() -> bool:
+	return attack_mode
+
+func _on_ExitButton_button_up():
+	emit_signal(\"close_arena\")
+"
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.235294, 0.509804, 0.145098, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.686275, 0.184314, 0.184314, 1 )
+
+[sub_resource type="DynamicFontData" id=4]
+font_path = "res://fonts/ren_regular.ttf"
+
+[sub_resource type="DynamicFont" id=5]
+size = 20
+font_data = SubResource( 4 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 40
+font_data = ExtResource( 5 )
 
 [node name="BattlePanel" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
+mouse_default_cursor_shape = 1
+script = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
+[node name="PlayerRect" type="TextureRect" parent="."]
+margin_right = 408.0
+margin_bottom = 816.0
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="PlayerRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.509804, 0.203922, 0.109804, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Columns" type="VBoxContainer" parent="PlayerRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -163.0
+margin_top = -284.0
+margin_right = 160.0
+margin_bottom = 284.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 7
+alignment = 1
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FirstRow" type="HBoxContainer" parent="PlayerRect/Columns"]
+margin_right = 323.0
+margin_bottom = 184.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 7
+alignment = 1
+script = ExtResource( 2 )
+
+[node name="BackRow" type="TextureRect" parent="PlayerRect/Columns/FirstRow" groups=[
+"Unit_GUI_positions",
+]]
+margin_right = 158.0
+margin_bottom = 184.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 1 )
+expand = true
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DamageBar" type="ColorRect" parent="PlayerRect/Columns/FirstRow/BackRow"]
+self_modulate = Color( 0.2, 0.0392157, 0.0392157, 0.72549 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.52549, 0.0705882, 0.0705882, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectedUnit" type="ColorRect" parent="PlayerRect/Columns/FirstRow/BackRow"]
+visible = false
+show_behind_parent = true
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 162.0
+margin_bottom = 189.0
+color = Color( 0.847059, 0.780392, 0.0431373, 0.815686 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FrontRow" type="TextureRect" parent="PlayerRect/Columns/FirstRow" groups=[
+"Unit_GUI_positions",
+]]
+margin_left = 165.0
+margin_right = 323.0
+margin_bottom = 184.0
+size_flags_horizontal = 3
+texture = ExtResource( 1 )
+expand = true
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DamageBar" type="ColorRect" parent="PlayerRect/Columns/FirstRow/FrontRow"]
+self_modulate = Color( 0.2, 0.0392157, 0.0392157, 0.72549 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+color = Color( 0.52549, 0.0705882, 0.0705882, 1 )
+
+[node name="SelectedUnit" type="ColorRect" parent="PlayerRect/Columns/FirstRow/FrontRow"]
+visible = false
+show_behind_parent = true
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 162.0
+margin_bottom = 189.0
+color = Color( 0.847059, 0.780392, 0.0431373, 0.815686 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SecondRow" type="HBoxContainer" parent="PlayerRect/Columns"]
+margin_top = 191.0
+margin_right = 323.0
+margin_bottom = 376.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 7
+alignment = 1
+script = ExtResource( 2 )
+
+[node name="BackRow" type="TextureRect" parent="PlayerRect/Columns/SecondRow" groups=[
+"Unit_GUI_positions",
+]]
+margin_right = 158.0
+margin_bottom = 185.0
+size_flags_horizontal = 3
+texture = ExtResource( 1 )
+expand = true
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DamageBar" type="ColorRect" parent="PlayerRect/Columns/SecondRow/BackRow"]
+self_modulate = Color( 0.2, 0.0392157, 0.0392157, 0.72549 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+color = Color( 0.52549, 0.0705882, 0.0705882, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectedUnit" type="ColorRect" parent="PlayerRect/Columns/SecondRow/BackRow"]
+visible = false
+show_behind_parent = true
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 162.0
+margin_bottom = 189.0
+color = Color( 0.847059, 0.780392, 0.0431373, 0.815686 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FrontRow" type="TextureRect" parent="PlayerRect/Columns/SecondRow" groups=[
+"Unit_GUI_positions",
+]]
+margin_left = 165.0
+margin_right = 323.0
+margin_bottom = 185.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 1 )
+expand = true
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DamageBar" type="ColorRect" parent="PlayerRect/Columns/SecondRow/FrontRow"]
+self_modulate = Color( 0.2, 0.0392157, 0.0392157, 0.72549 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+color = Color( 0.52549, 0.0705882, 0.0705882, 1 )
+
+[node name="SelectedUnit" type="ColorRect" parent="PlayerRect/Columns/SecondRow/FrontRow"]
+visible = false
+show_behind_parent = true
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 162.0
+margin_bottom = 189.0
+color = Color( 0.847059, 0.780392, 0.0431373, 0.815686 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ThirdRow" type="HBoxContainer" parent="PlayerRect/Columns"]
+margin_top = 383.0
+margin_right = 323.0
+margin_bottom = 568.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 7
+alignment = 1
+script = ExtResource( 2 )
+
+[node name="BackRow" type="TextureRect" parent="PlayerRect/Columns/ThirdRow" groups=[
+"Unit_GUI_positions",
+]]
+margin_right = 158.0
+margin_bottom = 185.0
+size_flags_horizontal = 3
+texture = ExtResource( 1 )
+expand = true
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DamageBar" type="ColorRect" parent="PlayerRect/Columns/ThirdRow/BackRow"]
+self_modulate = Color( 0.2, 0.0392157, 0.0392157, 0.72549 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+color = Color( 0.52549, 0.0705882, 0.0705882, 1 )
+
+[node name="SelectedUnit" type="ColorRect" parent="PlayerRect/Columns/ThirdRow/BackRow"]
+visible = false
+show_behind_parent = true
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 162.0
+margin_bottom = 189.0
+color = Color( 0.847059, 0.780392, 0.0431373, 0.815686 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FrontRow" type="TextureRect" parent="PlayerRect/Columns/ThirdRow" groups=[
+"Unit_GUI_positions",
+]]
+margin_left = 165.0
+margin_right = 323.0
+margin_bottom = 185.0
+size_flags_horizontal = 3
+texture = ExtResource( 1 )
+expand = true
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DamageBar" type="ColorRect" parent="PlayerRect/Columns/ThirdRow/FrontRow"]
+self_modulate = Color( 0.2, 0.0392157, 0.0392157, 0.72549 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+color = Color( 0.52549, 0.0705882, 0.0705882, 1 )
+
+[node name="SelectedUnit" type="ColorRect" parent="PlayerRect/Columns/ThirdRow/FrontRow"]
+visible = false
+show_behind_parent = true
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 162.0
+margin_bottom = 189.0
+color = Color( 0.847059, 0.780392, 0.0431373, 0.815686 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 margin_right = 1920.0
 margin_bottom = 1080.0
+mouse_filter = 2
+mouse_default_cursor_shape = 7
 color = Color( 0.12549, 0.576471, 0.290196, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="."]
-margin_right = 408.0
-margin_bottom = 816.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ColorRect" type="ColorRect" parent="TextureRect"]
-margin_right = 408.0
-margin_bottom = 816.0
-color = Color( 0.509804, 0.203922, 0.109804, 1 )
-
-[node name="LeftPanel" type="Panel" parent="TextureRect"]
-margin_left = 40.0
-margin_top = 128.0
-margin_right = 361.0
-margin_bottom = 681.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="BackRow1" type="TextureRect" parent="TextureRect/LeftPanel"]
-margin_left = 22.123
-margin_top = 20.3293
-margin_right = 152.123
-margin_bottom = 178.329
-texture = ExtResource( 1 )
-stretch_mode = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="FrontRow1" type="TextureRect" parent="TextureRect/LeftPanel"]
-margin_left = 168.274
-margin_top = 20.3293
-margin_right = 298.274
-margin_bottom = 178.329
-texture = ExtResource( 1 )
-stretch_mode = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="BackRow2" type="TextureRect" parent="TextureRect/LeftPanel"]
-margin_left = 19.6031
-margin_top = 194.198
-margin_right = 149.603
-margin_bottom = 352.198
-texture = ExtResource( 1 )
-stretch_mode = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="FrontRow2" type="TextureRect" parent="TextureRect/LeftPanel"]
-margin_left = 168.274
-margin_top = 191.679
-margin_right = 298.274
-margin_bottom = 349.679
-texture = ExtResource( 1 )
-stretch_mode = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="BackRow3" type="TextureRect" parent="TextureRect/LeftPanel"]
-margin_left = 22.123
-margin_top = 373.107
-margin_right = 152.123
-margin_bottom = 531.107
-texture = ExtResource( 1 )
-stretch_mode = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="FrontRow3" type="TextureRect" parent="TextureRect/LeftPanel"]
-margin_left = 170.794
-margin_top = 373.107
-margin_right = 300.794
-margin_bottom = 531.107
-texture = ExtResource( 1 )
-stretch_mode = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect2" type="TextureRect" parent="."]
+[node name="EnemyRect" type="TextureRect" parent="."]
 margin_left = 1512.0
 margin_right = 1920.0
 margin_bottom = 816.0
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect2" type="ColorRect" parent="TextureRect2"]
+[node name="ColorRect2" type="ColorRect" parent="EnemyRect"]
 margin_right = 408.0
 margin_bottom = 816.0
+mouse_filter = 1
 color = Color( 0.509804, 0.203922, 0.109804, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LeftPanel2" type="Panel" parent="TextureRect2"]
-margin_left = 48.0
-margin_top = 128.0
-margin_right = 369.0
-margin_bottom = 681.0
+[node name="Columns" type="VBoxContainer" parent="EnemyRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -160.0
+margin_top = -284.0
+margin_right = 160.0
+margin_bottom = 284.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 7
+alignment = 1
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="TextureRect2/LeftPanel2"]
-margin_left = 22.123
-margin_top = 20.3293
-margin_right = 152.123
-margin_bottom = 178.329
+[node name="FirstRow" type="HBoxContainer" parent="EnemyRect/Columns"]
+margin_right = 320.0
+margin_bottom = 184.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 7
+alignment = 1
+script = ExtResource( 2 )
+
+[node name="FrontRow" type="TextureRect" parent="EnemyRect/Columns/FirstRow" groups=[
+"Unit_GUI_positions",
+]]
+margin_right = 156.0
+margin_bottom = 184.0
+size_flags_horizontal = 3
 texture = ExtResource( 1 )
-stretch_mode = 1
+expand = true
+flip_h = true
+script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect2" type="TextureRect" parent="TextureRect2/LeftPanel2"]
-margin_left = 168.274
-margin_top = 20.3293
-margin_right = 298.274
-margin_bottom = 178.329
+[node name="DamageBar" type="ColorRect" parent="EnemyRect/Columns/FirstRow/FrontRow"]
+self_modulate = Color( 0.2, 0.0392157, 0.0392157, 0.72549 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+color = Color( 0.52549, 0.0705882, 0.0705882, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectedUnit" type="ColorRect" parent="EnemyRect/Columns/FirstRow/FrontRow"]
+visible = false
+show_behind_parent = true
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 160.0
+margin_bottom = 189.0
+color = Color( 0.847059, 0.780392, 0.0431373, 0.815686 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AttackSymbol" type="TextureRect" parent="EnemyRect/Columns/FirstRow/FrontRow"]
+visible = false
+margin_left = 28.0
+margin_top = 52.0
+margin_right = 128.0
+margin_bottom = 144.0
+texture = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackRow" type="TextureRect" parent="EnemyRect/Columns/FirstRow" groups=[
+"Unit_GUI_positions",
+]]
+margin_left = 163.0
+margin_right = 320.0
+margin_bottom = 184.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 texture = ExtResource( 1 )
-stretch_mode = 1
+expand = true
+flip_h = true
+script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect3" type="TextureRect" parent="TextureRect2/LeftPanel2"]
-margin_left = 19.6031
-margin_top = 194.198
-margin_right = 149.603
-margin_bottom = 352.198
+[node name="DamageBar" type="ColorRect" parent="EnemyRect/Columns/FirstRow/BackRow"]
+self_modulate = Color( 0.2, 0.0392157, 0.0392157, 0.72549 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1.0
+rect_rotation = 360.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.52549, 0.0705882, 0.0705882, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectedUnit" type="ColorRect" parent="EnemyRect/Columns/FirstRow/BackRow"]
+visible = false
+show_behind_parent = true
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 162.0
+margin_bottom = 188.0
+color = Color( 0.847059, 0.780392, 0.0431373, 0.815686 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AttackSymbol" type="TextureRect" parent="EnemyRect/Columns/FirstRow/BackRow"]
+visible = false
+margin_left = 28.0
+margin_top = 52.0
+margin_right = 128.0
+margin_bottom = 144.0
+texture = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SecondRow" type="HBoxContainer" parent="EnemyRect/Columns"]
+margin_top = 191.0
+margin_right = 320.0
+margin_bottom = 376.0
+size_flags_vertical = 3
+custom_constants/separation = 7
+alignment = 1
+script = ExtResource( 2 )
+
+[node name="FrontRow" type="TextureRect" parent="EnemyRect/Columns/SecondRow" groups=[
+"Unit_GUI_positions",
+]]
+margin_right = 156.0
+margin_bottom = 185.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 texture = ExtResource( 1 )
-stretch_mode = 1
+expand = true
+flip_h = true
+script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect4" type="TextureRect" parent="TextureRect2/LeftPanel2"]
-margin_left = 168.274
-margin_top = 191.679
-margin_right = 298.274
-margin_bottom = 349.679
+[node name="DamageBar" type="ColorRect" parent="EnemyRect/Columns/SecondRow/FrontRow"]
+self_modulate = Color( 0.2, 0.0392157, 0.0392157, 0.72549 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+color = Color( 0.52549, 0.0705882, 0.0705882, 1 )
+
+[node name="SelectedUnit" type="ColorRect" parent="EnemyRect/Columns/SecondRow/FrontRow"]
+visible = false
+show_behind_parent = true
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 160.0
+margin_bottom = 189.0
+color = Color( 0.847059, 0.780392, 0.0431373, 0.815686 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AttackSymbol" type="TextureRect" parent="EnemyRect/Columns/SecondRow/FrontRow"]
+visible = false
+margin_left = 28.0
+margin_top = 52.0
+margin_right = 128.0
+margin_bottom = 144.0
+texture = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackRow" type="TextureRect" parent="EnemyRect/Columns/SecondRow" groups=[
+"Unit_GUI_positions",
+]]
+margin_left = 163.0
+margin_right = 320.0
+margin_bottom = 185.0
+rect_pivot_offset = Vector2( -2263, 69 )
+size_flags_horizontal = 3
 texture = ExtResource( 1 )
-stretch_mode = 1
+expand = true
+flip_h = true
+script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect5" type="TextureRect" parent="TextureRect2/LeftPanel2"]
-margin_left = 22.123
-margin_top = 373.107
-margin_right = 152.123
-margin_bottom = 531.107
+[node name="DamageBar" type="ColorRect" parent="EnemyRect/Columns/SecondRow/BackRow"]
+self_modulate = Color( 0.2, 0.0392157, 0.0392157, 0.72549 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+color = Color( 0.52549, 0.0705882, 0.0705882, 1 )
+
+[node name="SelectedUnit" type="ColorRect" parent="EnemyRect/Columns/SecondRow/BackRow"]
+visible = false
+show_behind_parent = true
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 161.0
+margin_bottom = 189.0
+color = Color( 0.847059, 0.780392, 0.0431373, 0.815686 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AttackSymbol" type="TextureRect" parent="EnemyRect/Columns/SecondRow/BackRow"]
+visible = false
+margin_left = 28.0
+margin_top = 52.0
+margin_right = 128.0
+margin_bottom = 144.0
+texture = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ThirdRow" type="HBoxContainer" parent="EnemyRect/Columns"]
+margin_top = 383.0
+margin_right = 320.0
+margin_bottom = 568.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 7
+alignment = 1
+script = ExtResource( 2 )
+
+[node name="FrontRow" type="TextureRect" parent="EnemyRect/Columns/ThirdRow" groups=[
+"Unit_GUI_positions",
+]]
+margin_right = 156.0
+margin_bottom = 185.0
+size_flags_horizontal = 3
 texture = ExtResource( 1 )
-stretch_mode = 1
+expand = true
+flip_h = true
+script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect6" type="TextureRect" parent="TextureRect2/LeftPanel2"]
-margin_left = 170.794
-margin_top = 373.107
-margin_right = 300.794
-margin_bottom = 531.107
+[node name="DamageBar" type="ColorRect" parent="EnemyRect/Columns/ThirdRow/FrontRow"]
+self_modulate = Color( 0.2, 0.0392157, 0.0392157, 0.72549 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+color = Color( 0.52549, 0.0705882, 0.0705882, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectedUnit" type="ColorRect" parent="EnemyRect/Columns/ThirdRow/FrontRow"]
+visible = false
+show_behind_parent = true
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 160.0
+margin_bottom = 189.0
+color = Color( 0.847059, 0.780392, 0.0431373, 0.815686 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AttackSymbol" type="TextureRect" parent="EnemyRect/Columns/ThirdRow/FrontRow"]
+visible = false
+margin_left = 28.0
+margin_top = 52.0
+margin_right = 128.0
+margin_bottom = 144.0
+texture = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackRow" type="TextureRect" parent="EnemyRect/Columns/ThirdRow" groups=[
+"Unit_GUI_positions",
+]]
+margin_left = 163.0
+margin_right = 320.0
+margin_bottom = 185.0
+size_flags_horizontal = 3
 texture = ExtResource( 1 )
-stretch_mode = 1
+expand = true
+flip_h = true
+script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect3" type="TextureRect" parent="."]
-margin_top = 816.0
+[node name="DamageBar" type="ColorRect" parent="EnemyRect/Columns/ThirdRow/BackRow"]
+self_modulate = Color( 0.2, 0.0392157, 0.0392157, 0.72549 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+color = Color( 0.52549, 0.0705882, 0.0705882, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectedUnit" type="ColorRect" parent="EnemyRect/Columns/ThirdRow/BackRow"]
+visible = false
+show_behind_parent = true
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 161.0
+margin_bottom = 189.0
+color = Color( 0.847059, 0.780392, 0.0431373, 0.815686 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AttackSymbol" type="TextureRect" parent="EnemyRect/Columns/ThirdRow/BackRow"]
+visible = false
+margin_left = 28.0
+margin_top = 52.0
+margin_right = 128.0
+margin_bottom = 144.0
+texture = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LowerGuiRect" type="TextureRect" parent="."]
+margin_top = 784.0
 margin_right = 1920.0
 margin_bottom = 1080.0
+mouse_filter = 2
+script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="TextureRect3"]
+[node name="ColorRect" type="ColorRect" parent="LowerGuiRect"]
 margin_right = 1920.0
-margin_bottom = 264.0
+margin_bottom = 296.0
 color = Color( 0.270588, 0.054902, 0.054902, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UnitPortrait" type="TextureRect" parent="LowerGuiRect"]
+margin_left = 56.0
+margin_top = 24.0
+margin_right = 264.0
+margin_bottom = 272.0
+size_flags_horizontal = 3
+texture = ExtResource( 1 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="LowerGuiRect"]
+margin_left = 288.0
+margin_top = 48.0
+margin_right = 548.0
+margin_bottom = 88.0
+custom_styles/fg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+step = 1.0
+value = 28.0
+percent_visible = false
+
+[node name="Label" type="Label" parent="LowerGuiRect/ProgressBar"]
+anchor_right = 0.154
+anchor_bottom = 0.2
+margin_left = 80.0
+margin_top = 8.0
+margin_right = 135.96
+margin_bottom = 24.0
+text = "10/20"
+align = 1
+valign = 1
+
+[node name="TextBox" type="Control" parent="LowerGuiRect"]
+margin_left = 616.0
+margin_right = 1920.0
+margin_bottom = 296.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextLable" type="RichTextLabel" parent="LowerGuiRect/TextBox"]
+margin_left = 272.0
+margin_top = 16.0
+margin_right = 1280.0
+margin_bottom = 272.0
+focus_mode = 1
+mouse_default_cursor_shape = 4
+custom_fonts/normal_font = SubResource( 5 )
+bbcode_enabled = true
+bbcode_text = "Hello There[wave] :0 [/wave] [shake] how are you? [/shake] my name is gupta
+"
+text = "Hello There :0   how are you?  my name is gupta
+"
+scroll_following = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AttackButton" type="Button" parent="LowerGuiRect"]
+visible = false
+margin_left = 568.0
+margin_top = 32.0
+margin_right = 856.0
+margin_bottom = 112.0
+custom_fonts/font = SubResource( 6 )
+text = "Attack"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExitButton" type="Button" parent="LowerGuiRect"]
+visible = false
+margin_left = 280.0
+margin_top = 184.0
+margin_right = 568.0
+margin_bottom = 264.0
+custom_fonts/font = SubResource( 6 )
+text = "Exit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="gui_input" from="EnemyRect/Columns/FirstRow/FrontRow" to="EnemyRect" method="_on_FrontRow_gui_input"]
+[connection signal="mouse_entered" from="EnemyRect/Columns/FirstRow/FrontRow" to="EnemyRect" method="_on_FrontRow_mouse_entered"]
+[connection signal="mouse_exited" from="EnemyRect/Columns/FirstRow/FrontRow" to="EnemyRect" method="_on_FrontRow_mouse_exited"]
+[connection signal="gui_input" from="EnemyRect/Columns/FirstRow/BackRow" to="EnemyRect" method="_on_BackRow_gui_input"]
+[connection signal="mouse_entered" from="EnemyRect/Columns/FirstRow/BackRow" to="EnemyRect" method="_on_BackRow_mouse_entered"]
+[connection signal="mouse_exited" from="EnemyRect/Columns/FirstRow/BackRow" to="EnemyRect" method="_on_BackRow_mouse_exited"]
+[connection signal="gui_input" from="EnemyRect/Columns/SecondRow/FrontRow" to="EnemyRect" method="_on_Second_FrontRow_gui_input"]
+[connection signal="mouse_entered" from="EnemyRect/Columns/SecondRow/FrontRow" to="EnemyRect" method="_on_Second_FrontRow_mouse_entered"]
+[connection signal="mouse_exited" from="EnemyRect/Columns/SecondRow/FrontRow" to="EnemyRect" method="_on_FrontRow_mouse_exited"]
+[connection signal="gui_input" from="EnemyRect/Columns/SecondRow/BackRow" to="EnemyRect" method="_on_Second_BackRow_gui_input"]
+[connection signal="mouse_entered" from="EnemyRect/Columns/SecondRow/BackRow" to="EnemyRect" method="_on_Second_BackRow_mouse_entered"]
+[connection signal="mouse_exited" from="EnemyRect/Columns/SecondRow/BackRow" to="EnemyRect" method="_on_BackRow_mouse_exited"]
+[connection signal="gui_input" from="EnemyRect/Columns/ThirdRow/FrontRow" to="EnemyRect" method="_on_Third_FrontRow_gui_input"]
+[connection signal="mouse_entered" from="EnemyRect/Columns/ThirdRow/FrontRow" to="EnemyRect" method="_on_Third_FrontRow_mouse_entered"]
+[connection signal="mouse_exited" from="EnemyRect/Columns/ThirdRow/FrontRow" to="EnemyRect" method="_on_FrontRow_mouse_exited"]
+[connection signal="gui_input" from="EnemyRect/Columns/ThirdRow/BackRow" to="EnemyRect" method="_on_Third_BackRow_gui_input"]
+[connection signal="mouse_entered" from="EnemyRect/Columns/ThirdRow/BackRow" to="EnemyRect" method="_on_Third_BackRow_mouse_entered"]
+[connection signal="mouse_exited" from="EnemyRect/Columns/ThirdRow/BackRow" to="EnemyRect" method="_on_BackRow_mouse_exited"]
+[connection signal="button_up" from="LowerGuiRect/AttackButton" to="." method="_on_AttackButton_button_up"]
+[connection signal="button_up" from="LowerGuiRect/ExitButton" to="." method="_on_ExitButton_button_up"]

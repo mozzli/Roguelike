@@ -1,46 +1,47 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=64 format=2]
 
-[ext_resource path="res://Images/Tiles/town.png" type="Texture" id=1]
-[ext_resource path="res://Images/Tiles/plains.png" type="Texture" id=2]
+[ext_resource path="res://images/Tiles/town.png" type="Texture" id=1]
+[ext_resource path="res://images/Tiles/plains.png" type="Texture" id=2]
 [ext_resource path="res://Map.gd" type="Script" id=3]
-[ext_resource path="res://Images/Tiles/woods.png" type="Texture" id=4]
-[ext_resource path="res://Images/Tiles/mountains_with_river.png" type="Texture" id=5]
-[ext_resource path="res://Images/Tiles/mountains.png" type="Texture" id=6]
+[ext_resource path="res://images/Tiles/woods.png" type="Texture" id=4]
+[ext_resource path="res://images/Tiles/mountains_with_river.png" type="Texture" id=5]
+[ext_resource path="res://images/Tiles/mountains.png" type="Texture" id=6]
 [ext_resource path="res://MapTiles.gd" type="Script" id=7]
 [ext_resource path="res://ResourcePreloader.gd" type="Script" id=8]
 [ext_resource path="res://DaytimeControl.gd" type="Script" id=9]
 [ext_resource path="res://TownsControl.gd" type="Script" id=10]
-[ext_resource path="res://Images/Tiles/blue/new_animatedtexture.tres" type="Texture" id=11]
-[ext_resource path="res://Images/Events/treasure_box_event.png" type="Texture" id=12]
+[ext_resource path="res://images/Tiles/blue/new_animatedtexture.tres" type="Texture" id=11]
+[ext_resource path="res://images/Events/treasure_box_event.png" type="Texture" id=12]
 [ext_resource path="res://PlayerCamera.gd" type="Script" id=13]
-[ext_resource path="res://Images/Tiles/wall.png" type="Texture" id=14]
+[ext_resource path="res://images/Tiles/wall.png" type="Texture" id=14]
 [ext_resource path="res://TreasureControl.gd" type="Script" id=15]
 [ext_resource path="res://Background.gd" type="Script" id=16]
-[ext_resource path="res://Images/Tiles/river/river_left_to_left_down.png" type="Texture" id=17]
-[ext_resource path="res://Images/Tiles/river/river_up_right_to_left.png" type="Texture" id=18]
-[ext_resource path="res://Images/Tiles/river/river_down_left_to_up_left.png" type="Texture" id=19]
-[ext_resource path="res://Images/Tiles/river/river_right_to_up_right.png" type="Texture" id=20]
-[ext_resource path="res://Images/Tiles/river/river_up_right_to_up_left.png" type="Texture" id=21]
-[ext_resource path="res://Images/Tiles/river/river_left_down_to_right.png" type="Texture" id=22]
-[ext_resource path="res://Images/Tiles/river/river_left_to_right.png" type="Texture" id=23]
-[ext_resource path="res://Images/Tiles/river/river_down_right_to_up_left.png" type="Texture" id=24]
-[ext_resource path="res://Images/Tiles/river/river_up_left_to_right.png" type="Texture" id=25]
-[ext_resource path="res://Images/Tiles/river/river_down_left_to_up_right.png" type="Texture" id=26]
-[ext_resource path="res://Images/Tiles/river/river_left_down_to_right_down.png" type="Texture" id=27]
-[ext_resource path="res://Images/Tiles/river/river_down_right_to_up_right.png" type="Texture" id=28]
-[ext_resource path="res://Images/Tiles/river/river_left_to_right_down.png" type="Texture" id=29]
-[ext_resource path="res://Images/Tiles/river/river_left_to_up_left.png" type="Texture" id=30]
-[ext_resource path="res://Images/Tiles/river/river_right_to_right_down.png" type="Texture" id=31]
-[ext_resource path="res://Images/Tiles/lake.png" type="Texture" id=32]
-[ext_resource path="res://Images/Tiles/selected_tile.png" type="Texture" id=33]
-[ext_resource path="res://Sample_music/sample.mp3" type="AudioStream" id=34]
+[ext_resource path="res://images/Tiles/river/river_left_to_left_down.png" type="Texture" id=17]
+[ext_resource path="res://images/Tiles/river/river_up_right_to_left.png" type="Texture" id=18]
+[ext_resource path="res://images/Tiles/river/river_down_left_to_up_left.png" type="Texture" id=19]
+[ext_resource path="res://images/Tiles/river/river_right_to_up_right.png" type="Texture" id=20]
+[ext_resource path="res://images/Tiles/river/river_up_right_to_up_left.png" type="Texture" id=21]
+[ext_resource path="res://images/Tiles/river/river_left_down_to_right.png" type="Texture" id=22]
+[ext_resource path="res://images/Tiles/river/river_left_to_right.png" type="Texture" id=23]
+[ext_resource path="res://images/Tiles/river/river_down_right_to_up_left.png" type="Texture" id=24]
+[ext_resource path="res://images/Tiles/river/river_up_left_to_right.png" type="Texture" id=25]
+[ext_resource path="res://images/Tiles/river/river_down_left_to_up_right.png" type="Texture" id=26]
+[ext_resource path="res://images/Tiles/river/river_left_down_to_right_down.png" type="Texture" id=27]
+[ext_resource path="res://images/Tiles/river/river_down_right_to_up_right.png" type="Texture" id=28]
+[ext_resource path="res://images/Tiles/river/river_left_to_right_down.png" type="Texture" id=29]
+[ext_resource path="res://images/Tiles/river/river_left_to_up_left.png" type="Texture" id=30]
+[ext_resource path="res://images/Tiles/river/river_right_to_right_down.png" type="Texture" id=31]
+[ext_resource path="res://images/Tiles/lake.png" type="Texture" id=32]
+[ext_resource path="res://images/Tiles/selected_tile.png" type="Texture" id=33]
+[ext_resource path="res://sample_music/sample.mp3" type="AudioStream" id=34]
 [ext_resource path="res://MapMusicController.gd" type="Script" id=35]
-[ext_resource path="res://Images/Tiles/FogOfWar/darkBlue.png" type="Texture" id=36]
+[ext_resource path="res://images/Tiles/FogOfWar/darkBlue.png" type="Texture" id=36]
 [ext_resource path="res://FogOfWar.gd" type="Script" id=37]
 [ext_resource path="res://PathLineCreator.gd" type="Script" id=38]
-[ext_resource path="res://BattleArena.gd" type="Script" id=39]
+[ext_resource path="res://battle_arena/BattleArena.gd" type="Script" id=39]
 [ext_resource path="res://BattleFadeOut.tscn" type="PackedScene" id=40]
 [ext_resource path="res://BattlePanel.tscn" type="PackedScene" id=41]
+[ext_resource path="res://fonts/ren_regular.ttf" type="DynamicFontData" id=42]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 
@@ -478,6 +479,10 @@ extents = Vector2( 6.63184, 1146.98 )
 
 [sub_resource type="Theme" id=20]
 
+[sub_resource type="DynamicFont" id=21]
+size = 19
+font_data = ExtResource( 42 )
+
 [node name="Map" type="Node2D"]
 script = ExtResource( 3 )
 
@@ -619,13 +624,13 @@ margin_top = -690.23
 margin_right = -271.461
 margin_bottom = -308.23
 focus_mode = 2
-mouse_filter = 2
 script = ExtResource( 15 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
 [node name="Popup" type="Popup" parent="TreasureControl"]
+visible = true
 margin_left = -225.5
 margin_top = -148.5
 margin_right = 225.5
@@ -650,6 +655,7 @@ margin_left = -172.735
 margin_top = -64.2633
 margin_right = 179.265
 margin_bottom = 36.737
+custom_fonts/font = SubResource( 21 )
 align = 1
 valign = 1
 __meta__ = {
@@ -670,17 +676,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BattleArena" type="Control" parent="."]
+[node name="BattleArena" type="Control" parent="." groups=[
+"battle_arena",
+]]
 margin_right = 40.0
 margin_bottom = 40.0
+mouse_filter = 2
+mouse_default_cursor_shape = 16
 script = ExtResource( 39 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="BackgroundPlains" type="Popup" parent="BattleArena"]
-margin_right = 40.0
-margin_bottom = 40.0
+visible = true
+margin_left = -856.0
+margin_top = -648.0
+margin_right = 1904.0
+margin_bottom = 952.0
+mouse_filter = 2
+popup_exclusive = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -692,8 +707,13 @@ z_index = 9
 margin_right = 40.0
 margin_bottom = 40.0
 color = Color( 0.0588235, 0.498039, 0.227451, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="BattlePanel" parent="BattleArena/BackgroundPlains/Plains/ColorRect" instance=ExtResource( 41 )]
+[node name="BattlePanel" parent="BattleArena/BackgroundPlains/Plains" instance=ExtResource( 41 )]
+mouse_filter = 2
+mouse_default_cursor_shape = 8
 
 [node name="BattleFadeOut" parent="BattleArena" instance=ExtResource( 40 )]
 
@@ -745,3 +765,4 @@ script = ExtResource( 8 )
 [connection signal="mouse_exited" from="Camera2D/ScrollingRightArea" to="Camera2D" method="_on_ScrollingRightArea_mouse_exited"]
 [connection signal="button_up" from="TownsControl/Popup/Sprite/Button" to="TownsControl" method="_on_Button_button_up"]
 [connection signal="button_up" from="TreasureControl/Popup/Sprite/Button" to="TreasureControl" method="_on_Button_button_up"]
+[connection signal="close_arena" from="BattleArena/BackgroundPlains/Plains/BattlePanel" to="BattleArena" method="_on_BattlePanel_close_arena"]

@@ -75,4 +75,4 @@ func check_key_event(event):
 #		else:
 #			$FogOfWar.create_fog_of_war()
 #			fog_on = true
-		$BattleArena.show_forest()
+		$BattleArena.next_turn()
