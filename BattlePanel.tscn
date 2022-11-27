@@ -22,6 +22,7 @@ var attack_mode = false
 var attack_chosen
 var target_chosen
 var current_unit
+onready var pic_nodes = get_tree().get_nodes_in_group(\"Unit_GUI_positions\")
 
 func change_unit_hp(unit_side, unit_position, percent: int):
 	match(unit_side):
@@ -42,6 +43,11 @@ func refresh_units_hp(player_units: Dictionary, enemy_units: Dictionary):
 		var enemy = enemy_units.get(unit)
 		if enemy != null:
 			change_enemy_hp(enemy.get_current_battle_position(), enemy.get_percent_of_hp())
+			
+
+func clear_units_hp():
+	for picture in pic_nodes:
+		picture.reset_hp_box()
 
 func change_enemy_hp(player_position, percent: int) -> void:
 	$EnemyRect.change_hp(player_position, percent)
@@ -52,8 +58,8 @@ func prepare_player_pics(position: Dictionary):
 			change_player_pic(pos, position.get(pos))
 
 func reset_pictures() -> void:
-	var pic_places = get_tree().get_nodes_in_group(\"Unit_GUI_positions\")
-	for picture in pic_places:
+	clear_units_hp()
+	for picture in pic_nodes:
 		picture.reset_picture()
 
 func change_player_pic(position, player):

@@ -2,6 +2,7 @@ extends Node2D
 
 var pos_cell_global
 var fog_on = true
+onready var music = $Audio
 
 func _ready():
 	randomize()
@@ -21,6 +22,7 @@ func _ready():
 	spawn_boar_random()
 	spawn_boar_random()
 	$Camera2D.activate_camera()
+	music.play_music(music.get_audio(music.audio.FOREST_MAZE))
 
 func spawn_builder(column, row):
 	pos_cell_global = MovementUtils.movement_tiles.map_to_world(Vector2(column,row))

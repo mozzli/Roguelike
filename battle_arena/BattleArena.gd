@@ -17,6 +17,7 @@ var main_enemy
 var battle_end = false
 var player_won: bool
 onready var battlePanel = $BackgroundPlains/Plains/BattlePanel
+onready var music = get_parent().get_node("Audio")
 
 signal units_done
 
@@ -40,6 +41,7 @@ func _ready():
 	rect_size = start_resolution
 
 func prepare_battle(player, enemy, terrain):
+	music.change_music(music.get_audio(music.audio.BATTLE_NORMAL))
 	battlePanel.reset_pictures()
 	battlePanel.reset_battle_text()
 	main_player = player
@@ -68,7 +70,6 @@ func show_forest():
 	yield($BattleFadeOut/ColorRect/AnimationPlayer, "animation_finished")
 	$BattleFadeOut/ColorRect.material.set_shader_param("cutoff",1)
 	popup_plains()
-	get_parent().get_node("AudioStreamPlayer").volume_down()
 
 func end_battle() -> void:
 	battlePanel.show_exit_button()
@@ -79,7 +80,7 @@ func end_battle() -> void:
 		var items = main_enemy.get_reward_items()
 		battlePanel.add_battle_text("Party gains " + String(money) + " money!")
 		for item in items:
-			battlePanel.add_battle_text("Party gets "+ String(item) + "!")
+			battlePanel.add_battle_text("Party gets "+ String(GlobalItems.get_item_name(item)) + "!")
 
 func transition_process():
 	$BattleFadeOut.play_shader()
@@ -135,8 +136,6 @@ func get_active_enemy_units() -> Array:
 	return active_units
 
 func next_turn() -> void:
-	if current_turn_unit != null:
-		battlePanel.change_selected_unit(current_turn_unit)
 	current_turn_unit = get_next_unit()
 	battlePanel.change_selected_unit(current_turn_unit)
 	battlePanel.set_selected_unit_portrait(current_turn_unit)
@@ -151,15 +150,7 @@ func next_turn() -> void:
 		end_battle()
 	else:
 		next_turn()
-
-func check_if_end():
-	if get_active_player_units().empty():
-		battle_end = true
-		player_won = false
-	elif get_active_enemy_units().empty():
-		battle_end = true
-		player_won = true
-
+	
 func unit_action(unit) -> void:
 	if unit.get_unit_type() == "enemy":
 		yield(get_tree().create_timer(2.0), "timeout")
@@ -168,6 +159,14 @@ func unit_action(unit) -> void:
 		battlePanel.show_player_gui_buttons()
 		yield(get_tree().create_timer(2.0), "timeout")
 		player_action(current_turn_unit)
+
+func check_if_end():
+	if get_active_player_units().empty():
+		battle_end = true
+		player_won = false
+	elif get_active_enemy_units().empty():
+		battle_end = true
+		player_won = true
 
 func player_action(player_unit: BaseBattleUnit) -> void:
 	yield($BackgroundPlains/Plains/BattlePanel, "player_attacked")
@@ -193,6 +192,7 @@ func get_enemy_party() -> Dictionary:
 	return enemy_units
 
 func _on_BattlePanel_close_arena():
+	music.fade_music_in(music.get_audio(music.audio.FOREST_MAZE))
 	transition_process()
 	yield($BattleFadeOut/ColorRect/AnimationPlayer, "animation_finished")
 	yield(get_tree().create_timer(0.5), "timeout")

@@ -4,12 +4,12 @@ class_name BuilderHero
 
 remote var unit_min_hp = 100
 remote var unit_max_hp = 105
-remote var unit_min_strenght = 5 
-remote var unit_max_strenght = 100
+remote var unit_min_strenght = 20
+remote var unit_max_strenght = 25
 remote var unit_min_dexterity = 5
 remote var unit_max_dexterity = 8
-remote var unit_min_agility = 100
-remote var unit_max_agility = 100
+remote var unit_min_agility = 7
+remote var unit_max_agility = 9
 remote var unit_min_wisdom = 0
 remote var unit_max_wisdom = 3
 var player_unit_picture = "res://images/Enemies/Boar/boar.png"
