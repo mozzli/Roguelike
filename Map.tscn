@@ -1,13 +1,16 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://tile_sets/Map.tres" type="TileSet" id=1]
 [ext_resource path="res://tile_sets/fog.tres" type="TileSet" id=2]
 [ext_resource path="res://Map.gd" type="Script" id=3]
 [ext_resource path="res://tile_sets/Movement2.tres" type="TileSet" id=4]
+[ext_resource path="res://AudioController.gd" type="Script" id=5]
+[ext_resource path="res://sample_music/battle_normal.mp3" type="AudioStream" id=6]
 [ext_resource path="res://MapTiles.gd" type="Script" id=7]
 [ext_resource path="res://ResourcePreloader.gd" type="Script" id=8]
 [ext_resource path="res://DaytimeControl.gd" type="Script" id=9]
 [ext_resource path="res://TownsControl.gd" type="Script" id=10]
+[ext_resource path="res://sample_music/town_theme.mp3" type="AudioStream" id=11]
 [ext_resource path="res://images/Events/treasure_box_event.png" type="Texture" id=12]
 [ext_resource path="res://PlayerCamera.gd" type="Script" id=13]
 [ext_resource path="res://TreasureControl.gd" type="Script" id=15]
@@ -24,24 +27,24 @@
 
 [sub_resource type="CanvasItemMaterial" id=1]
 
-[sub_resource type="CanvasItemMaterial" id=13]
+[sub_resource type="CanvasItemMaterial" id=2]
 light_mode = 1
 
-[sub_resource type="RectangleShape2D" id=16]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 1351.33, 5.75543 )
 
-[sub_resource type="RectangleShape2D" id=17]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 7.0466, 1170.62 )
 
-[sub_resource type="RectangleShape2D" id=18]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 1235.8, 5.56519 )
 
-[sub_resource type="RectangleShape2D" id=19]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 6.63184, 1146.98 )
 
-[sub_resource type="Theme" id=20]
+[sub_resource type="Theme" id=7]
 
-[sub_resource type="DynamicFont" id=21]
+[sub_resource type="DynamicFont" id=8]
 size = 19
 font_data = ExtResource( 42 )
 
@@ -63,7 +66,7 @@ tile_data = PoolIntArray( -262148, 21, 0, 65535, 0, 0, 1, 21, 0, 2, 21, 0, 13107
 script = ExtResource( 7 )
 
 [node name="MovementTiles" type="TileMap" parent="."]
-material = SubResource( 13 )
+material = SubResource( 2 )
 z_index = 1
 tile_set = ExtResource( 4 )
 cell_size = Vector2( 63, 47 )
@@ -103,7 +106,7 @@ position = Vector2( -82.6381, 82.6381 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/ScrollingDownArea"]
 position = Vector2( -3.87897, 322.809 )
-shape = SubResource( 16 )
+shape = SubResource( 3 )
 
 [node name="ScrollingLeftArea" type="Area2D" parent="Camera2D"]
 position = Vector2( -63.5677, 61.4489 )
@@ -111,21 +114,21 @@ position = Vector2( -63.5677, 61.4489 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/ScrollingLeftArea"]
 use_parent_material = true
 position = Vector2( -530.525, -13.6073 )
-shape = SubResource( 17 )
+shape = SubResource( 4 )
 
 [node name="ScrollingUpArea" type="Area2D" parent="Camera2D"]
 position = Vector2( 27.546, 59.3299 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/ScrollingUpArea"]
 position = Vector2( 27.2444, -348.974 )
-shape = SubResource( 18 )
+shape = SubResource( 5 )
 
 [node name="ScrollingRightArea" type="Area2D" parent="Camera2D"]
 position = Vector2( -16.9514, 91.1138 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/ScrollingRightArea"]
 position = Vector2( 561.842, 38.8837 )
-shape = SubResource( 19 )
+shape = SubResource( 6 )
 
 [node name="TownsControl" type="Control" parent="."]
 margin_left = -3107.1
@@ -198,7 +201,7 @@ margin_top = -148.5
 margin_right = 225.5
 margin_bottom = 148.5
 mouse_filter = 2
-theme = SubResource( 20 )
+theme = SubResource( 7 )
 popup_exclusive = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -217,7 +220,7 @@ margin_left = -172.735
 margin_top = -64.2633
 margin_right = 179.265
 margin_bottom = 36.737
-custom_fonts/font = SubResource( 21 )
+custom_fonts/font = SubResource( 8 )
 align = 1
 valign = 1
 __meta__ = {
@@ -238,7 +241,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BattleArena" type="Control" parent="." groups=["battle_arena"]]
+[node name="BattleArena" type="Control" parent="." groups=[
+"battle_arena",
+]]
 margin_right = 40.0
 margin_bottom = 40.0
 mouse_filter = 2
@@ -296,10 +301,19 @@ __meta__ = {
 [node name="SelectedTile" type="Sprite" parent="."]
 texture = ExtResource( 33 )
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Audio" type="Node2D" parent="."]
+script = ExtResource( 5 )
+
+[node name="ForestMaze" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource( 34 )
-volume_db = 24.0
-autoplay = true
+script = ExtResource( 35 )
+
+[node name="BattleNormal" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 6 )
+script = ExtResource( 35 )
+
+[node name="TownTheme" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 11 )
 script = ExtResource( 35 )
 
 [node name="PathLineCreator" type="Line2D" parent="."]

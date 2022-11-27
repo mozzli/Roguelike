@@ -2,6 +2,7 @@ extends Control
 
 var resolution
 var town_opened = false
+onready var music = get_parent().get_node("Audio")
 
 func _ready():
 	resolution = get_viewport_rect().size
@@ -12,7 +13,7 @@ func _ready():
 func show_town():
 	GameVariables.gui_is_on = true
 	town_opened = true
-	get_parent().get_node("AudioStreamPlayer").volume_down()
+	music.fade_music_in(music.get_audio(music.audio.TOWN))
 	$Popup.popup()
 
 func _process(_delta):
@@ -21,7 +22,7 @@ func _process(_delta):
 
 func _on_Button_button_up():
 	print("im on it")
-	get_parent().get_node("AudioStreamPlayer").volume_up()
+	music.fade_music_in(music.get_audio(music.audio.FOREST_MAZE))
 	$Popup.hide()
 	town_opened = false
 	GameVariables.gui_is_on = false

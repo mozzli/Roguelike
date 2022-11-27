@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/battle_normal.mp3-d82747f381aff787954e6dfb457e0e8c.mp3str"
+
+[deps]
+
+source_file="res://sample_music/battle_normal.mp3"
+dest_files=[ "res://.import/battle_normal.mp3-d82747f381aff787954e6dfb457e0e8c.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
