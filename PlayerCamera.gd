@@ -82,7 +82,6 @@ func _input(event):
 			if zoom.x < 0.99:
 				GameVariables.camera_zoom = Vector2(1,1)
 			else:
-				print(zoom.x)
 				GameVariables.camera_zoom = Vector2(0.5,0.5)
 
 func change_border_hitboxes():

@@ -21,7 +21,6 @@ func _process(_delta):
 		$Popup.set_position(get_node("../Camera2D").get_camera_position() - Vector2(resolution/2))
 
 func _on_Button_button_up():
-	print("im on it")
 	music.fade_music_in(music.get_audio(music.audio.FOREST_MAZE))
 	$Popup.hide()
 	town_opened = false
