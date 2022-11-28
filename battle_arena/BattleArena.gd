@@ -110,10 +110,11 @@ func reset_units_ticks() -> void:
 func get_next_unit():
 	var min_unit = null
 	for unit in all_units:
-		if min_unit == null:
-			min_unit = unit
-		elif min_unit.get_next_tick_value() > unit.get_next_tick_value():
-			min_unit = unit
+		if unit.get_if_alive():
+			if min_unit == null:
+				min_unit = unit
+			elif min_unit.get_next_tick_value() > unit.get_next_tick_value():
+				min_unit = unit
 	min_unit.set_next_tick_value()
 	return min_unit
 
@@ -136,6 +137,9 @@ func get_active_enemy_units() -> Array:
 	return active_units
 
 func next_turn() -> void:
+	
+	if current_turn_unit != null:
+		battlePanel.change_selected_unit(current_turn_unit)
 	current_turn_unit = get_next_unit()
 	battlePanel.change_selected_unit(current_turn_unit)
 	battlePanel.set_selected_unit_portrait(current_turn_unit)
