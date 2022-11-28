@@ -19,6 +19,7 @@ func play_music(new_audio: Music):
 func change_music(new_music: Music):
 	current_music.stop()
 	current_music = new_music
+	new_music.set_max_volume()
 	current_music.play()
 
 func fade_music_in(new_music: Music):

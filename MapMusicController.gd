@@ -2,7 +2,7 @@ extends AudioStreamPlayer
 
 class_name Music
 
-const min_volume = -40
+const min_volume = -30
 const max_volume = 0
 var active = false
 
@@ -34,5 +34,13 @@ func music_fade_in():
 func music_fade_out():
 	current_volume = min_volume
 	active = true
+
+func set_max_volume():
+	current_volume = max_volume
+	volume_db = max_volume
+
+func set_min_volume():
+	current_volume = min_volume
+	volume_db = min_volume
 
 

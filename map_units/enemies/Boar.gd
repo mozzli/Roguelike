@@ -50,9 +50,11 @@ func movement_process():
 		visible = false
 
 func play_event(player):
+	$WalkingSound.stop()
 	var terrain = MovementUtils.get_terrain_type(position)
 	GameVariables.battle_on = true
 	GameVariables.current_map.get_node("BattleArena").prepare_battle(player, self, terrain)
+
 
 func _on_Boar_body_entered(body):
 	play_event(body)
@@ -87,5 +89,6 @@ func get_reward_items() -> Array:
 	return $PartyNode.get_party_items()
 
 func delete_unit():
+	emit_signal("boar_was_moved")
 	GameVariables.enemies.erase(self)
 	self.queue_free()
