@@ -11,6 +11,7 @@ func _ready():
 	$Popup/Sprite/ColorRect.rect_size = resolution
 
 func show_town():
+	get_parent().get_node("Camera2D").zoom_out_camera()
 	GameVariables.gui_is_on = true
 	town_opened = true
 	music.fade_music_in(music.get_audio(music.audio.TOWN))

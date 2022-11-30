@@ -16,7 +16,7 @@ var monster_unit_picture = "res://images/Enemies/Boar/boar2.png"
 var type = "enemy"
 var u_name ="Boar"
 var attacks = [Attacks.attack_enums.BASIC_ATTACK]
-var item_drop: Dictionary = {GlobalItems.items.SILVER_SWORD: 10, GlobalItems.items.BRONZE_SWORD: 50, GlobalItems.items.IRON_SWORD: 25}
+var item_drop: Dictionary = {GlobalItems.items.SILVER_SWORD: 1, GlobalItems.items.BRONZE_SWORD: 50, GlobalItems.items.IRON_SWORD: 5}
 var min_money_drop = 100
 var max_money_drop = 134
 

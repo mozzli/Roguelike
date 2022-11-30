@@ -8,4 +8,4 @@ func get_damage(attack: int, unit: BaseBattleUnit) -> int:
 		_: return 0
 
 func basic_attack(unit: BaseBattleUnit) -> int:
-	return unit.get_stat(StatEnums.stat_enums.STR) + 7
+	return unit.get_stat(StatEnums.stat_enums.STR) + Utilities.rng.randi()%6

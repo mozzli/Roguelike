@@ -78,7 +78,7 @@ func _on_ScrollingRightArea_mouse_exited():
 
 func _input(event):
 	if event is InputEventKey:
-		if event.is_action_pressed("zoom"):
+		if event.is_action_pressed("zoom") && !GameVariables.gui_is_on:
 			if zoom.x < 0.99:
 				GameVariables.camera_zoom = Vector2(1,1)
 			else:
@@ -95,6 +95,7 @@ func get_camera_edge():
 	return get_camera_screen_center() - OS.window_size/2
 
 func zoom_out_camera():
+	GameVariables.camera_zoom = Vector2(1,1)
 	zoom = Vector2(1,1)
 
 func zoom_in_camera():

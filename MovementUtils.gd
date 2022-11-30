@@ -32,7 +32,7 @@ func _ready():
 		RIVER_TILES.append(i)
 
 func get_terrain_type(position):
-	var cell_position = MovementUtils.map.world_to_map(position)
+	var cell_position = map.world_to_map(position)
 	return MovementUtils.map.get_cell(cell_position.x, cell_position.y)
 
 func get_movement_value_by_index(index):
@@ -50,7 +50,7 @@ func get_movement_value_by_index(index):
 
 func get_neighbor_tiles(column: int, row: int):
 	var tiles_list = {
-		MovementUtils.neighbour_tiles.UP_LEFT: null,
+		neighbour_tiles.UP_LEFT: null,
 		neighbour_tiles.UP_RIGHT: null,
 		neighbour_tiles.RIGHT: map.get_cell(column + 1, row),
 		neighbour_tiles.LEFT: map.get_cell(column - 1, row),
@@ -213,3 +213,39 @@ func add_tile_types_to_cell_list():
 func add_g_value_to_cells():
 	for i_cell in cell_cubed_list:
 		i_cell.g_value = get_movement_value_by_index(i_cell.type)
+
+func get_neighbor_dictionary(unit: Node2D) -> Dictionary:
+	var neighbours: Dictionary = {neighbour_tiles.UP_LEFT: null,
+	 neighbour_tiles.UP_RIGHT: null,
+	 neighbour_tiles.LEFT: null,
+	 neighbour_tiles.RIGHT: null,
+	 neighbour_tiles.DOWN_LEFT: null,
+	 neighbour_tiles.DOWN_RIGHT: null}
+	var unit_pos: Vector2 = unit.get_tile_position()
+	for tile in neighbours:
+		match tile:
+			neighbour_tiles.UP_LEFT:
+				if (int(unit_pos.y) % 2 == 0):
+					neighbours[neighbour_tiles.UP_LEFT] = unit_pos + Vector2(-1,-1)
+				else:
+					neighbours[neighbour_tiles.UP_LEFT] = unit_pos + Vector2(0,-1)
+			neighbour_tiles.UP_RIGHT: 
+				if (int(unit_pos.y) % 2 == 0):
+					neighbours[neighbour_tiles.UP_RIGHT] = unit_pos + Vector2(0,-1)
+				else:
+					neighbours[neighbour_tiles.UP_RIGHT] = unit_pos + Vector2(+1,-1)
+			neighbour_tiles.LEFT:
+				neighbours[neighbour_tiles.LEFT] = unit_pos + Vector2(-1,0)
+			neighbour_tiles.RIGHT:
+				neighbours[neighbour_tiles.RIGHT] = unit_pos + Vector2(+1,0)
+			neighbour_tiles.DOWN_LEFT: 
+				if (int(unit_pos.y) % 2 == 0):
+					neighbours[neighbour_tiles.DOWN_LEFT] = unit_pos + Vector2(-1,+1)
+				else:
+					neighbours[neighbour_tiles.DOWN_LEFT] = unit_pos + Vector2(0,+1)
+			neighbour_tiles.DOWN_RIGHT:
+				if (int(unit_pos.y) % 2 == 0):
+					neighbours[neighbour_tiles.DOWN_RIGHT] = unit_pos + Vector2(0,+1)
+				else:
+					neighbours[neighbour_tiles.DOWN_RIGHT] = unit_pos + Vector2(+1,+1)
+	return neighbours

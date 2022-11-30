@@ -1,5 +1,7 @@
 extends Area2D
 
+class_name Boar
+
 var type = "enemy"
 var movement_on = false
 var movement_amount = 3
@@ -42,9 +44,9 @@ func movement_process():
 	if movement_on && mgp != gp:
 		set_x_speed()
 		set_body_position()
-	if gp.x >= mgp.x - 2 && gp.x <= mgp.x + 2 && gp.y >= mgp.y - 2 && gp.y <= mgp.y + 2 && movement_on == true:
+	if gp.x >= mgp.x - 2 && gp.x <= mgp.x + 2 && gp.y >= mgp.y - 2 && gp.y <= mgp.y + 2 && movement_on:
 		goal_achived()
-	if GameVariables.current_map.get_node("FogOfWar").check_if_visible(column, row) == true:
+	if GameVariables.current_map.get_node("FogOfWar").check_if_visible(column, row):
 		visible = true
 	else:
 		visible = false
@@ -92,3 +94,6 @@ func delete_unit():
 	emit_signal("boar_was_moved")
 	GameVariables.enemies.erase(self)
 	self.queue_free()
+
+func get_tile_position() -> Vector2:
+	return MovementUtils.map.world_to_map(get_global_position())
