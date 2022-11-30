@@ -12,11 +12,11 @@ func _ready():
 	MovementUtils.map.create_map()
 	MovementUtils.create_cell_cubed_list()
 	$FogOfWar.create_fog_of_war()
-	spawn_builder(21,21)
-	spawn_builder(8,20)
-	spawn_builder(10,10)
-	spawn_treasure(12,12)
-	spawn_treasure(11,11)
+	spawn_builder(Vector2(21,21))
+	spawn_builder(Vector2(8,20))
+	spawn_builder(Vector2(10,10))
+	spawn_treasure(get_random_map_position())
+	spawn_treasure(get_random_map_position())
 	spawn_boar_random()
 	spawn_boar_random()
 	spawn_boar_random()
@@ -24,13 +24,13 @@ func _ready():
 	$Camera2D.activate_camera()
 	music.play_music(music.get_audio(music.audio.FOREST_MAZE))
 
-func spawn_builder(column, row):
-	pos_cell_global = MovementUtils.movement_tiles.map_to_world(Vector2(column,row))
+func spawn_builder(pos: Vector2):
+	pos_cell_global = MovementUtils.movement_tiles.map_to_world(pos)
 	var builder = $ResourcePreloader.builder_res.instance()
 	builder.position = pos_cell_global + Vector2(32,24)
-	CellsContainers.set_cell_container(row,column,builder)
+	CellsContainers.set_cell_container(int(pos.y),int(pos.x),builder)
 	add_child(builder)
-	$FogOfWar.set_visibility(column, row, builder)
+	$FogOfWar.set_visibility(int(pos.x), int(pos.y), builder)
 
 func spawn_boar(column, row):
 	pos_cell_global = MovementUtils.movement_tiles.map_to_world(Vector2(column,row))
@@ -47,11 +47,16 @@ func spawn_boar_random():
 	var column = rand_forest_tile[1]
 	spawn_boar(column, row)
 
-func spawn_treasure(column: int, row: int):
-	pos_cell_global = MovementUtils.movement_tiles.map_to_world(Vector2(column,row))
+func spawn_treasure(pos: Vector2):
+	pos_cell_global = MovementUtils.movement_tiles.map_to_world(pos)
 	var treasure_chest = $ResourcePreloader.treasure_res.instance()
 	treasure_chest.position = pos_cell_global + Vector2(32,24)
 	add_child(treasure_chest)
+
+func get_random_map_position() -> Vector2:
+	var column = Utilities.rng.randi()%GameVariables.map_columns
+	var row = Utilities.rng.randi()%GameVariables.map_rows
+	return Vector2(column,row)
 
 func spawn_town():
 	return $ResourcePreloader.town.instance()

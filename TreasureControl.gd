@@ -1,7 +1,7 @@
 extends Control
 
 func open_treasure_event(item_name):
-	$Popup/Sprite/Label.text = "You've got " + item_name + "!"
+	$Popup/Sprite/Label.text = "You've got " + String(item_name) + "!"
 	$Popup/Sprite.scale = GameVariables.camera_zoom
 	$Popup.popup()
 	GameVariables.gui_is_on = true

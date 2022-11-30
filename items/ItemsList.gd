@@ -36,8 +36,8 @@ enum elements {
 var item_keys = {0:"Leather Boots",
 	1:"Leather Cap",
 	2:"Iron Sword",
-	3:"Leather Gloves",
-	4:"Leather Armor"
+	3:"Bronze Sword",
+	4:"Silver Sword"
 	}
 
 func get_item_name(number):

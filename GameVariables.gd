@@ -32,11 +32,15 @@ func change_day_color(day_enum):
 func _input(event):
 	if event is InputEventKey:
 		if event.is_action_pressed("new_turn"):
-			enemies_turn()
-			yield(self, "enemies_moved")
-			for active_unit in active_units:
-				active_unit.new_turn()
-			print("New Turn!!")
+			new_turn()
+
+func new_turn():
+	end_turn_of_player()
+	enemies_turn()
+	yield(self, "enemies_moved")
+	for active_unit in active_units:
+		active_unit.new_turn()
+	print("New Turn!!")
 
 func enemies_turn():
 	for enemy in enemies:
@@ -44,5 +48,12 @@ func enemies_turn():
 		yield(enemy, "boar_was_moved")
 	emit_signal("enemies_moved")
 
+func end_turn_of_player():
+	for unit in active_units:
+		unit.end_of_turn()
+
 func get_random_forest_tile():
 	return forest_tiles[rand_range(0,forest_tiles.size())]
+
+func get_enemies() -> Array:
+	return enemies

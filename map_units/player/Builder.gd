@@ -66,17 +66,13 @@ func move_player():
 	if GameVariables.current_map.fog_on:
 		fog_of_war_class.hide_tiles(fog_of_war_visibility)
 	fog_of_war_class.set_visibility(current_cell.x, current_cell.y, self)
-	deselect_player()
-	path_creator.clear_points()
 	global_position = MovementUtils.movement_tiles.map_to_world(WalkCode.mouse_position)+Vector2(32,24)
-	end_of_turn = true
-	ColorManager.change_color_end_turn($AnimatedSprite)
+	end_of_turn()
 	if GameVariables.object_under_player != null:
 		play_object_event()
 
 func reset_player_position():
 	deselect_player()
-	path_creator.clear_points()
 	global_position = old_position
 	ColorManager.change_color_default($AnimatedSprite)
 
@@ -90,6 +86,7 @@ func select_player():
 
 func deselect_player():
 	WalkCode.reset_movement_tiles()
+	path_creator.clear_points()
 	selected = false
 	$AnimatedSprite.speed_scale = 1
 	input_pickable = true
@@ -107,3 +104,8 @@ func delete_unit():
 
 func gain_money(amount: int) -> void:
 	$Items.add_money(amount)
+
+func end_of_turn():
+	deselect_player()
+	end_of_turn = true
+	ColorManager.change_color_end_turn($AnimatedSprite)
