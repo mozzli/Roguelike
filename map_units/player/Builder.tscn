@@ -36,7 +36,6 @@ script = ExtResource( 6 )
 material = SubResource( 1 )
 z_index = 2
 frames = SubResource( 2 )
-frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

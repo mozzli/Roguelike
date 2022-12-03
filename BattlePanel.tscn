@@ -226,9 +226,7 @@ custom_constants/separation = 7
 alignment = 1
 script = ExtResource( 2 )
 
-[node name="BackRow" type="TextureRect" parent="PlayerRect/Columns/FirstRow" groups=[
-"Unit_GUI_positions",
-]]
+[node name="BackRow" type="TextureRect" parent="PlayerRect/Columns/FirstRow" groups=["Unit_GUI_positions"]]
 margin_right = 158.0
 margin_bottom = 184.0
 size_flags_horizontal = 3
@@ -265,9 +263,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FrontRow" type="TextureRect" parent="PlayerRect/Columns/FirstRow" groups=[
-"Unit_GUI_positions",
-]]
+[node name="FrontRow" type="TextureRect" parent="PlayerRect/Columns/FirstRow" groups=["Unit_GUI_positions"]]
 margin_left = 165.0
 margin_right = 323.0
 margin_bottom = 184.0
@@ -309,9 +305,7 @@ custom_constants/separation = 7
 alignment = 1
 script = ExtResource( 2 )
 
-[node name="BackRow" type="TextureRect" parent="PlayerRect/Columns/SecondRow" groups=[
-"Unit_GUI_positions",
-]]
+[node name="BackRow" type="TextureRect" parent="PlayerRect/Columns/SecondRow" groups=["Unit_GUI_positions"]]
 margin_right = 158.0
 margin_bottom = 185.0
 size_flags_horizontal = 3
@@ -345,9 +339,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FrontRow" type="TextureRect" parent="PlayerRect/Columns/SecondRow" groups=[
-"Unit_GUI_positions",
-]]
+[node name="FrontRow" type="TextureRect" parent="PlayerRect/Columns/SecondRow" groups=["Unit_GUI_positions"]]
 margin_left = 165.0
 margin_right = 323.0
 margin_bottom = 185.0
@@ -390,9 +382,7 @@ custom_constants/separation = 7
 alignment = 1
 script = ExtResource( 2 )
 
-[node name="BackRow" type="TextureRect" parent="PlayerRect/Columns/ThirdRow" groups=[
-"Unit_GUI_positions",
-]]
+[node name="BackRow" type="TextureRect" parent="PlayerRect/Columns/ThirdRow" groups=["Unit_GUI_positions"]]
 margin_right = 158.0
 margin_bottom = 185.0
 size_flags_horizontal = 3
@@ -423,9 +413,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FrontRow" type="TextureRect" parent="PlayerRect/Columns/ThirdRow" groups=[
-"Unit_GUI_positions",
-]]
+[node name="FrontRow" type="TextureRect" parent="PlayerRect/Columns/ThirdRow" groups=["Unit_GUI_positions"]]
 margin_left = 165.0
 margin_right = 323.0
 margin_bottom = 185.0
@@ -510,10 +498,7 @@ custom_constants/separation = 7
 alignment = 1
 script = ExtResource( 2 )
 
-[node name="FrontRow" type="TextureRect" parent="EnemyRect/Columns/FirstRow" groups=[
-"Enemy_GUI_Pictures",
-"Unit_GUI_positions",
-]]
+[node name="FrontRow" type="TextureRect" parent="EnemyRect/Columns/FirstRow" groups=["Enemy_GUI_Pictures", "Unit_GUI_positions"]]
 margin_right = 156.0
 margin_bottom = 184.0
 size_flags_horizontal = 3
@@ -561,10 +546,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BackRow" type="TextureRect" parent="EnemyRect/Columns/FirstRow" groups=[
-"Enemy_GUI_Pictures",
-"Unit_GUI_positions",
-]]
+[node name="BackRow" type="TextureRect" parent="EnemyRect/Columns/FirstRow" groups=["Enemy_GUI_Pictures", "Unit_GUI_positions"]]
 margin_left = 163.0
 margin_right = 320.0
 margin_bottom = 184.0
@@ -627,10 +609,7 @@ custom_constants/separation = 7
 alignment = 1
 script = ExtResource( 2 )
 
-[node name="FrontRow" type="TextureRect" parent="EnemyRect/Columns/SecondRow" groups=[
-"Enemy_GUI_Pictures",
-"Unit_GUI_positions",
-]]
+[node name="FrontRow" type="TextureRect" parent="EnemyRect/Columns/SecondRow" groups=["Enemy_GUI_Pictures", "Unit_GUI_positions"]]
 margin_right = 156.0
 margin_bottom = 185.0
 size_flags_horizontal = 3
@@ -676,10 +655,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BackRow" type="TextureRect" parent="EnemyRect/Columns/SecondRow" groups=[
-"Enemy_GUI_Pictures",
-"Unit_GUI_positions",
-]]
+[node name="BackRow" type="TextureRect" parent="EnemyRect/Columns/SecondRow" groups=["Enemy_GUI_Pictures", "Unit_GUI_positions"]]
 margin_left = 163.0
 margin_right = 320.0
 margin_bottom = 185.0
@@ -736,10 +712,7 @@ custom_constants/separation = 7
 alignment = 1
 script = ExtResource( 2 )
 
-[node name="FrontRow" type="TextureRect" parent="EnemyRect/Columns/ThirdRow" groups=[
-"Enemy_GUI_Pictures",
-"Unit_GUI_positions",
-]]
+[node name="FrontRow" type="TextureRect" parent="EnemyRect/Columns/ThirdRow" groups=["Enemy_GUI_Pictures", "Unit_GUI_positions"]]
 margin_right = 156.0
 margin_bottom = 185.0
 size_flags_horizontal = 3
@@ -787,10 +760,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BackRow" type="TextureRect" parent="EnemyRect/Columns/ThirdRow" groups=[
-"Enemy_GUI_Pictures",
-"Unit_GUI_positions",
-]]
+[node name="BackRow" type="TextureRect" parent="EnemyRect/Columns/ThirdRow" groups=["Enemy_GUI_Pictures", "Unit_GUI_positions"]]
 margin_left = 163.0
 margin_right = 320.0
 margin_bottom = 185.0
@@ -874,9 +844,9 @@ margin_left = 288.0
 margin_top = 48.0
 margin_right = 548.0
 margin_bottom = 88.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_styles/fg = SubResource( 2 )
 custom_styles/bg = SubResource( 3 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
 step = 1.0
 value = 28.0
 percent_visible = false
