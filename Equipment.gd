@@ -10,8 +10,10 @@ GlobalItems.types_of_equipement.RIGHT_HAND: null,
 GlobalItems.types_of_equipement.LEGS: null, 
 GlobalItems.types_of_equipement.ACCESSORY: null }
 
-func get_item(item):
+func get_item(item: Items):
+	add_child(item)
 	items.append(item)
+	print(items)
 
 func equip_head(item):
 	equiped_items[GlobalItems.types_of_equipement.HEAD] = item

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://tile_sets/Map.tres" type="TileSet" id=1]
 [ext_resource path="res://tile_sets/fog.tres" type="TileSet" id=2]
@@ -13,8 +13,12 @@
 [ext_resource path="res://sample_music/town_theme.mp3" type="AudioStream" id=11]
 [ext_resource path="res://images/Events/treasure_box_event.png" type="Texture" id=12]
 [ext_resource path="res://PlayerCamera.gd" type="Script" id=13]
+[ext_resource path="res://images/items/weapons/bronze_sword.png" type="Texture" id=14]
 [ext_resource path="res://TreasureControl.gd" type="Script" id=15]
 [ext_resource path="res://Background.gd" type="Script" id=16]
+[ext_resource path="res://PauseControl.gd" type="Script" id=17]
+[ext_resource path="res://PauseButton.gd" type="Script" id=18]
+[ext_resource path="res://SoundSlider.gd" type="Script" id=19]
 [ext_resource path="res://images/Tiles/selected_tile.png" type="Texture" id=33]
 [ext_resource path="res://sample_music/sample.mp3" type="AudioStream" id=34]
 [ext_resource path="res://MapMusicController.gd" type="Script" id=35]
@@ -50,6 +54,99 @@ font_data = ExtResource( 42 )
 
 [node name="Map" type="Node2D"]
 script = ExtResource( 3 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+pause_mode = 2
+follow_viewport_scale = 51.0
+
+[node name="PauseControl" type="Control" parent="CanvasLayer"]
+margin_left = -3223.0
+margin_right = -1633.0
+margin_bottom = 906.0
+script = ExtResource( 17 )
+
+[node name="Timer" type="Timer" parent="CanvasLayer/PauseControl"]
+wait_time = 0.095
+one_shot = true
+
+[node name="MainMenu" type="Popup" parent="CanvasLayer/PauseControl"]
+visible = true
+margin_right = 1920.0
+margin_bottom = 1080.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/PauseControl/MainMenu"]
+color = Color( 0.101961, 0.0470588, 0.0470588, 1 )
+
+[node name="Popup" type="Popup" parent="CanvasLayer/PauseControl/MainMenu"]
+margin_right = 1920.0
+margin_bottom = 1080.0
+popup_exclusive = true
+
+[node name="Button" type="Button" parent="CanvasLayer/PauseControl/MainMenu/Popup" groups=["main_pause_buttons"]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -96.0
+margin_top = -85.0
+margin_right = 98.0
+margin_bottom = -11.0
+text = "Return"
+icon_align = 1
+expand_icon = true
+script = ExtResource( 18 )
+
+[node name="OptionsButton" type="Button" parent="CanvasLayer/PauseControl/MainMenu/Popup" groups=["main_pause_buttons"]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -96.0
+margin_top = 22.0
+margin_right = 98.0
+margin_bottom = 96.0
+text = "Options"
+icon_align = 1
+expand_icon = true
+script = ExtResource( 18 )
+
+[node name="SoundOptions" type="Popup" parent="CanvasLayer/PauseControl/MainMenu"]
+visible = true
+margin_right = 1920.0
+margin_bottom = 1080.0
+
+[node name="SoundSlider" type="HSlider" parent="CanvasLayer/PauseControl/MainMenu/SoundOptions"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -215.0
+margin_top = -33.5
+margin_right = 215.0
+margin_bottom = 33.5
+min_value = -70.0
+max_value = 0.0
+rounded = true
+ticks_on_borders = true
+script = ExtResource( 19 )
+
+[node name="Label" type="Label" parent="CanvasLayer/PauseControl/MainMenu/SoundOptions"]
+anchor_top = 0.415
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 854.0
+margin_top = 58.8
+margin_right = -856.0
+margin_bottom = -520.0
+text = "Volume:"
+align = 1
+
+[node name="OptionsBackButton" type="Button" parent="CanvasLayer/PauseControl/MainMenu/SoundOptions"]
+margin_left = 750.0
+margin_top = 347.0
+margin_right = 874.0
+margin_bottom = 397.0
+text = "Back"
 
 [node name="Map" type="TileMap" parent="."]
 material = SubResource( 1 )
@@ -140,6 +237,9 @@ focus_mode = 2
 mouse_filter = 2
 mouse_default_cursor_shape = 2
 script = ExtResource( 10 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Popup" type="Popup" parent="TownsControl"]
 margin_right = 1905.0
@@ -150,7 +250,7 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="TownsControl/Popup"]
-z_index = 7
+z_index = 3
 __meta__ = {
 "_edit_lock_": true
 }
@@ -194,50 +294,49 @@ __meta__ = {
 
 [node name="Popup" type="Popup" parent="TreasureControl"]
 visible = true
-margin_left = -225.5
-margin_top = -148.5
-margin_right = 225.5
-margin_bottom = 148.5
+margin_left = -279.0
+margin_top = -132.0
+margin_right = 214.0
+margin_bottom = 175.0
 mouse_filter = 2
 theme = SubResource( 7 )
 popup_exclusive = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Sprite" type="Sprite" parent="TreasureControl/Popup"]
-position = Vector2( 220.941, 149.448 )
+position = Vector2( 243.461, 154.23 )
 z_index = 3
 texture = ExtResource( 12 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Label" type="Label" parent="TreasureControl/Popup/Sprite"]
-margin_left = -172.735
-margin_top = -64.2633
-margin_right = 179.265
-margin_bottom = 36.737
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -450.0
+margin_top = -110.0
+margin_bottom = -19.0
 custom_fonts/font = SubResource( 8 )
+text = "fsdfsdfgdgsdfgsdfgsgf"
 align = 1
 valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Button" type="Button" parent="TreasureControl/Popup/Sprite"]
-margin_left = -53.328
-margin_top = 65.573
-margin_right = 53.672
-margin_bottom = 105.573
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -288.0
+margin_top = -227.0
+margin_right = -181.0
+margin_bottom = -187.0
 focus_mode = 0
 mouse_default_cursor_shape = 2
 input_pass_on_modal_close_click = false
 enabled_focus_mode = 0
 text = "Got it!"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+
+[node name="ItemImage" type="Sprite" parent="TreasureControl/Popup/Sprite"]
+position = Vector2( -4, 15 )
+scale = Vector2( 0.3875, 0.38125 )
+texture = ExtResource( 14 )
 
 [node name="BattleArena" type="Control" parent="." groups=["battle_arena"]]
 margin_right = 40.0
@@ -245,9 +344,6 @@ margin_bottom = 40.0
 mouse_filter = 2
 mouse_default_cursor_shape = 16
 script = ExtResource( 39 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="BackgroundPlains" type="Popup" parent="BattleArena"]
 visible = true
@@ -258,7 +354,7 @@ margin_bottom = 952.0
 mouse_filter = 2
 popup_exclusive = true
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_lock_": true
 }
 
 [node name="Plains" type="Sprite" parent="BattleArena/BackgroundPlains"]
@@ -268,9 +364,6 @@ z_index = 9
 margin_right = 40.0
 margin_bottom = 40.0
 color = Color( 0.0588235, 0.498039, 0.227451, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="BattlePanel" parent="BattleArena/BackgroundPlains/Plains" instance=ExtResource( 41 )]
 mouse_filter = 2
@@ -298,17 +391,21 @@ __meta__ = {
 texture = ExtResource( 33 )
 
 [node name="Audio" type="Node2D" parent="."]
+pause_mode = 2
 script = ExtResource( 5 )
 
 [node name="ForestMaze" type="AudioStreamPlayer" parent="Audio"]
+pause_mode = 2
 stream = ExtResource( 34 )
 script = ExtResource( 35 )
 
 [node name="BattleNormal" type="AudioStreamPlayer" parent="Audio"]
+pause_mode = 2
 stream = ExtResource( 6 )
 script = ExtResource( 35 )
 
 [node name="TownTheme" type="AudioStreamPlayer" parent="Audio"]
+pause_mode = 2
 stream = ExtResource( 11 )
 script = ExtResource( 35 )
 
@@ -325,6 +422,10 @@ script = ExtResource( 9 )
 process_priority = -1
 script = ExtResource( 8 )
 
+[connection signal="timeout" from="CanvasLayer/PauseControl/Timer" to="CanvasLayer/PauseControl" method="_on_Timer_timeout"]
+[connection signal="button_up" from="CanvasLayer/PauseControl/MainMenu/Popup/Button" to="CanvasLayer/PauseControl" method="_on_Button_button_up"]
+[connection signal="button_up" from="CanvasLayer/PauseControl/MainMenu/Popup/OptionsButton" to="CanvasLayer/PauseControl" method="_on_OptionsButton_button_up"]
+[connection signal="button_up" from="CanvasLayer/PauseControl/MainMenu/SoundOptions/OptionsBackButton" to="CanvasLayer/PauseControl" method="_on_OptionsBackButton_button_up"]
 [connection signal="mouse_entered" from="Camera2D/ScrollingDownArea" to="Camera2D" method="_on_ScrollingDownArea_mouse_entered"]
 [connection signal="mouse_exited" from="Camera2D/ScrollingDownArea" to="Camera2D" method="_on_ScrollingDownArea_mouse_exited"]
 [connection signal="mouse_entered" from="Camera2D/ScrollingLeftArea" to="Camera2D" method="_on_ScrollingLeftArea_mouse_entered"]

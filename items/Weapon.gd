@@ -8,7 +8,7 @@ var power
 
 func _ready():
 	set_item_type(GlobalItems.types_of_items.WEAPON)
-	print_name()
+#	print_name()
 
 func set_element(new_element: int):
 	element = new_element

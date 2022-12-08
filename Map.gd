@@ -54,6 +54,7 @@ func spawn_treasure(pos: Vector2):
 	add_child(treasure_chest)
 
 func get_random_map_position() -> Vector2:
+	Utilities.rng.randomize()
 	var column = Utilities.rng.randi()%GameVariables.map_columns
 	var row = Utilities.rng.randi()%GameVariables.map_rows
 	return Vector2(column,row)
@@ -61,7 +62,7 @@ func get_random_map_position() -> Vector2:
 func spawn_town():
 	return $ResourcePreloader.town.instance()
 
-func _input(event):
+func _unhandled_input(event):
 	if event is InputEventKey:
 		check_key_event(event)
 
@@ -69,9 +70,10 @@ func check_key_event(event):
 	if event.is_action_pressed("ui_accept"):
 		GameVariables.change_day_color(GameVariables.day_cycle.EVENING)
 		print("It's evening!")
-	if event.is_action_pressed("ui_cancel"):
-		GameVariables.change_day_color(GameVariables.day_cycle.NOON)
-		print("It's noon!")
+	if event.is_action_pressed("ui_cancel") && $CanvasLayer/PauseControl.pause_is_on == false:
+#		GameVariables.change_day_color(GameVariables.day_cycle.NOON)
+#		print("It's noon!")
+		$CanvasLayer/PauseControl.pause_on()
 	if event.is_action_pressed("ui_select"):
 		GameVariables.change_day_color(GameVariables.day_cycle.NIGHT)
 		print("It's night!")
@@ -82,4 +84,4 @@ func check_key_event(event):
 #		else:
 #			$FogOfWar.create_fog_of_war()
 #			fog_on = true
-		$BattleArena.next_turn()
+		pass

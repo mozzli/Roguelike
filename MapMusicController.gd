@@ -2,7 +2,7 @@ extends AudioStreamPlayer
 
 class_name Music
 
-const min_volume = -30
+const min_volume = -70
 const max_volume = 0
 var active = false
 

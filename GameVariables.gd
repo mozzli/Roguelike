@@ -20,6 +20,7 @@ var base_map
 var saved_node
 var main_menu = preload("res://Main.tscn")
 var battle_on = false
+var enemies_turn_on = false
 signal enemies_moved
 
 func change_day_color(day_enum):
@@ -35,11 +36,13 @@ func _input(event):
 			new_turn()
 
 func new_turn():
+	enemies_turn_on = true
 	end_turn_of_player()
 	enemies_turn()
 	yield(self, "enemies_moved")
 	for active_unit in active_units:
 		active_unit.new_turn()
+		enemies_turn_on = false
 	print("New Turn!!")
 
 func enemies_turn():

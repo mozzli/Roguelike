@@ -25,8 +25,6 @@ func create_party():
 		add_child(new_monster)
 		enemies_nodes.append(new_monster)
 		set_unit_position(new_monster.get_prefered_position(), new_monster)
-	print(enemies_nodes)
-	print(unit_formation)
 
 func set_random_position(unit) -> void:
 	rng.randomize()

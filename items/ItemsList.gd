@@ -1,5 +1,9 @@
 extends Node
 
+var iron_sword = preload("res://items/specific_items/IronSword.tscn")
+var bronze_sword = preload("res://items/specific_items/BronzeSword.tscn")
+var silver_sword = preload("res://items/specific_items/SilverSword.tscn")
+
 enum types_of_items{
 	WEAPON,
 	ARMOR,
@@ -33,15 +37,28 @@ enum elements {
 	EARTH
 }
 
-var item_keys = {0:"Leather Boots",
-	1:"Leather Cap",
-	2:"Iron Sword",
-	3:"Bronze Sword",
-	4:"Silver Sword"
+var item_keys = {items.LEATHER_BOOTS:"Leather Boots",
+	items.LEATHER_CAP:"Leather Cap",
+	items.IRON_SWORD:"Iron Sword",
+	items.BRONZE_SWORD:"Bronze Sword",
+	items.SILVER_SWORD:"Silver Sword"
 	}
+
+func get_item_instance(item: int) -> Object:
+	match (item):
+		items.BRONZE_SWORD: return bronze_sword.instance()
+		items.IRON_SWORD: return iron_sword.instance()
+		items.SILVER_SWORD: return silver_sword.instance()
+		_: return iron_sword.instance()
+
 
 func get_item_name(number):
 	return item_keys.get(number)
 
 func get_random_item_lvl1():
-	return items.values()[randi()%items.size()]
+	Utilities.rng.randomize()
+	return get_item_instance(get_random_lvl1_item())
+
+func get_random_lvl1_item():
+	var chest_items = [items.BRONZE_SWORD, items.SILVER_SWORD, items.IRON_SWORD]
+	return chest_items[randi()%chest_items.size()]

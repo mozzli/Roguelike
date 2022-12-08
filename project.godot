@@ -143,6 +143,7 @@ BattleUtilities="*res://battle_arena/BattleUtilities.gd"
 BattleEnums="*res://battle_arena/BattleEnums.gd"
 StatEnums="*res://battle_units/StatEnums.gd"
 Attacks="*res://battle_units/attacks/Attacks.gd"
+GlobalPreloader="*res://ResourcePreloader.gd"
 
 [display]
 

@@ -18,10 +18,10 @@ func _on_TreasureChest_body_exited(_body):
 
 func play_event(body):
 	var current_map = GameVariables.current_map
-	var item_get = GlobalItems.get_random_item_lvl1()
-	var item_acquired = GlobalItems.get_item_name(item_get)
+	var item_get: Items = GlobalItems.get_random_item_lvl1()
 	body.get_item(item_get)
-	current_map.get_node("TreasureControl").open_treasure_event(item_acquired)
+	print(item_get.get_item_name())
+	current_map.get_node("TreasureControl").open_treasure_event(item_get)
 	self.queue_free()
 
 func _process(_delta):

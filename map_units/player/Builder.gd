@@ -15,7 +15,10 @@ var current_cell
 func _ready():
 	GameVariables.active_units.append(self)
 	$PlayerParty.add_unit(BattleEnums.BattleRows.SECOND_FRONT, EnemiesList.get_player_node(EnemiesList.player.BUILDER))
+	get_item(GlobalItems.iron_sword.instance())
 	$Items.equip_left_hand($Items/IronSword)
+	print(z_index)
+	print(z_as_relative)
 
 func _process(_delta):
 	current_cell = WalkCode.mouse_position

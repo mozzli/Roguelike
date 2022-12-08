@@ -30,7 +30,6 @@ func set_monster_party_units(units: Array):
 func get_party_money() -> int:
 	var money: int = 0
 	var party = get_party()
-	print(party)
 	for unit in party:
 		if party[unit] != null:
 			money += party[unit].get_enemy_money()

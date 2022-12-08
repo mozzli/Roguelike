@@ -8,7 +8,6 @@ func get_tile_without_enemies(unit, sides) -> Array:
 	var unit_neighbour_tiles: Dictionary = MovementUtils.get_neighbor_dictionary(unit)
 	var tiles_without_enemies: Array = []
 	tiles_without_enemies.append_array(sides)
-	print("unit tile: ", unit_tile, " neighbours: ", unit_neighbour_tiles )
 	for enemy in GameVariables.enemies:
 		var new_enemy_pos = enemy.get_tile_position()
 		if enemy != unit:
