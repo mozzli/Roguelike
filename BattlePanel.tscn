@@ -173,6 +173,8 @@ size = 40
 font_data = ExtResource( 5 )
 
 [node name="BattlePanel" type="Control"]
+pause_mode = 1
+physics_interpolation_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
@@ -882,9 +884,6 @@ bbcode_text = "Hello There[wave] :0 [/wave] [shake] how are you? [/shake] my nam
 text = "Hello There :0   how are you?  my name is gupta
 "
 scroll_following = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="AttackButton" type="Button" parent="LowerGuiRect"]
 visible = false

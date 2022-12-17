@@ -40,6 +40,7 @@ func zoom_progressive():
 
 func activate_camera():
 	if GameVariables.map_on:
+		print(GameVariables.active_units)
 		position = GameVariables.active_units[0].get_position()
 
 func check_if_camera_can_be_moved():
@@ -77,12 +78,13 @@ func _on_ScrollingRightArea_mouse_exited():
 	mouse_right = false
 
 func _input(event):
-	if event is InputEventKey:
-		if event.is_action_pressed("zoom") && !GameVariables.gui_is_on:
-			if zoom.x < 0.99:
-				GameVariables.camera_zoom = Vector2(1,1)
-			else:
-				GameVariables.camera_zoom = Vector2(0.5,0.5)
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_WHEEL_UP && !GameVariables.gui_is_on:
+			GameVariables.camera_zoom = Vector2(0.5,0.5)
+		if event.button_index == BUTTON_WHEEL_DOWN && !GameVariables.gui_is_on:
+			print("hey!!!")
+			GameVariables.camera_zoom = Vector2(1,1)
+			
 
 func change_border_hitboxes():
 	var camera_position = global_position

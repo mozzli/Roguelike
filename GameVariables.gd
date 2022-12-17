@@ -3,15 +3,15 @@ extends Node
 enum day_cycle {MORNING = 0, NOON = 1, EVENING = 2, NIGHT = 3}
 
 var object_under_player = null
-var map_on = false
-var selected_unit
-var time_of_the_day = Color(1,1,1,1)
-var map_columns = 23
-var map_rows = 23
-var active_units = []
+var map_on: bool = false
+var selected_unit: Array
+var time_of_the_day: Color = Color(1,1,1,1)
+var map_columns: int = 23
+var map_rows: int = 23
+var active_units: Array = []
 var current_map
-var camera_zoom = Vector2(0.5,0.5)
-var gui_is_on = false
+var camera_zoom: Vector2 = Vector2(0.5,0.5)
+var gui_is_on: bool = false
 var enemies = []
 var forest_tiles = []
 var number_of_towns = 0
@@ -19,8 +19,8 @@ var current_scene
 var base_map
 var saved_node
 var main_menu = preload("res://Main.tscn")
-var battle_on = false
-var enemies_turn_on = false
+var battle_on: bool = false
+var enemies_turn_on: bool = false
 signal enemies_moved
 
 func change_day_color(day_enum):
@@ -60,3 +60,18 @@ func get_random_forest_tile():
 
 func get_enemies() -> Array:
 	return enemies
+
+func load_new_map():
+	object_under_player = null
+	gui_is_on = false
+	forest_tiles.clear()
+	active_units.clear()
+	selected_unit.clear()
+	enemies.clear()
+	map_on = true
+	time_of_the_day = Color(1,1,1,1)
+	camera_zoom = Vector2(0.5,0.5)
+	battle_on = false
+	enemies_turn_on = false
+	
+	

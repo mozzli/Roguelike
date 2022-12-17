@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://tile_sets/Map.tres" type="TileSet" id=1]
 [ext_resource path="res://tile_sets/fog.tres" type="TileSet" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://PauseControl.gd" type="Script" id=17]
 [ext_resource path="res://PauseButton.gd" type="Script" id=18]
 [ext_resource path="res://SoundSlider.gd" type="Script" id=19]
+[ext_resource path="res://images/pause_menu/pause_backlayer.png" type="Texture" id=20]
 [ext_resource path="res://images/Tiles/selected_tile.png" type="Texture" id=33]
 [ext_resource path="res://sample_music/sample.mp3" type="AudioStream" id=34]
 [ext_resource path="res://MapMusicController.gd" type="Script" id=35]
@@ -49,73 +50,97 @@ extents = Vector2( 6.63184, 1146.98 )
 [sub_resource type="Theme" id=7]
 
 [sub_resource type="DynamicFont" id=8]
-size = 19
+size = 23
 font_data = ExtResource( 42 )
 
 [node name="Map" type="Node2D"]
+pause_mode = 1
 script = ExtResource( 3 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="PauseLayer" type="CanvasLayer" parent="."]
 pause_mode = 2
 follow_viewport_scale = 51.0
 
-[node name="PauseControl" type="Control" parent="CanvasLayer"]
-margin_left = -3223.0
-margin_right = -1633.0
-margin_bottom = 906.0
+[node name="PauseControl" type="Control" parent="PauseLayer"]
+visible = false
+margin_left = -418.0
+margin_top = 70.0
+margin_right = 1172.0
+margin_bottom = 976.0
 script = ExtResource( 17 )
 
-[node name="Timer" type="Timer" parent="CanvasLayer/PauseControl"]
+[node name="Timer" type="Timer" parent="PauseLayer/PauseControl"]
 wait_time = 0.095
 one_shot = true
 
-[node name="MainMenu" type="Popup" parent="CanvasLayer/PauseControl"]
+[node name="MainMenu" type="Popup" parent="PauseLayer/PauseControl"]
 visible = true
 margin_right = 1920.0
 margin_bottom = 1080.0
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/PauseControl/MainMenu"]
-color = Color( 0.101961, 0.0470588, 0.0470588, 1 )
+[node name="ColorRect" type="ColorRect" parent="PauseLayer/PauseControl/MainMenu"]
 
-[node name="Popup" type="Popup" parent="CanvasLayer/PauseControl/MainMenu"]
+[node name="TextureRect" type="TextureRect" parent="PauseLayer/PauseControl/MainMenu"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 20 )
+
+[node name="Popup" type="Popup" parent="PauseLayer/PauseControl/MainMenu"]
+visible = true
 margin_right = 1920.0
 margin_bottom = 1080.0
 popup_exclusive = true
 
-[node name="Button" type="Button" parent="CanvasLayer/PauseControl/MainMenu/Popup" groups=["main_pause_buttons"]]
+[node name="Button" type="Button" parent="PauseLayer/PauseControl/MainMenu/Popup" groups=["main_pause_buttons"]]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -96.0
-margin_top = -85.0
-margin_right = 98.0
-margin_bottom = -11.0
+margin_left = -97.0
+margin_top = -138.0
+margin_right = 97.0
+margin_bottom = -64.0
 text = "Return"
 icon_align = 1
 expand_icon = true
 script = ExtResource( 18 )
 
-[node name="OptionsButton" type="Button" parent="CanvasLayer/PauseControl/MainMenu/Popup" groups=["main_pause_buttons"]]
+[node name="OptionsButton" type="Button" parent="PauseLayer/PauseControl/MainMenu/Popup" groups=["main_pause_buttons"]]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -96.0
-margin_top = 22.0
+margin_top = -41.0
 margin_right = 98.0
-margin_bottom = 96.0
+margin_bottom = 33.0
 text = "Options"
 icon_align = 1
 expand_icon = true
 script = ExtResource( 18 )
 
-[node name="SoundOptions" type="Popup" parent="CanvasLayer/PauseControl/MainMenu"]
-visible = true
+[node name="MainMenuButton" type="Button" parent="PauseLayer/PauseControl/MainMenu/Popup" groups=["main_pause_buttons"]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -97.0
+margin_top = 57.0
+margin_right = 97.0
+margin_bottom = 131.0
+text = "Exit to main menu"
+icon_align = 1
+expand_icon = true
+script = ExtResource( 18 )
+
+[node name="SoundOptions" type="Popup" parent="PauseLayer/PauseControl/MainMenu"]
 margin_right = 1920.0
 margin_bottom = 1080.0
 
-[node name="SoundSlider" type="HSlider" parent="CanvasLayer/PauseControl/MainMenu/SoundOptions"]
+[node name="SoundSlider" type="HSlider" parent="PauseLayer/PauseControl/MainMenu/SoundOptions"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -124,13 +149,13 @@ margin_left = -215.0
 margin_top = -33.5
 margin_right = 215.0
 margin_bottom = 33.5
-min_value = -70.0
+min_value = -40.0
 max_value = 0.0
-rounded = true
+step = 0.5
 ticks_on_borders = true
 script = ExtResource( 19 )
 
-[node name="Label" type="Label" parent="CanvasLayer/PauseControl/MainMenu/SoundOptions"]
+[node name="Label" type="Label" parent="PauseLayer/PauseControl/MainMenu/SoundOptions"]
 anchor_top = 0.415
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -141,7 +166,7 @@ margin_bottom = -520.0
 text = "Volume:"
 align = 1
 
-[node name="OptionsBackButton" type="Button" parent="CanvasLayer/PauseControl/MainMenu/SoundOptions"]
+[node name="OptionsBackButton" type="Button" parent="PauseLayer/PauseControl/MainMenu/SoundOptions"]
 margin_left = 750.0
 margin_top = 347.0
 margin_right = 874.0
@@ -198,6 +223,9 @@ drag_margin_bottom = 1.0
 editor_draw_limits = true
 editor_draw_drag_margin = true
 script = ExtResource( 13 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="ScrollingDownArea" type="Area2D" parent="Camera2D"]
 position = Vector2( -82.6381, 82.6381 )
@@ -282,28 +310,29 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -726.461
-margin_top = -690.23
-margin_right = -271.461
-margin_bottom = -308.23
+margin_left = -1337.0
+margin_top = -548.0
+margin_right = -790.0
+margin_bottom = -124.0
 focus_mode = 2
 script = ExtResource( 15 )
-__meta__ = {
-"_edit_use_anchors_": true
-}
 
 [node name="Popup" type="Popup" parent="TreasureControl"]
 visible = true
-margin_left = -279.0
-margin_top = -132.0
-margin_right = 214.0
-margin_bottom = 175.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -246.5
+margin_top = -153.5
+margin_right = 246.5
+margin_bottom = 153.5
 mouse_filter = 2
 theme = SubResource( 7 )
 popup_exclusive = true
 
 [node name="Sprite" type="Sprite" parent="TreasureControl/Popup"]
-position = Vector2( 243.461, 154.23 )
+position = Vector2( 240, 160.5 )
 z_index = 3
 texture = ExtResource( 12 )
 
@@ -311,12 +340,15 @@ texture = ExtResource( 12 )
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -450.0
-margin_top = -110.0
+margin_top = -133.0
 margin_bottom = -19.0
 custom_fonts/font = SubResource( 8 )
 text = "fsdfsdfgdgsdfgsdfgsgf"
 align = 1
 valign = 1
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Button" type="Button" parent="TreasureControl/Popup/Sprite"]
 anchor_left = 0.5
@@ -339,11 +371,17 @@ scale = Vector2( 0.3875, 0.38125 )
 texture = ExtResource( 14 )
 
 [node name="BattleArena" type="Control" parent="." groups=["battle_arena"]]
-margin_right = 40.0
-margin_bottom = 40.0
+pause_mode = 1
+margin_left = 2939.0
+margin_top = -139.0
+margin_right = 2983.0
+margin_bottom = -99.0
 mouse_filter = 2
 mouse_default_cursor_shape = 16
 script = ExtResource( 39 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="BackgroundPlains" type="Popup" parent="BattleArena"]
 visible = true
@@ -422,10 +460,11 @@ script = ExtResource( 9 )
 process_priority = -1
 script = ExtResource( 8 )
 
-[connection signal="timeout" from="CanvasLayer/PauseControl/Timer" to="CanvasLayer/PauseControl" method="_on_Timer_timeout"]
-[connection signal="button_up" from="CanvasLayer/PauseControl/MainMenu/Popup/Button" to="CanvasLayer/PauseControl" method="_on_Button_button_up"]
-[connection signal="button_up" from="CanvasLayer/PauseControl/MainMenu/Popup/OptionsButton" to="CanvasLayer/PauseControl" method="_on_OptionsButton_button_up"]
-[connection signal="button_up" from="CanvasLayer/PauseControl/MainMenu/SoundOptions/OptionsBackButton" to="CanvasLayer/PauseControl" method="_on_OptionsBackButton_button_up"]
+[connection signal="timeout" from="PauseLayer/PauseControl/Timer" to="PauseLayer/PauseControl" method="_on_Timer_timeout"]
+[connection signal="button_up" from="PauseLayer/PauseControl/MainMenu/Popup/Button" to="PauseLayer/PauseControl" method="_on_Button_button_up"]
+[connection signal="button_up" from="PauseLayer/PauseControl/MainMenu/Popup/OptionsButton" to="PauseLayer/PauseControl" method="_on_OptionsButton_button_up"]
+[connection signal="button_up" from="PauseLayer/PauseControl/MainMenu/Popup/MainMenuButton" to="PauseLayer/PauseControl" method="_on_MainMenuButton_button_up"]
+[connection signal="button_up" from="PauseLayer/PauseControl/MainMenu/SoundOptions/OptionsBackButton" to="PauseLayer/PauseControl" method="_on_OptionsBackButton_button_up"]
 [connection signal="mouse_entered" from="Camera2D/ScrollingDownArea" to="Camera2D" method="_on_ScrollingDownArea_mouse_entered"]
 [connection signal="mouse_exited" from="Camera2D/ScrollingDownArea" to="Camera2D" method="_on_ScrollingDownArea_mouse_exited"]
 [connection signal="mouse_entered" from="Camera2D/ScrollingLeftArea" to="Camera2D" method="_on_ScrollingLeftArea_mouse_entered"]

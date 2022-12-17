@@ -9,6 +9,7 @@
 extents = Vector2( 6.52679, 6.563 )
 
 [node name="Boar" type="Area2D"]
+pause_mode = 1
 script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]

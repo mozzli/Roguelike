@@ -15,7 +15,6 @@ func _ready():
 func pause_on():
 	$MainMenu.popup_centered()
 	$MainMenu/Popup.popup()
-	camera.zoom_out_camera()
 	GameVariables.gui_is_on = true
 	pause_is_on = true
 	get_tree().paused = true
@@ -50,3 +49,12 @@ func _input(event):
 
 func _on_Timer_timeout():
 	pause_is_on = false
+
+func _on_MainMenuButton_button_up():
+	get_tree().paused = false
+	GameVariables.map_on = false
+	print(GameVariables.active_units)
+	if (get_tree().change_scene_to(GameVariables.main_menu) == 0):
+		print("Map loading successful")
+	else:
+		print("Map loading failed")

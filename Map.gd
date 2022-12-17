@@ -5,6 +5,7 @@ var fog_on = true
 onready var music = $Audio
 
 func _ready():
+	GameVariables.load_new_map()
 	randomize()
 	MovementUtils.map = $Map
 	GameVariables.current_map = self
@@ -70,10 +71,10 @@ func check_key_event(event):
 	if event.is_action_pressed("ui_accept"):
 		GameVariables.change_day_color(GameVariables.day_cycle.EVENING)
 		print("It's evening!")
-	if event.is_action_pressed("ui_cancel") && $CanvasLayer/PauseControl.pause_is_on == false:
+	if event.is_action_pressed("ui_cancel") && $PauseLayer/PauseControl.pause_is_on == false:
 #		GameVariables.change_day_color(GameVariables.day_cycle.NOON)
 #		print("It's noon!")
-		$CanvasLayer/PauseControl.pause_on()
+		$PauseLayer/PauseControl.pause_on()
 	if event.is_action_pressed("ui_select"):
 		GameVariables.change_day_color(GameVariables.day_cycle.NIGHT)
 		print("It's night!")

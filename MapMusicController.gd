@@ -11,9 +11,9 @@ var current_volume
 func _process(_delta):
 	if volume_db != current_volume && active == true:
 		if current_volume < volume_db:
-			volume_db -= 0.1
+			volume_db -= 0.5
 		elif current_volume > volume_db:
-			volume_db += 0.1
+			volume_db += 0.5
 		elif current_volume == volume_db:
 			active = false
 			if current_volume == min_volume:
