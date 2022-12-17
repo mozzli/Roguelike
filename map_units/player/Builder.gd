@@ -70,7 +70,7 @@ func move_player():
 		fog_of_war_class.hide_tiles(fog_of_war_visibility)
 	fog_of_war_class.set_visibility(current_cell.x, current_cell.y, self)
 	global_position = MovementUtils.movement_tiles.map_to_world(WalkCode.mouse_position)+Vector2(32,24)
-	end_of_turn()
+	end_turn()
 	if GameVariables.object_under_player != null:
 		play_object_event()
 
@@ -108,7 +108,7 @@ func delete_unit():
 func gain_money(amount: int) -> void:
 	$Items.add_money(amount)
 
-func end_of_turn():
+func end_turn():
 	deselect_player()
 	end_of_turn = true
 	ColorManager.change_color_end_turn($AnimatedSprite)

@@ -53,7 +53,7 @@ func enemies_turn():
 
 func end_turn_of_player():
 	for unit in active_units:
-		unit.end_of_turn()
+		unit.end_turn()
 
 func get_random_forest_tile():
 	return forest_tiles[rand_range(0,forest_tiles.size())]

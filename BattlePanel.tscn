@@ -27,6 +27,10 @@ onready var pic_nodes = get_tree().get_nodes_in_group(\"Unit_GUI_positions\")
 func _ready():
 	$EnemyRect.enemy_party = battle_arena.get_enemy_party()
 
+func _process(delta):
+	if battle_arena.get_tree().paused == true:
+		get_tree().paused = true
+
 func change_unit_hp(unit_side, unit_position, percent: int):
 	match(unit_side):
 		BattleEnums.BattleSide.PLAYER:

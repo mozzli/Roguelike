@@ -20,6 +20,7 @@ onready var battlePanel = $BackgroundPlains/Plains/BattlePanel
 onready var music = get_parent().get_node("Audio")
 
 signal units_done
+signal pause_off
 
 var player_units = {BattleEnums.BattleRows.FIRST_BACK: null,
 	BattleEnums.BattleRows.FIRST_FRONT: null,
@@ -40,7 +41,11 @@ func _ready():
 	max_resolution = get_viewport_rect().size
 	rect_size = start_resolution
 
-func prepare_battle(player, enemy, terrain):
+func _process(delta):
+	if get_tree().paused == false:
+		emit_signal("pause_off")
+
+func prepare_battle(player, enemy, _terrain):
 	music.change_music(music.get_audio(music.audio.BATTLE_NORMAL))
 	battlePanel.reset_pictures()
 	battlePanel.reset_battle_text()
@@ -138,7 +143,8 @@ func get_active_enemy_units() -> Array:
 	return active_units
 
 func next_turn() -> void:
-	
+	if get_tree().paused == true:
+		yield(self, "pause_off")
 	if current_turn_unit != null:
 		battlePanel.change_selected_unit(current_turn_unit)
 	current_turn_unit = get_next_unit()

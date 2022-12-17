@@ -2,7 +2,6 @@ extends Control
 
 var resolution
 var pause_is_on = false
-signal pause_off
 onready var music = $"../../Audio"
 onready var camera = $"../../Camera2D"
 
@@ -10,7 +9,6 @@ func _ready():
 	resolution = get_viewport_rect().size
 	rect_size = resolution
 	$MainMenu.rect_size = resolution
-	$MainMenu/ColorRect.rect_size = resolution
 
 func pause_on():
 	$MainMenu.popup_centered()

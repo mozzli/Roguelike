@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://tile_sets/Map.tres" type="TileSet" id=1]
 [ext_resource path="res://tile_sets/fog.tres" type="TileSet" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://PauseButton.gd" type="Script" id=18]
 [ext_resource path="res://SoundSlider.gd" type="Script" id=19]
 [ext_resource path="res://images/pause_menu/pause_backlayer.png" type="Texture" id=20]
+[ext_resource path="res://SelectedTile.gd" type="Script" id=21]
 [ext_resource path="res://images/Tiles/selected_tile.png" type="Texture" id=33]
 [ext_resource path="res://sample_music/sample.mp3" type="AudioStream" id=34]
 [ext_resource path="res://MapMusicController.gd" type="Script" id=35]
@@ -80,8 +81,6 @@ one_shot = true
 visible = true
 margin_right = 1920.0
 margin_bottom = 1080.0
-
-[node name="ColorRect" type="ColorRect" parent="PauseLayer/PauseControl/MainMenu"]
 
 [node name="TextureRect" type="TextureRect" parent="PauseLayer/PauseControl/MainMenu"]
 margin_right = 40.0
@@ -404,6 +403,8 @@ margin_bottom = 40.0
 color = Color( 0.0588235, 0.498039, 0.227451, 1 )
 
 [node name="BattlePanel" parent="BattleArena/BackgroundPlains/Plains" instance=ExtResource( 41 )]
+physics_interpolation_mode = 0
+process_priority = -1
 mouse_filter = 2
 mouse_default_cursor_shape = 8
 
@@ -426,7 +427,9 @@ __meta__ = {
 }
 
 [node name="SelectedTile" type="Sprite" parent="."]
+pause_mode = 2
 texture = ExtResource( 33 )
+script = ExtResource( 21 )
 
 [node name="Audio" type="Node2D" parent="."]
 pause_mode = 2
@@ -435,11 +438,13 @@ script = ExtResource( 5 )
 [node name="ForestMaze" type="AudioStreamPlayer" parent="Audio"]
 pause_mode = 2
 stream = ExtResource( 34 )
+bus = "Forest"
 script = ExtResource( 35 )
 
 [node name="BattleNormal" type="AudioStreamPlayer" parent="Audio"]
 pause_mode = 2
 stream = ExtResource( 6 )
+bus = "Forest"
 script = ExtResource( 35 )
 
 [node name="TownTheme" type="AudioStreamPlayer" parent="Audio"]
