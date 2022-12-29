@@ -1,0 +1,73 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://PlayerCamera.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 1351.33, 5.75543 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 7.0466, 1170.62 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 1235.8, 5.56519 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 6.63184, 1146.98 )
+
+[node name="Camera2D" type="Camera2D"]
+position = Vector2( 587, 527 )
+current = true
+limit_left = -250
+limit_top = -250
+limit_right = 2000
+limit_bottom = 1250
+limit_smoothed = true
+drag_margin_left = 1.0
+drag_margin_top = 1.0
+drag_margin_right = 1.0
+drag_margin_bottom = 1.0
+editor_draw_limits = true
+editor_draw_drag_margin = true
+script = ExtResource( 1 )
+
+[node name="ScrollingDownArea" type="Area2D" parent="."]
+position = Vector2( -82.6381, 82.6381 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollingDownArea"]
+position = Vector2( -3.87897, 322.809 )
+shape = SubResource( 3 )
+
+[node name="ScrollingLeftArea" type="Area2D" parent="."]
+position = Vector2( -63.5677, 61.4489 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollingLeftArea"]
+use_parent_material = true
+position = Vector2( -530.525, -13.6073 )
+shape = SubResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ScrollingUpArea" type="Area2D" parent="."]
+position = Vector2( 27.546, 59.3299 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollingUpArea"]
+position = Vector2( 27.2444, -348.974 )
+shape = SubResource( 5 )
+
+[node name="ScrollingRightArea" type="Area2D" parent="."]
+position = Vector2( -16.9514, 91.1138 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollingRightArea"]
+position = Vector2( 1102.29, 16.5182 )
+z_index = 16
+shape = SubResource( 6 )
+
+[connection signal="mouse_entered" from="ScrollingDownArea" to="." method="_on_ScrollingDownArea_mouse_entered"]
+[connection signal="mouse_exited" from="ScrollingDownArea" to="." method="_on_ScrollingDownArea_mouse_exited"]
+[connection signal="mouse_entered" from="ScrollingLeftArea" to="." method="_on_ScrollingLeftArea_mouse_entered"]
+[connection signal="mouse_exited" from="ScrollingLeftArea" to="." method="_on_ScrollingLeftArea_mouse_exited"]
+[connection signal="mouse_entered" from="ScrollingUpArea" to="." method="_on_ScrollingUpArea_mouse_entered"]
+[connection signal="mouse_exited" from="ScrollingUpArea" to="." method="_on_ScrollingUpArea_mouse_exited"]
+[connection signal="mouse_entered" from="ScrollingRightArea" to="." method="_on_ScrollingRightArea_mouse_entered"]
+[connection signal="mouse_exited" from="ScrollingRightArea" to="." method="_on_ScrollingRightArea_mouse_exited"]

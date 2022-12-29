@@ -14,7 +14,7 @@ func compare_floats(a, b, epsilon = FLOAT_EPSILON):
 func _ready():
 	drag_margin_left = 1
 	zoom = GameVariables.camera_zoom
-	limit_right = GameVariables.map_columns*65 + 250
+	limit_right = GameVariables.map_columns*65 + 550
 	limit_bottom = GameVariables.map_rows*48.5 + 200
 
 func _process(_delta):

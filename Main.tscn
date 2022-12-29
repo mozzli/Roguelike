@@ -230,7 +230,7 @@ margin_top = 80.0
 margin_right = 696.0
 margin_bottom = 264.0
 theme = SubResource( 13 )
-text = "This game is being created by the one and only Lukasz Gluszek! (Thats me) It's a little side project that I'm making when im not procrastinatig too much. I hope you'll like it! "
+text = "This game is being created by the one and only Lukasz Gluszek (Thats me)! It's a little side project that I'm making when im not procrastinatig too much. I hope you'll like it! "
 align = 1
 autowrap = true
 
@@ -240,9 +240,9 @@ margin_top = 232.0
 margin_right = 368.0
 margin_bottom = 262.0
 bbcode_enabled = true
-bbcode_text = "[wave] Ver. 0.1.1 [/wave]
+bbcode_text = "[wave] Ver. 0.1.2 [/wave]
 "
-text = " Ver. 0.1.1 
+text = " Ver. 0.1.2 
 "
 fit_content_height = true
 

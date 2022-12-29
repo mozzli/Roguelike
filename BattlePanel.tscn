@@ -27,7 +27,7 @@ onready var pic_nodes = get_tree().get_nodes_in_group(\"Unit_GUI_positions\")
 func _ready():
 	$EnemyRect.enemy_party = battle_arena.get_enemy_party()
 
-func _process(delta):
+func _process(_delta):
 	if battle_arena.get_tree().paused == true:
 		get_tree().paused = true
 

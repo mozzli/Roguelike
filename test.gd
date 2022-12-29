@@ -1,4 +1,7 @@
-extends Control
+extends Camera2D
 
-func _ready():
-	$Popup.popup()
+var target = null
+
+func _process(delta):
+	if target:
+		position = target.position

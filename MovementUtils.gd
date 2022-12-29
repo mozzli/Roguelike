@@ -23,6 +23,7 @@ enum neighbour_tiles {UP_LEFT = 0, UP_RIGHT = 1, LEFT = 2, RIGHT = 3, DOWN_LEFT 
 var cell = load("res://CellClass.gd")
 var map
 var movement_tiles
+var fog_map
 var cell_cubed_list
 var cell_dictionary = {}
 const RIVER_TILES = []

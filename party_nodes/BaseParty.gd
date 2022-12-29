@@ -15,7 +15,7 @@ func set_random_position(unit) -> void:
 	unit_formation[pos] = unit
 	unit.set_current_battle_position(pos)	
 
-func add_unit(position, unit):
+func add_unit(_position, unit):
 	var new_unit = unit.instance()
 	add_child(new_unit)
 	set_unit_position(new_unit.get_prefered_position(), new_unit)

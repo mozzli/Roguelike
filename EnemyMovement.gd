@@ -4,7 +4,6 @@ var forest: int = MovementUtils.tiles.FOREST
 var town: int = MovementUtils.tiles.TOWN 
 
 func get_tile_without_enemies(unit, sides) -> Array:
-	var unit_tile = unit.get_tile_position()
 	var unit_neighbour_tiles: Dictionary = MovementUtils.get_neighbor_dictionary(unit)
 	var tiles_without_enemies: Array = []
 	tiles_without_enemies.append_array(sides)
@@ -23,6 +22,5 @@ func boar_movement_tile(boar: Boar):
 	for side in MovementUtils.neighbour_tiles.size():
 		if neighbour_tiles.get(side) == forest || neighbour_tiles.get(side) == town:
 			neighbour_forest_tiles.append(side)
-	get_tile_without_enemies(boar, neighbour_forest_tiles)
 	neighbour_forest_tiles = get_tile_without_enemies(boar, neighbour_forest_tiles)
 	return neighbour_forest_tiles[rand_range(0,neighbour_forest_tiles.size())]

@@ -44,6 +44,7 @@ func _on_KinematicBody2D_input_event(_viewport, event, _shape_idx):
 func _input(event):
 	if event is InputEventMouseButton && not mouse_floats:
 		left_click_check(event)
+		GameVariables.current_map.update_minimap()
 	if event is InputEventMouseButton && selected:
 		if event.is_action_pressed("mouse_click_right"):
 			reset_player_position()

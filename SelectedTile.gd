@@ -1,6 +1,6 @@
 extends Sprite
 
-func _process(delta):
+func _process(_delta):
 	if get_tree().paused == true:
 		visible = false
 	else:

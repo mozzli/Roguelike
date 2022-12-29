@@ -21,6 +21,8 @@ onready var music = get_parent().get_node("Audio")
 
 signal units_done
 signal pause_off
+signal hide_gui
+signal show_gui
 
 var player_units = {BattleEnums.BattleRows.FIRST_BACK: null,
 	BattleEnums.BattleRows.FIRST_FRONT: null,
@@ -41,7 +43,7 @@ func _ready():
 	max_resolution = get_viewport_rect().size
 	rect_size = start_resolution
 
-func _process(delta):
+func _process(_delta):
 	if get_tree().paused == false:
 		emit_signal("pause_off")
 
@@ -72,6 +74,7 @@ func show_forest():
 	GameVariables.gui_is_on = true
 	GameVariables.battle_on = true
 	transition_process()
+	emit_signal("hide_gui")
 	yield($BattleFadeOut/ColorRect/AnimationPlayer, "animation_finished")
 	$BattleFadeOut/ColorRect.material.set_shader_param("cutoff",1)
 	popup_plains()
@@ -179,7 +182,7 @@ func check_if_end():
 		battle_end = true
 		player_won = true
 
-func player_action(player_unit: BaseBattleUnit) -> void:
+func player_action(_player_unit: BaseBattleUnit) -> void:
 	yield($BackgroundPlains/Plains/BattlePanel, "player_attacked")
 
 func enemy_attack(enemy_unit: BaseBattleUnit):
@@ -207,6 +210,7 @@ func _on_BattlePanel_close_arena():
 	transition_process()
 	yield($BattleFadeOut/ColorRect/AnimationPlayer, "animation_finished")
 	yield(get_tree().create_timer(0.5), "timeout")
+	emit_signal("show_gui")
 	$BattleFadeOut/ColorRect.material.set_shader_param("cutoff",1)
 	battlePanel.hide_exit_button()
 	if !player_won:

@@ -1,0 +1,6 @@
+[gd_scene format=2]
+
+[node name="MinimapView" type="Camera2D"]
+position = Vector2( 530, 413 )
+limit_left = -10000006
+limit_right = 10000001

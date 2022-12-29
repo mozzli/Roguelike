@@ -8,6 +8,9 @@ var river_amount = 2
 var forest_amount = 150
 var current_number_of_tiles = 0
 
+func _ready():
+	clear()
+
 func create_map():
 	clear()
 	create_plains()

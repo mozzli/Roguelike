@@ -4,6 +4,7 @@ var pos_cell_global
 var fog_on = true
 onready var music = $Audio
 
+
 func _ready():
 	GameVariables.load_new_map()
 	randomize()
@@ -12,6 +13,7 @@ func _ready():
 	MovementUtils.movement_tiles = $MovementTiles
 	MovementUtils.map.create_map()
 	MovementUtils.create_cell_cubed_list()
+	MovementUtils.fog_map = $FogOfWar
 	$FogOfWar.create_fog_of_war()
 	spawn_builder(Vector2(21,21))
 	spawn_builder(Vector2(8,20))
@@ -24,6 +26,7 @@ func _ready():
 	spawn_boar_random()
 	$Camera2D.activate_camera()
 	music.play_music(music.get_audio(music.audio.FOREST_MAZE))
+	update_minimap()
 
 func spawn_builder(pos: Vector2):
 	pos_cell_global = MovementUtils.movement_tiles.map_to_world(pos)
@@ -63,6 +66,9 @@ func get_random_map_position() -> Vector2:
 func spawn_town():
 	return $ResourcePreloader.town.instance()
 
+func update_minimap():
+	$SideGUILayer/SideGUIControl/MinimapViewportContainer/MinimapViewport/MinimapTiles.update_minimap()
+
 func _unhandled_input(event):
 	if event is InputEventKey:
 		check_key_event(event)
@@ -85,4 +91,11 @@ func check_key_event(event):
 #		else:
 #			$FogOfWar.create_fog_of_war()
 #			fog_on = true
-		pass
+		update_minimap()
+
+
+func _on_BattleArena_hide_gui():
+	$SideGUILayer.visible = false
+
+func _on_BattleArena_show_gui():
+	$SideGUILayer.visible = true

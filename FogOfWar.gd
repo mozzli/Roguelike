@@ -2,6 +2,9 @@ extends TileMap
 
 enum tiles {DARK_BLUE = 0}
 
+func _ready():
+	clear()
+
 func create_fog_of_war():
 	for column in GameVariables.map_columns:
 		for row in GameVariables.map_rows:
