@@ -35,6 +35,7 @@ func move_boar():
 	movement_goal_position = MovementUtils.get_cell_in_position(movement_next_tile, MovementUtils.map.world_to_map(self.global_position))
 	movement_goal_position = MovementUtils.map.map_to_world(Vector2(movement_goal_position[0], movement_goal_position[1])) + Vector2(32,24)
 	movement_on = true
+	GameVariables.current_map.update_minimap_units()
 
 func movement_process():
 	column = MovementUtils.map.world_to_map(global_position).x
@@ -56,7 +57,6 @@ func play_event(player):
 	var terrain = MovementUtils.get_terrain_type(position)
 	GameVariables.battle_on = true
 	GameVariables.current_map.get_node("BattleArena").prepare_battle(player, self, terrain)
-
 
 func _on_Boar_body_entered(body):
 	play_event(body)

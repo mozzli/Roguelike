@@ -56,3 +56,4 @@ func _on_MainMenuButton_button_up():
 		print("Map loading successful")
 	else:
 		print("Map loading failed")
+

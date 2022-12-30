@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://tile_sets/Map.tres" type="TileSet" id=1]
 [ext_resource path="res://tile_sets/fog.tres" type="TileSet" id=2]
@@ -32,6 +32,13 @@
 [ext_resource path="res://BattleFadeOut.tscn" type="PackedScene" id=40]
 [ext_resource path="res://BattlePanel.tscn" type="PackedScene" id=41]
 [ext_resource path="res://fonts/ren_regular.ttf" type="DynamicFontData" id=42]
+
+[sub_resource type="DynamicFont" id=18]
+size = 25
+font_data = ExtResource( 42 )
+
+[sub_resource type="Theme" id=19]
+default_font = SubResource( 18 )
 
 [sub_resource type="CanvasItemMaterial" id=15]
 
@@ -198,6 +205,14 @@ margin_left = -278.0
 margin_top = 12.0
 margin_right = -13.0
 margin_bottom = 263.0
+
+[node name="EndTurnButton" type="Button" parent="SideGUILayer/SideGUIControl"]
+margin_left = 62.0
+margin_top = 949.0
+margin_right = 252.0
+margin_bottom = 1018.0
+theme = SubResource( 19 )
+text = "END TURN"
 
 [node name="Map" type="TileMap" parent="."]
 material = SubResource( 15 )
@@ -468,6 +483,7 @@ script = ExtResource( 8 )
 [connection signal="button_up" from="PauseLayer/PauseControl/MainMenu/Popup/OptionsButton" to="PauseLayer/PauseControl" method="_on_OptionsButton_button_up"]
 [connection signal="button_up" from="PauseLayer/PauseControl/MainMenu/Popup/MainMenuButton" to="PauseLayer/PauseControl" method="_on_MainMenuButton_button_up"]
 [connection signal="button_up" from="PauseLayer/PauseControl/MainMenu/SoundOptions/OptionsBackButton" to="PauseLayer/PauseControl" method="_on_OptionsBackButton_button_up"]
+[connection signal="pressed" from="SideGUILayer/SideGUIControl/EndTurnButton" to="SideGUILayer/SideGUIControl" method="_on_EndTurnButton_pressed"]
 [connection signal="button_up" from="TownsControl/Popup/Sprite/Button" to="TownsControl" method="_on_Button_button_up"]
 [connection signal="button_up" from="TreasureControl/Popup/Sprite/Button" to="TreasureControl" method="_on_Button_button_up"]
 [connection signal="hide_gui" from="BattleArena" to="." method="_on_BattleArena_hide_gui"]

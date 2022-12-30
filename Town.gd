@@ -16,3 +16,6 @@ func _on_Town_body_exited(_body):
 func play_event(_body):
 	town_controller.show_town()
 	print("it's everyday bro with a chicken nugget flo'")
+
+func get_tile_position():
+	return MovementUtils.map.world_to_map(position)

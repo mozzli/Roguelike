@@ -72,6 +72,7 @@ func create_town():
 		var pos_cell_global = MovementUtils.movement_tiles.map_to_world(Vector2(column,row))
 		town.position = pos_cell_global + Vector2(32,24)
 		add_child(town)
+		GameVariables.towns.append(town)
 
 func place_tiles(tiles, column, row, repeat_number, current_repeat):
 	divide_cells_by_type(tiles, [row,column])

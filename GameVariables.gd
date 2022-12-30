@@ -13,6 +13,7 @@ var current_map
 var camera_zoom: Vector2 = Vector2(0.5,0.5)
 var gui_is_on: bool = false
 var enemies = []
+var towns = []
 var forest_tiles = []
 var number_of_towns = 0
 var current_scene
@@ -68,6 +69,7 @@ func load_new_map():
 	active_units.clear()
 	selected_unit.clear()
 	enemies.clear()
+	towns.clear()
 	map_on = true
 	time_of_the_day = Color(1,1,1,1)
 	camera_zoom = Vector2(0.5,0.5)

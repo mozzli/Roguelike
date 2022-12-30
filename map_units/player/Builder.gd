@@ -29,6 +29,7 @@ func _process(_delta):
 		path_creator.create_path(builder_position_cell,current_cell)
 		selected_cell = current_cell
 	fog_of_war_class.show_tiles(fog_of_war_visibility)
+	GameVariables.current_map.update_minimap_visibility()
 
 func _on_KinematicBody2D_mouse_entered():
 	mouse_floats = true
@@ -62,6 +63,9 @@ func new_turn():
 
 func get_position_on_map(pos):
 	return MovementUtils.map.world_to_map(pos)
+
+func get_tile():
+	return MovementUtils.map.world_to_map(position)
 
 func play_object_event():
 	GameVariables.object_under_player.play_event()

@@ -69,6 +69,12 @@ func spawn_town():
 func update_minimap():
 	$SideGUILayer/SideGUIControl/MinimapViewportContainer/MinimapViewport/MinimapTiles.update_minimap()
 
+func update_minimap_visibility():
+	$SideGUILayer/SideGUIControl/MinimapViewportContainer/MinimapViewport/MinimapTiles.update_visibility()
+
+func update_minimap_units():
+	$SideGUILayer/SideGUIControl/MinimapViewportContainer/MinimapViewport/MinimapTiles.update_units()
+
 func _unhandled_input(event):
 	if event is InputEventKey:
 		check_key_event(event)
