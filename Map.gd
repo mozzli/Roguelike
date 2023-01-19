@@ -56,7 +56,7 @@ func spawn_caravan(pos: Vector2):
 	GameVariables.caravan = caravan
 	$FogOfWar.set_visibility(int(pos.x), int(pos.y), caravan)
 
-func spawn_boar(column, row):
+func spawn_boar(row, column):
 	pos_cell_global = MovementUtils.movement_tiles.map_to_world(Vector2(column,row))
 	var boar = $ResourcePreloader.boar_res.instance()
 	boar.position = pos_cell_global + Vector2(32,24)
