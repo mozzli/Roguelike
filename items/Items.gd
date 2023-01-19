@@ -11,7 +11,6 @@ func print_name() -> void:
 
 func set_name(new_name) -> void:
 	item_name = new_name
-	print(item_name)
 
 func get_item_name() -> String:
 	return item_name

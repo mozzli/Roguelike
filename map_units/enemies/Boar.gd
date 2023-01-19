@@ -54,7 +54,7 @@ func movement_process():
 
 func play_event(player):
 	$WalkingSound.stop()
-	var terrain = MovementUtils.get_terrain_type(position)
+	var terrain = MovementUtils.get_terrain_type_pos(position)
 	GameVariables.battle_on = true
 	GameVariables.current_map.get_node("BattleArena").prepare_battle(player, self, terrain)
 

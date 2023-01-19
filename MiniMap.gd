@@ -6,9 +6,7 @@ extends ViewportContainer
 # var b = "text"
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	$Control/Viewport/Map/Camera2D.zoom = vec
+# Called when the node enters the scene tree for the first tim
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

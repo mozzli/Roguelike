@@ -9,6 +9,8 @@
 
 [sub_resource type="DynamicFont" id=2]
 size = 50
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
 [sub_resource type="Theme" id=1]
@@ -62,7 +64,6 @@ margin_bottom = 40.0
 script = ExtResource( 5 )
 
 [node name="MainPopup" type="Popup" parent="ButtonLayer/MenuButtonControl"]
-visible = true
 anchor_right = 47.925
 anchor_bottom = 27.0
 margin_right = -0.00012207
@@ -197,7 +198,6 @@ theme = SubResource( 6 )
 text = "Back"
 
 [node name="AboutPopup" type="PopupDialog" parent="ButtonLayer/MenuButtonControl"]
-visible = true
 margin_left = 616.0
 margin_top = 304.0
 margin_right = 1344.0

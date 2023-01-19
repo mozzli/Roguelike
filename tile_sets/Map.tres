@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=36 format=2]
+[gd_resource type="TileSet" load_steps=37 format=2]
 
 [ext_resource path="res://images/Tiles/plains.png" type="Texture" id=1]
 [ext_resource path="res://images/Tiles/mountains_with_river.png" type="Texture" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://images/Tiles/minimap/minimap_hero.png" type="Texture" id=23]
 [ext_resource path="res://images/Tiles/minimap/minimap_enemy.png" type="Texture" id=24]
 [ext_resource path="res://images/Tiles/minimap/minimap_town.png" type="Texture" id=25]
+[ext_resource path="res://images/Tiles/minimap/minimap_base.png" type="Texture" id=26]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
@@ -452,3 +453,17 @@ points = PoolVector2Array( 62.0045, 17.0522, 62.1391, 46.9307, 62.1391, 46.9307,
 24/shape_one_way_margin = 0.0
 24/shapes = [  ]
 24/z_index = 0
+25/name = "minimap_base.png 25"
+25/texture = ExtResource( 26 )
+25/tex_offset = Vector2( 0, 0 )
+25/modulate = Color( 1, 1, 1, 1 )
+25/region = Rect2( 0, 0, 64, 64 )
+25/tile_mode = 0
+25/occluder_offset = Vector2( 0, 0 )
+25/navigation_offset = Vector2( 0, 0 )
+25/shape_offset = Vector2( 0, 0 )
+25/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+25/shape_one_way = false
+25/shape_one_way_margin = 0.0
+25/shapes = [  ]
+25/z_index = 0

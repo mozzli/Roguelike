@@ -51,7 +51,6 @@ func _on_Timer_timeout():
 func _on_MainMenuButton_button_up():
 	get_tree().paused = false
 	GameVariables.map_on = false
-	print(GameVariables.active_units)
 	if (get_tree().change_scene_to(GameVariables.main_menu) == 0):
 		print("Map loading successful")
 	else:

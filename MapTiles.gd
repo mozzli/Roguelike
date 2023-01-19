@@ -63,8 +63,16 @@ extra_neighbours):
 		place_tiles(type_of_tile, column, row,number_of_repeat,0)
 
 func create_town():
-	var row = randi() % map_rows
-	var column = randi() % map_columns
+	var tile_found = false
+	var row
+	var column
+	while !tile_found:
+		row = randi() % map_rows
+		column = randi() % map_columns
+		for unit in GameVariables.active_units:
+			if unit.get_tile() == Vector2(row, column):
+				continue
+		tile_found = true
 	var current_tile = get_cell(column, row)
 	if current_tile == MovementUtils.tiles.PLAINS:
 		place_tiles(MovementUtils.tiles.TOWN, column, row,1,0)

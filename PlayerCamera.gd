@@ -15,7 +15,7 @@ func _ready():
 	drag_margin_left = 1
 	zoom = GameVariables.camera_zoom
 	limit_right = GameVariables.map_columns*65 + 550
-	limit_bottom = GameVariables.map_rows*48.5 + 200
+	limit_bottom = GameVariables.map_rows*49 + 200
 
 func _process(_delta):
 	change_border_hitboxes()
@@ -40,8 +40,7 @@ func zoom_progressive():
 
 func activate_camera():
 	if GameVariables.map_on:
-		print(GameVariables.active_units)
-		position = GameVariables.active_units[0].get_position()
+		position = GameVariables.caravan.position
 
 func check_if_camera_can_be_moved():
 	if mouse_down == true:
@@ -82,7 +81,6 @@ func _input(event):
 		if event.button_index == BUTTON_WHEEL_UP && !GameVariables.gui_is_on:
 			GameVariables.camera_zoom = Vector2(0.5,0.5)
 		if event.button_index == BUTTON_WHEEL_DOWN && !GameVariables.gui_is_on:
-			print("hey!!!")
 			GameVariables.camera_zoom = Vector2(1,1)
 			
 

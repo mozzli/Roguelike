@@ -3,12 +3,15 @@ extends Node
 enum day_cycle {MORNING = 0, NOON = 1, EVENING = 2, NIGHT = 3}
 
 var object_under_player = null
+var base
 var map_on: bool = false
 var selected_unit: Array
+var map_selected_unit: MapUnit
 var time_of_the_day: Color = Color(1,1,1,1)
 var map_columns: int = 23
 var map_rows: int = 23
 var active_units: Array = []
+var caravan: MapUnit
 var current_map
 var camera_zoom: Vector2 = Vector2(0.5,0.5)
 var gui_is_on: bool = false
@@ -65,6 +68,7 @@ func get_enemies() -> Array:
 func load_new_map():
 	object_under_player = null
 	gui_is_on = false
+	base = null
 	forest_tiles.clear()
 	active_units.clear()
 	selected_unit.clear()
@@ -75,5 +79,11 @@ func load_new_map():
 	camera_zoom = Vector2(0.5,0.5)
 	battle_on = false
 	enemies_turn_on = false
+	caravan = null
 	
-	
+
+func get_active_unit_pos_list():
+	var pos: Array = []
+	for unit in active_units:
+		pos.append(unit.get_tile())
+	return pos

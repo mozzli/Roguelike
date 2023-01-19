@@ -87,7 +87,6 @@ func end_battle() -> void:
 		var money = main_enemy.get_reward_money()
 		var items = main_enemy.get_reward_items()
 		battlePanel.add_battle_text("Party gains " + String(money) + " money!")
-		print(items)
 		for item in items:
 			battlePanel.add_battle_text("Party gets "+ String(GlobalItems.get_item_name(item)) + "!")
 

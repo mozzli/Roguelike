@@ -1,13 +1,8 @@
-extends "res://party_nodes/BaseParty.gd"
+extends BaseParty
 
-var party = []
 var enemies_nodes = []
-var unit_formation = {BattleEnums.BattleRows.FIRST_BACK: null, BattleEnums.BattleRows.SECOND_BACK: null,
-	BattleEnums.BattleRows.THIRD_BACK: null, BattleEnums.BattleRows.FIRST_FRONT: null,
-	BattleEnums.BattleRows.SECOND_FRONT: null, BattleEnums.BattleRows.THIRD_FRONT: null }
 var max_party_amount = 4
 var party_monster_type = [EnemiesList.enemies.BOAR]
-var rng = Utilities.rng
 
 func get_random_party():
 	rng.randomize()
