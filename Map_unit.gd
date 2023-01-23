@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 class_name MapUnit
 
+var gui_image
 var mouse_floats = false
 var selected = false
 var fog_of_war_class = GameVariables.current_map.get_node("FogOfWar")
@@ -14,6 +15,7 @@ var current_cell
 var movement_value
 var vision_range
 var unit_class
+var gui_panel_placement
 
 func _input(event):
 	if event is InputEventMouseButton && not mouse_floats:
@@ -43,13 +45,8 @@ func left_click_check(event):
 
 func new_turn():
 	end_of_turn = false
+	gui_panel_placement.player_refreshed()
 	ColorManager.change_color_default($AnimatedSprite)
-
-func get_position_on_map(pos):
-	return MovementUtils.map.world_to_map(pos)
-
-func get_tile():
-	return MovementUtils.map.world_to_map(position)
 
 func play_object_event():
 	GameVariables.object_under_player.play_event()
@@ -85,12 +82,6 @@ func deselect_player():
 	$AnimatedSprite.speed_scale = 1
 	input_pickable = true
 
-func get_item(item):
-	$Items.get_item(item)
-
-func get_party() -> Dictionary:
-	return $PlayerParty.get_party()
-
 func delete_unit():
 	GameVariables.active_units.erase(self)
 	GameVariables.current_map.update_gui_units()
@@ -102,14 +93,39 @@ func gain_money(amount: int) -> void:
 
 func end_turn():
 	deselect_player()
+	gui_panel_placement.player_moved()
 	end_of_turn = true
 	ColorManager.change_color_end_turn($AnimatedSprite)
+
+func focus_camera():
+	GameVariables.current_map.change_camera_position(position)
+
+func check_if_end_of_turn():
+	return end_of_turn
+
+func add_item(item: Items):
+	return $Items.add_new_item(item)
 
 func get_unit_class() -> int:
 	return unit_class
 
-func focus_camera():
-	GameVariables.current_map.change_camera_position(position)
+func get_item_box():
+	return $Items.item_box
+
+func get_equipement_box():
+	return $Items.equiped_items
+
+func get_party() -> Dictionary:
+	return $PlayerParty.get_party()
+
+func get_position_on_map(pos):
+	return MovementUtils.map.world_to_map(pos)
+
+func get_tile():
+	return MovementUtils.map.world_to_map(position)
+
+func get_gui_image():
+	return gui_image
 
 func _on_KinematicBody2D_mouse_entered():
 	mouse_floats = true

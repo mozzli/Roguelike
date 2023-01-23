@@ -4,15 +4,15 @@ class_name BuilderHero
 
 remote var unit_min_hp = 100
 remote var unit_max_hp = 105
-remote var unit_min_strenght = 20
-remote var unit_max_strenght = 25
+remote var unit_min_strenght = 10
+remote var unit_max_strenght = 15
 remote var unit_min_dexterity = 5
 remote var unit_max_dexterity = 8
 remote var unit_min_agility = 7
 remote var unit_max_agility = 9
 remote var unit_min_wisdom = 0
 remote var unit_max_wisdom = 3
-var player_unit_picture = "res://images/Enemies/Boar/boar.png"
+var player_unit_picture = load("res://images/Enemies/Boar/boar.png")
 var type = "player"
 var u_name = "Mark"
 
@@ -20,7 +20,7 @@ var unit_prefered_position = [BattleEnums.BattleRows.SECOND_FRONT,
 	BattleEnums.BattleRows.FIRST_FRONT, 
 	BattleEnums.BattleRows.THIRD_FRONT]
 
-func _ready():
+func _init():
 	set_unit_type(type)
 	set_max_hp(unit_max_hp)
 	set_max_str(unit_max_strenght)

@@ -13,6 +13,11 @@ func _ready():
 	rect_size.y = resolution.y
 	$ColorRect.rect_size = resolution
 
+func update_unit_panel():
+	$UnitGUIControl.reset_panels()
+	for unit in GameVariables.active_units:
+		$UnitGUIControl.set_unit(unit)
+
 func _on_EndTurnButton_pressed():
 	GameVariables.new_turn()
 
@@ -22,8 +27,3 @@ func _on_BuildButton_pressed():
 
 func _on_MenuButton_pressed():
 	GameVariables.current_map.pause_on()
-
-func update_unit_panel():
-	$UnitGUIControl.reset_panels()
-	for unit in GameVariables.active_units:
-		$UnitGUIControl.set_unit(unit)

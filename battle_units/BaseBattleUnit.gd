@@ -20,7 +20,7 @@ var max_agility: int
 var wisdom
 var min_wisdom: int
 var max_wisdom: int
-var unit_picture: String
+var unit_picture: Texture
 var unit_type
 var current_battle_position
 var unit_name
@@ -99,7 +99,7 @@ func set_random_status_points() -> void:
 func get_prefered_position() -> Array:
 	return prefered_position
 
-func get_unit_picture() -> String:
+func get_unit_picture() -> Texture:
 	return unit_picture
 
 func set_max_hp(value):
@@ -177,3 +177,4 @@ func get_percent_of_hp() -> int:
 func use_attack(attack: int) -> int:
 	var damage = Attacks.get_damage(attack, self)
 	return damage
+	

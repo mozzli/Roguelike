@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Items",
+"class": "Armor",
+"language": "GDScript",
+"path": "res://items/Armor.gd"
+}, {
 "base": "Node",
 "class": "BaseBattleUnit",
 "language": "GDScript",
@@ -79,6 +84,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://items/Items.gd"
 }, {
+"base": "Armor",
+"class": "LeatherCap",
+"language": "GDScript",
+"path": "res://items/specific_items/LeatherCap.gd"
+}, {
+"base": "Armor",
+"class": "LeatherShoes",
+"language": "GDScript",
+"path": "res://items/specific_items/LeatherShoes.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "MapUnit",
 "language": "GDScript",
@@ -94,6 +109,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://MapMusicController.gd"
 }, {
+"base": "Node2D",
+"class": "PlayerItems",
+"language": "GDScript",
+"path": "res://Equipment.gd"
+}, {
 "base": "BaseParty",
 "class": "PlayerParty",
 "language": "GDScript",
@@ -103,6 +123,16 @@ _global_script_classes=[ {
 "class": "SilverSword",
 "language": "GDScript",
 "path": "res://items/specific_items/SilverSword.gd"
+}, {
+"base": "Control",
+"class": "StatusWindow",
+"language": "GDScript",
+"path": "res://status_window/StatusWindow.gd"
+}, {
+"base": "Panel",
+"class": "UnitGui",
+"language": "GDScript",
+"path": "res://side_gui/UnitPanel.gd"
 }, {
 "base": "Weapons",
 "class": "Weapon",
@@ -115,6 +145,7 @@ _global_script_classes=[ {
 "path": "res://items/Weapon.gd"
 } ]
 _global_script_class_icons={
+"Armor": "",
 "BaseBattleUnit": "",
 "BaseMonsterParty": "",
 "BaseMonsterUnit": "",
@@ -129,11 +160,16 @@ _global_script_class_icons={
 "Caravan": "",
 "IronSword": "",
 "Items": "",
+"LeatherCap": "",
+"LeatherShoes": "",
 "MapUnit": "",
 "MonsterName": "",
 "Music": "",
+"PlayerItems": "",
 "PlayerParty": "",
 "SilverSword": "",
+"StatusWindow": "",
+"UnitGui": "",
 "Weapon": "",
 "Weapons": ""
 }
@@ -214,6 +250,10 @@ zoom_in={
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":4,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
 
 [rendering]
 

@@ -12,7 +12,7 @@ func set_items_to_gain(items: Dictionary) -> void:
 	for item in items:
 		var chance = Utilities.rng.randi_range(1, 100)
 		if chance <= items[item]:
-			items_to_gain.append(item)
+			items_to_gain.append(GlobalItems.get_item_instance(item))
 
 func get_enemy_money() -> int:
 	return money_to_gain

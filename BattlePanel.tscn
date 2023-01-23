@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://images/Battle/unit_box.png" type="Texture" id=1]
 [ext_resource path="res://battle_arena/BattleFirstRow.gd" type="Script" id=2]
@@ -50,7 +50,6 @@ func refresh_units_hp(player_units: Dictionary, enemy_units: Dictionary):
 		var enemy = enemy_units.get(unit)
 		if enemy != null:
 			change_enemy_hp(enemy.get_current_battle_position(), enemy.get_percent_of_hp())
-			
 
 func clear_units_hp():
 	for picture in pic_nodes:
@@ -72,17 +71,17 @@ func reset_pictures() -> void:
 func change_player_pic(position, player):
 	match(position):
 		BattleEnums.BattleRows.FIRST_BACK:
-			$PlayerRect/Columns/FirstRow/BackRow.texture = load(player.get_unit_picture())
+			$PlayerRect/Columns/FirstRow/BackRow.texture = player.get_unit_picture()
 		BattleEnums.BattleRows.FIRST_FRONT:
-			$PlayerRect/Columns/FirstRow/FrontRow.texture = load(player.get_unit_picture())
+			$PlayerRect/Columns/FirstRow/FrontRow.texture = player.get_unit_picture()
 		BattleEnums.BattleRows.SECOND_BACK:
-			$PlayerRect/Columns/SecondRow/BackRow.texture = load(player.get_unit_picture())
+			$PlayerRect/Columns/SecondRow/BackRow.texture = player.get_unit_picture()
 		BattleEnums.BattleRows.SECOND_FRONT:
-			$PlayerRect/Columns/SecondRow/FrontRow.texture = load(player.get_unit_picture())
+			$PlayerRect/Columns/SecondRow/FrontRow.texture = player.get_unit_picture()
 		BattleEnums.BattleRows.THIRD_BACK:
-			$PlayerRect/Columns/ThirdRow/BackRow.texture = load(player.get_unit_picture())
+			$PlayerRect/Columns/ThirdRow/BackRow.texture = player.get_unit_picture()
 		BattleEnums.BattleRows.THIRD_FRONT:
-			$PlayerRect/Columns/ThirdRow/FrontRow.texture = load(player.get_unit_picture())
+			$PlayerRect/Columns/ThirdRow/FrontRow.texture = player.get_unit_picture()
 
 func prepare_enemy_pics(position: Dictionary):
 	for pos in position:
@@ -92,17 +91,17 @@ func prepare_enemy_pics(position: Dictionary):
 func change_enemy_pic(position, enemy):
 	match(position):
 		BattleEnums.BattleRows.FIRST_BACK:
-			$EnemyRect/Columns/FirstRow/BackRow.texture = load(enemy.get_unit_picture())
+			$EnemyRect/Columns/FirstRow/BackRow.texture = enemy.get_unit_picture()
 		BattleEnums.BattleRows.FIRST_FRONT:
-			$EnemyRect/Columns/FirstRow/FrontRow.texture = load(enemy.get_unit_picture())
+			$EnemyRect/Columns/FirstRow/FrontRow.texture = enemy.get_unit_picture()
 		BattleEnums.BattleRows.SECOND_BACK:
-			$EnemyRect/Columns/SecondRow/BackRow.texture = load(enemy.get_unit_picture())
+			$EnemyRect/Columns/SecondRow/BackRow.texture = enemy.get_unit_picture()
 		BattleEnums.BattleRows.SECOND_FRONT:
-			$EnemyRect/Columns/SecondRow/FrontRow.texture = load(enemy.get_unit_picture())
+			$EnemyRect/Columns/SecondRow/FrontRow.texture = enemy.get_unit_picture()
 		BattleEnums.BattleRows.THIRD_BACK:
-			$EnemyRect/Columns/ThirdRow/BackRow.texture = load(enemy.get_unit_picture())
+			$EnemyRect/Columns/ThirdRow/BackRow.texture = enemy.get_unit_picture()
 		BattleEnums.BattleRows.THIRD_FRONT:
-			$EnemyRect/Columns/ThirdRow/FrontRow.texture = load(enemy.get_unit_picture())
+			$EnemyRect/Columns/ThirdRow/FrontRow.texture = enemy.get_unit_picture()
 
 func change_selected_unit(unit) -> void:
 	current_unit = unit
@@ -112,7 +111,7 @@ func change_selected_unit(unit) -> void:
 		$EnemyRect/Columns.change_visibility(unit)
 
 func set_selected_unit_portrait(unit):
-	$LowerGuiRect/UnitPortrait.texture = load(unit.get_unit_picture())
+	$LowerGuiRect/UnitPortrait.texture = unit.get_unit_picture()
 	$LowerGuiRect/ProgressBar.max_value = unit.get_stat(StatEnums.stat_enums.HP)
 	$LowerGuiRect/ProgressBar.value = unit.get_stat(StatEnums.stat_enums.CURRENT_HP)
 	$LowerGuiRect/ProgressBar/Label.text = \"hp: \" + str(unit.get_stat(StatEnums.stat_enums.CURRENT_HP)) + \"/\" + str(unit.get_stat(StatEnums.stat_enums.HP))
@@ -138,11 +137,6 @@ func show_exit_button() -> void:
 func hide_exit_button() -> void:
 	$LowerGuiRect/ExitButton.visible = false
 
-func _on_AttackButton_button_up():
-	$EnemyRect.enemy_party = battle_arena.get_enemy_party()
-	attack_mode = true
-	attack_chosen = Attacks.attack_enums.BASIC_ATTACK
-
 func set_target(target: int):
 	target_chosen = target
 
@@ -157,6 +151,11 @@ func get_attack_mode() -> bool:
 
 func _on_ExitButton_button_up():
 	emit_signal(\"close_arena\")
+
+func _on_AttackButton_button_up():
+	$EnemyRect.enemy_party = battle_arena.get_enemy_party()
+	attack_mode = true
+	attack_chosen = Attacks.attack_enums.BASIC_ATTACK
 "
 
 [sub_resource type="StyleBoxFlat" id=2]
@@ -175,6 +174,8 @@ font_data = SubResource( 4 )
 [sub_resource type="DynamicFont" id=6]
 size = 40
 font_data = ExtResource( 5 )
+
+[sub_resource type="ButtonGroup" id=7]
 
 [node name="BattlePanel" type="Control"]
 pause_mode = 1
@@ -250,9 +251,6 @@ mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.52549, 0.0705882, 0.0705882, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="SelectedUnit" type="ColorRect" parent="PlayerRect/Columns/FirstRow/BackRow"]
 visible = false
@@ -514,9 +512,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
 color = Color( 0.52549, 0.0705882, 0.0705882, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="SelectedUnit" type="ColorRect" parent="EnemyRect/Columns/FirstRow/FrontRow"]
 visible = false
@@ -906,6 +901,7 @@ margin_bottom = 264.0
 focus_mode = 0
 custom_fonts/font = SubResource( 6 )
 enabled_focus_mode = 0
+group = SubResource( 7 )
 text = "Exit"
 __meta__ = {
 "_edit_use_anchors_": false

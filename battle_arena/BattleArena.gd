@@ -12,7 +12,7 @@ var trasition_ready = false
 var show_background
 var all_units = []
 var current_turn_unit: BaseBattleUnit
-var main_player
+var main_player: MapUnit
 var main_enemy
 var battle_end = false
 var player_won: bool
@@ -85,10 +85,12 @@ func end_battle() -> void:
 		battlePanel.add_battle_text("The party has lost")
 	elif player_won:
 		var money = main_enemy.get_reward_money()
-		var items = main_enemy.get_reward_items()
+		var items: Array = main_enemy.get_reward_items()
 		battlePanel.add_battle_text("Party gains " + String(money) + " money!")
 		for item in items:
-			battlePanel.add_battle_text("Party gets "+ String(GlobalItems.get_item_name(item)) + "!")
+			battlePanel.add_battle_text("Party gets "+ item.get_item_name() + "!")
+			if !main_player.add_item(item):
+				print("oops")
 
 func transition_process():
 	$BattleFadeOut.play_shader()

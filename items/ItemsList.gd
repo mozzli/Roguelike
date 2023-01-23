@@ -10,13 +10,29 @@ enum types_of_items{
 	CONSUMABLES
 }
 
-enum types_of_equipement{
+enum equipement_type{
 	HEAD,
 	LEFT_HAND,
 	RIGHT_HAND,
 	BODY,
 	LEGS,
 	ACCESSORY
+}
+
+enum armor_type{
+	BODY,
+	HEAD,
+	LEGS,
+	ACCESSORY,
+}
+
+enum weapon_type{
+	KNIFE,
+	SWORD,
+	AXE,
+	BOW,
+	CROSSBOW,
+	LANCE
 }
 
 enum items{
@@ -37,6 +53,8 @@ enum elements {
 	EARTH
 }
 
+var chest_lvl_1: Array = [items.BRONZE_SWORD, items.SILVER_SWORD, items.IRON_SWORD]
+
 var item_keys = {items.LEATHER_BOOTS:"Leather Boots",
 	items.LEATHER_CAP:"Leather Cap",
 	items.IRON_SWORD:"Iron Sword",
@@ -46,10 +64,10 @@ var item_keys = {items.LEATHER_BOOTS:"Leather Boots",
 
 func get_item_instance(item: int) -> Object:
 	match (item):
-		items.BRONZE_SWORD: return bronze_sword.instance()
-		items.IRON_SWORD: return iron_sword.instance()
-		items.SILVER_SWORD: return silver_sword.instance()
-		_: return iron_sword.instance()
+		items.BRONZE_SWORD: return BronzeSword.new()
+		items.IRON_SWORD: return IronSword.new()
+		items.SILVER_SWORD: return SilverSword.new()
+		_: return IronSword.new()
 
 
 func get_item_name(number):
@@ -57,8 +75,4 @@ func get_item_name(number):
 
 func get_random_item_lvl1():
 	Utilities.rng.randomize()
-	return get_item_instance(get_random_lvl1_item())
-
-func get_random_lvl1_item():
-	var chest_items = [items.BRONZE_SWORD, items.SILVER_SWORD, items.IRON_SWORD]
-	return chest_items[randi()%chest_items.size()]
+	return get_item_instance(chest_lvl_1[randi()%chest_lvl_1.size()])

@@ -4,7 +4,7 @@ func open_treasure_event(item: Items):
 	var name: String = item.get_item_name()
 	$Popup/Sprite/Label.text = "You've got " + name + "!"
 	$Popup/Sprite.scale = GameVariables.camera_zoom
-	$Popup/Sprite/ItemImage.texture = load(item.get_image())
+	$Popup/Sprite/ItemImage.texture = item.get_image()
 	$Popup.popup()
 	GameVariables.gui_is_on = true
 

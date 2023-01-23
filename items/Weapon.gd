@@ -5,10 +5,10 @@ class_name Weapons
 var element = null
 var passive_effect = null
 var power
+var weapon_type
 
-func _ready():
+func _init():
 	set_item_type(GlobalItems.types_of_items.WEAPON)
-#	print_name()
 
 func set_element(new_element: int):
 	element = new_element

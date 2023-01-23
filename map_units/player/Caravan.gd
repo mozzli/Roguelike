@@ -5,9 +5,9 @@ class_name Caravan
 var movement = 2
 var vision = 3
 var unit = StatEnums.unit_class.CARAVAN
-var gui_image = load("res://images/Characters/caravan/gui_caravan.png")
 
 func _ready():
+	gui_image = load("res://images/Characters/caravan/gui_caravan.png")
 	movement_value = movement
 	vision_range = vision
 	unit_class = unit

@@ -1,4 +1,4 @@
-extends TextureRect
+extends Control
 
 var selected_unit = null
 
@@ -16,3 +16,5 @@ func change_hp(unit_position, percent):
 			$Columns.change_hp_third_back(percent)
 		BattleEnums.BattleRows.THIRD_FRONT:
 			$Columns.change_hp_third_front(percent)
+func change_visibility(unit):
+	$Columns.change_visibility(unit)

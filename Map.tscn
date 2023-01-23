@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://tile_sets/Map.tres" type="TileSet" id=1]
 [ext_resource path="res://tile_sets/fog.tres" type="TileSet" id=2]
@@ -29,6 +29,7 @@
 [ext_resource path="res://icon.png" type="Texture" id=27]
 [ext_resource path="res://side_gui/UnitGUIControl.gd" type="Script" id=28]
 [ext_resource path="res://side_gui/UnitPanel.gd" type="Script" id=29]
+[ext_resource path="res://status_window/StatusWindow.tscn" type="PackedScene" id=30]
 [ext_resource path="res://images/Tiles/selected_tile.png" type="Texture" id=33]
 [ext_resource path="res://sample_music/sample.mp3" type="AudioStream" id=34]
 [ext_resource path="res://MapMusicController.gd" type="Script" id=35]
@@ -169,6 +170,8 @@ margin_left = -97.0
 margin_top = -138.0
 margin_right = 97.0
 margin_bottom = -64.0
+focus_mode = 0
+enabled_focus_mode = 0
 text = "Return"
 icon_align = 1
 expand_icon = true
@@ -183,6 +186,8 @@ margin_left = -96.0
 margin_top = -41.0
 margin_right = 98.0
 margin_bottom = 33.0
+focus_mode = 0
+enabled_focus_mode = 0
 text = "Options"
 icon_align = 1
 expand_icon = true
@@ -197,6 +202,8 @@ margin_left = -97.0
 margin_top = 57.0
 margin_right = 97.0
 margin_bottom = 131.0
+focus_mode = 0
+enabled_focus_mode = 0
 text = "Exit to main menu"
 icon_align = 1
 expand_icon = true
@@ -237,6 +244,8 @@ margin_left = 750.0
 margin_top = 347.0
 margin_right = 874.0
 margin_bottom = 397.0
+focus_mode = 0
+enabled_focus_mode = 0
 text = "Back"
 
 [node name="SideGUILayer" type="CanvasLayer" parent="."]
@@ -580,6 +589,17 @@ theme = SubResource( 26 )
 enabled_focus_mode = 0
 text = "MENU"
 
+[node name="StatusWindowLayer" type="CanvasLayer" parent="."]
+offset = Vector2( 200, 200 )
+transform = Transform2D( 1, 0, 0, 1, 200, 200 )
+
+[node name="StatusWindow" parent="StatusWindowLayer" instance=ExtResource( 30 )]
+margin_left = -360.0
+margin_top = -240.0
+margin_right = -360.0
+margin_bottom = -240.0
+mouse_filter = 2
+
 [node name="Map" type="TileMap" parent="."]
 material = SubResource( 15 )
 tile_set = ExtResource( 1 )
@@ -628,7 +648,7 @@ script = ExtResource( 10 )
 [node name="Popup" type="Popup" parent="TownsControl"]
 margin_right = 1905.0
 margin_bottom = 1154.0
-mouse_filter = 2
+popup_exclusive = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -827,10 +847,16 @@ script = ExtResource( 8 )
 [connection signal="pressed" from="SideGUILayer/SideGUIControl/BaseGUIControl/BuildButton" to="SideGUILayer/SideGUIControl" method="_on_BuildButton_pressed"]
 [connection signal="input_event" from="SideGUILayer/SideGUIControl/BaseGUIControl/BasePanel/Area2D" to="SideGUILayer/SideGUIControl/BaseGUIControl" method="_on_Area2D_input_event"]
 [connection signal="input_event" from="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel/Area2D" to="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel" method="_on_Area2D_input_event"]
+[connection signal="pressed" from="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel/Button" to="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel" method="_on_Button_pressed"]
+[connection signal="pressed" from="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel2/Button" to="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel2" method="_on_Button_pressed"]
 [connection signal="input_event" from="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel2/Area2D" to="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel2" method="_on_Area2D_input_event"]
+[connection signal="pressed" from="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel3/Button" to="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel3" method="_on_Button_pressed"]
 [connection signal="input_event" from="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel3/Area2D" to="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel3" method="_on_Area2D_input_event"]
+[connection signal="pressed" from="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel4/Button" to="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel4" method="_on_Button_pressed"]
 [connection signal="input_event" from="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel4/Area2D" to="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel4" method="_on_Area2D_input_event"]
+[connection signal="pressed" from="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel5/Button" to="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel5" method="_on_Button_pressed"]
 [connection signal="input_event" from="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel5/Area2D" to="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel5" method="_on_Area2D_input_event"]
+[connection signal="pressed" from="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel6/Button" to="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel6" method="_on_Button_pressed"]
 [connection signal="input_event" from="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel6/Area2D" to="SideGUILayer/SideGUIControl/UnitGUIControl/GUIUnitsContainer/Panel6" method="_on_Area2D_input_event"]
 [connection signal="pressed" from="SideGUILayer/SideGUIControl/MenuButton" to="SideGUILayer/SideGUIControl" method="_on_MenuButton_pressed"]
 [connection signal="hide_gui" from="TownsControl" to="." method="_on_BattleArena_hide_gui"]
