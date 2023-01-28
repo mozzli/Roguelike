@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=57 format=2]
 
 [ext_resource path="res://tile_sets/Map.tres" type="TileSet" id=1]
 [ext_resource path="res://tile_sets/fog.tres" type="TileSet" id=2]
@@ -39,6 +39,16 @@
 [ext_resource path="res://BattleFadeOut.tscn" type="PackedScene" id=40]
 [ext_resource path="res://BattlePanel.tscn" type="PackedScene" id=41]
 [ext_resource path="res://fonts/ren_regular.ttf" type="DynamicFontData" id=42]
+
+[sub_resource type="DynamicFont" id=30]
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 42 )
+
+[sub_resource type="DynamicFont" id=31]
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 42 )
 
 [sub_resource type="DynamicFont" id=18]
 size = 25
@@ -146,6 +156,7 @@ wait_time = 0.095
 one_shot = true
 
 [node name="MainMenu" type="Popup" parent="PauseLayer/PauseControl"]
+visible = true
 margin_right = 1920.0
 margin_bottom = 1080.0
 
@@ -155,6 +166,7 @@ margin_bottom = 40.0
 texture = ExtResource( 20 )
 
 [node name="Popup" type="Popup" parent="PauseLayer/PauseControl/MainMenu"]
+visible = true
 margin_left = 5.0
 margin_top = -4.0
 margin_right = 1925.0
@@ -171,6 +183,7 @@ margin_top = -138.0
 margin_right = 97.0
 margin_bottom = -64.0
 focus_mode = 0
+custom_fonts/font = SubResource( 30 )
 enabled_focus_mode = 0
 text = "Return"
 icon_align = 1
@@ -187,6 +200,7 @@ margin_top = -41.0
 margin_right = 98.0
 margin_bottom = 33.0
 focus_mode = 0
+custom_fonts/font = SubResource( 30 )
 enabled_focus_mode = 0
 text = "Options"
 icon_align = 1
@@ -203,6 +217,7 @@ margin_top = 57.0
 margin_right = 97.0
 margin_bottom = 131.0
 focus_mode = 0
+custom_fonts/font = SubResource( 30 )
 enabled_focus_mode = 0
 text = "Exit to main menu"
 icon_align = 1
@@ -245,6 +260,7 @@ margin_top = 347.0
 margin_right = 874.0
 margin_bottom = 397.0
 focus_mode = 0
+custom_fonts/font = SubResource( 31 )
 enabled_focus_mode = 0
 text = "Back"
 
