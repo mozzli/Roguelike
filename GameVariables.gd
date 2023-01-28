@@ -29,10 +29,10 @@ signal enemies_moved
 
 func change_day_color(day_enum):
 	match day_enum:
-		day_cycle.MORNING: time_of_the_day = Color(0.94, 1, 1, 1)
+		day_cycle.MORNING: time_of_the_day = Color(0.70, 1, 1, 1)
 		day_cycle.NOON: time_of_the_day = Color(1, 1, 1, 1)
-		day_cycle.EVENING: time_of_the_day = Color(1, 0.27, 0, 1)
-		day_cycle.NIGHT: time_of_the_day = Color(0, 0, 0.55, 1)
+		day_cycle.EVENING: time_of_the_day = Color(0.70, 0.40, 0.10, 1)
+		day_cycle.NIGHT: time_of_the_day = Color(0.2, 0.2, 0.55, 1)
 
 func _input(event):
 	if event is InputEventKey:
@@ -44,6 +44,7 @@ func new_turn():
 	end_turn_of_player()
 	enemies_turn()
 	yield(self, "enemies_moved")
+	current_map.move_time()
 	for active_unit in active_units:
 		active_unit.new_turn()
 		enemies_turn_on = false

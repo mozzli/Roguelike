@@ -74,6 +74,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://map_units/player/Caravan.gd"
 }, {
+"base": "Control",
+"class": "ClockControl",
+"language": "GDScript",
+"path": "res://time_control/ClockControl.gd"
+}, {
 "base": "Weapons",
 "class": "IronSword",
 "language": "GDScript",
@@ -158,6 +163,7 @@ _global_script_class_icons={
 "Builder": "",
 "BuilderHero": "",
 "Caravan": "",
+"ClockControl": "",
 "IronSword": "",
 "Items": "",
 "LeatherCap": "",
