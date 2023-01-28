@@ -1,3 +1,4 @@
+
 [gd_scene load_steps=57 format=2]
 
 [ext_resource path="res://tile_sets/Map.tres" type="TileSet" id=1]
@@ -30,6 +31,7 @@
 [ext_resource path="res://side_gui/UnitGUIControl.gd" type="Script" id=28]
 [ext_resource path="res://side_gui/UnitPanel.gd" type="Script" id=29]
 [ext_resource path="res://status_window/StatusWindow.tscn" type="PackedScene" id=30]
+[ext_resource path="res://time_control/ClockControl.tscn" type="PackedScene" id=31]
 [ext_resource path="res://images/Tiles/selected_tile.png" type="Texture" id=33]
 [ext_resource path="res://sample_music/sample.mp3" type="AudioStream" id=34]
 [ext_resource path="res://MapMusicController.gd" type="Script" id=35]
@@ -114,6 +116,7 @@ font_data = ExtResource( 42 )
 default_font = SubResource( 25 )
 
 [sub_resource type="CanvasItemMaterial" id=15]
+light_mode = 1
 
 [sub_resource type="CanvasItemMaterial" id=14]
 light_mode = 1
@@ -615,6 +618,10 @@ margin_top = -240.0
 margin_right = -360.0
 margin_bottom = -240.0
 mouse_filter = 2
+
+[node name="ClockLayer" type="CanvasLayer" parent="."]
+
+[node name="ClockControl" parent="ClockLayer" instance=ExtResource( 31 )]
 
 [node name="Map" type="TileMap" parent="."]
 material = SubResource( 15 )

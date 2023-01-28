@@ -2,6 +2,7 @@ extends Node2D
 
 var pos_cell_global 
 var fog_on = true
+var current_time = 0
 onready var music = $Audio
 
 
@@ -149,6 +150,17 @@ func check_key_event(event):
 #			$FogOfWar.create_fog_of_war()
 #			fog_on = true
 		print(GameVariables.selected_unit)
+
+func move_time():
+	$ClockLayer/ClockControl.add_time()
+	current_time += 1
+	match(current_time):
+		2: GameVariables.change_day_color(GameVariables.day_cycle.EVENING)
+		4: GameVariables.change_day_color(GameVariables.day_cycle.NIGHT)
+		8: GameVariables.change_day_color(GameVariables.day_cycle.MORNING)
+		10: GameVariables.change_day_color(GameVariables.day_cycle.NOON)
+		12: current_time = 0
+		_: pass
 
 func change_camera_position(pos):
 	$Camera2D.position = pos
