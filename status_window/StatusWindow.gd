@@ -24,7 +24,6 @@ func reset_box():
 	item_box_node.refresh_item_box()
 	unit_container.refresh_party()
 	equipement_node.refresh_equipement()
-	
 
 func _on_Button_pressed():
 	GameVariables.gui_is_on = false

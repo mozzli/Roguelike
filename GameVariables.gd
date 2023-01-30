@@ -7,7 +7,8 @@ var base
 var map_on: bool = false
 var selected_unit: Array
 var map_selected_unit: MapUnit
-var time_of_the_day: Color = Color(1,1,1,1)
+var daytime = day_cycle.MORNING
+var world_color: Color = Color(1,1,1,1)
 var map_columns: int = 23
 var map_rows: int = 23
 var active_units: Array = []
@@ -29,10 +30,13 @@ signal enemies_moved
 
 func change_day_color(day_enum):
 	match day_enum:
-		day_cycle.MORNING: time_of_the_day = Color(0.70, 1, 1, 1)
-		day_cycle.NOON: time_of_the_day = Color(1, 1, 1, 1)
-		day_cycle.EVENING: time_of_the_day = Color(0.70, 0.40, 0.10, 1)
-		day_cycle.NIGHT: time_of_the_day = Color(0.2, 0.2, 0.55, 1)
+		day_cycle.MORNING: world_color = Color(0.70, 1, 1, 1)
+		day_cycle.NOON: world_color = Color(1, 1, 1, 1)
+		day_cycle.EVENING: world_color = Color(0.70, 0.40, 0.30, 1)
+		day_cycle.NIGHT: world_color = Color(0.2, 0.2, 0.55, 1)
+	daytime = day_enum
+	for unit in active_units:
+		unit.reset_visibility()
 
 func _input(event):
 	if event is InputEventKey:
@@ -76,12 +80,12 @@ func load_new_map():
 	enemies.clear()
 	towns.clear()
 	map_on = true
-	time_of_the_day = Color(1,1,1,1)
+	world_color = Color(1,1,1,1)
 	camera_zoom = Vector2(0.5,0.5)
 	battle_on = false
 	enemies_turn_on = false
 	caravan = null
-	
+	daytime = day_cycle.MORNING
 
 func get_active_unit_pos_list():
 	var pos: Array = []

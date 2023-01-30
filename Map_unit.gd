@@ -3,6 +3,8 @@ extends KinematicBody2D
 class_name MapUnit
 
 var gui_image
+var image
+var shadow_texture: Node2D
 var mouse_floats = false
 var selected = false
 var fog_of_war_class = GameVariables.current_map.get_node("FogOfWar")
@@ -11,14 +13,15 @@ var end_of_turn = false
 var old_position
 var fog_of_war_visibility = []
 var movement_on = true
+var mouse_cell
 var current_cell
 var movement_value
-var vision_range
+var vision_rang
 var unit_class
 var gui_panel_placement
 
 func _input(event):
-	if event is InputEventMouseButton && not mouse_floats:
+	if event.is_action_pressed("mouse_click_left") && not mouse_floats:
 		left_click_check(event)
 		GameVariables.current_map.update_minimap()
 	if event is InputEventMouseButton && selected:
@@ -26,13 +29,13 @@ func _input(event):
 			reset_player_position()
 
 func _process(_delta):
-	current_cell = WalkCode.mouse_position
+	mouse_cell = WalkCode.mouse_position
 	var selected_cell
 	var movement_tiles = MovementUtils.movement_tiles.get_cell(WalkCode.mouse_position[0], WalkCode.mouse_position[1])
-	if(selected && current_cell != selected_cell && movement_tiles == 0):
+	if(selected && mouse_cell != selected_cell && movement_tiles == 0):
 		var builder_position_cell = MovementUtils.movement_tiles.world_to_map(global_position)
-		path_creator.create_path(builder_position_cell,current_cell)
-		selected_cell = current_cell
+		path_creator.create_path(builder_position_cell,mouse_cell)
+		selected_cell = mouse_cell
 	fog_of_war_class.show_tiles(fog_of_war_visibility)
 	GameVariables.current_map.update_minimap_visibility()
 
@@ -54,7 +57,7 @@ func play_object_event():
 func move_player():
 	if GameVariables.current_map.fog_on:
 		fog_of_war_class.hide_tiles(fog_of_war_visibility)
-	fog_of_war_class.set_visibility(current_cell.x, current_cell.y, self)
+	fog_of_war_class.set_visibility(mouse_cell.x, mouse_cell.y, self)
 	global_position = MovementUtils.movement_tiles.map_to_world(WalkCode.mouse_position)+Vector2(32,24)
 	end_turn()
 	if GameVariables.object_under_player != null:
@@ -68,6 +71,7 @@ func reset_player_position():
 func select_player():
 	old_position = global_position
 	selected = true
+	path_creator.change_texture(image)
 	GameVariables.map_selected_unit = self
 	WalkCode.get_movement_distance(get_position_on_map(global_position),
 	movement_value, null)
@@ -77,6 +81,7 @@ func select_player():
 func deselect_player():
 	WalkCode.reset_movement_tiles()
 	path_creator.clear_points()
+	path_creator.hide_texture()
 	selected = false
 	GameVariables.map_selected_unit = null
 	$AnimatedSprite.speed_scale = 1
@@ -105,6 +110,16 @@ func check_if_end_of_turn():
 
 func add_item(item: Items):
 	return $Items.add_new_item(item)
+
+func reset_visibility():
+	var map_pos = MovementUtils.movement_tiles.world_to_map(global_position)
+	fog_of_war_class.hide_tiles(fog_of_war_visibility)
+	fog_of_war_class.set_visibility(map_pos.x, map_pos.y, self)
+
+func get_vision():
+	if GameVariables.daytime == GameVariables.day_cycle.NIGHT:
+		return vision_rang - 1
+	return vision_rang
 
 func get_unit_class() -> int:
 	return unit_class

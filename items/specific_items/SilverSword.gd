@@ -4,7 +4,7 @@ class_name SilverSword
 
 var weapon_name = "Silver Sword"
 var weapon_power = 15
-var image = "res://images/items/weapons/silver_sword.png"
+var image = load("res://images/items/weapons/silver_sword.png")
 
 func _init():
 	weapon_type = GlobalItems.weapon_type.SWORD

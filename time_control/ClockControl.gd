@@ -9,7 +9,7 @@ var current_rotation = 0
 func _ready():
 	rotate_hand()
 
-func _process(delta):
+func _process(_delta):
 	if current_rotation == 360:
 		reset_clock()
 	if current_rotation < rotation_degree:

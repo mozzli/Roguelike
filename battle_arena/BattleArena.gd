@@ -16,8 +16,8 @@ var main_player: MapUnit
 var main_enemy
 var battle_end = false
 var player_won: bool
-onready var battlePanel = $BackgroundPlains/Plains/BattlePanel
-onready var music = get_parent().get_node("Audio")
+onready var battlePanel = $BackgroundPlains/BattlePanel
+onready var music = get_parent().get_parent().get_node("Audio")
 
 signal units_done
 signal pause_off
@@ -97,10 +97,7 @@ func transition_process():
 	transition_on = false
 	
 func popup_plains():
-	get_parent().get_node("Camera2D").zoom_out_camera()
 	$BackgroundPlains.popup()
-	$BackgroundPlains.rect_position = get_node("../Camera2D").get_camera_edge()
-	$BackgroundPlains/Plains/ColorRect.rect_size = get_viewport_rect().size
 
 func refresh_unit_list():
 	all_units.clear()
@@ -184,7 +181,7 @@ func check_if_end():
 		player_won = true
 
 func player_action(_player_unit: BaseBattleUnit) -> void:
-	yield($BackgroundPlains/Plains/BattlePanel, "player_attacked")
+	yield($BackgroundPlains/BattlePanel, "player_attacked")
 
 func enemy_attack(enemy_unit: BaseBattleUnit):
 	var attack_damage = enemy_unit.use_random_attack()

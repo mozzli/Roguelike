@@ -18,7 +18,7 @@ func _ready():
 	$FogOfWar.create_fog_of_war()
 	spawn_caravan(Vector2(11,11))
 	spawn_builder_random()
-	spawn_builder_random()
+	spawn_builder(Vector2(11,12))
 	spawn_boar_random()
 	spawn_boar_random()
 	spawn_boar_random()

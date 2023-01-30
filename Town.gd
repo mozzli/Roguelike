@@ -5,7 +5,7 @@ var guild = false
 var shop = false
 var trainer = false
 var object_body
-var town_controller = GameVariables.current_map.get_node("TownsControl")
+var town_controller = GameVariables.current_map.get_node("TownLayer").get_node("TownsControl")
 
 func _on_Town_body_entered(body):
 	play_event(body)

@@ -2,7 +2,7 @@ extends Control
 
 var resolution
 var town_opened = false
-onready var music = get_parent().get_node("Audio")
+onready var music = get_parent().get_parent().get_node("Audio")
 
 signal hide_gui
 signal show_gui
@@ -15,15 +15,16 @@ func _ready():
 
 func show_town():
 	emit_signal("hide_gui")
-	get_parent().get_node("Camera2D").zoom_out_camera()
+	GameVariables.current_map.get_node("Camera2D").zoom_out_camera()
 	GameVariables.gui_is_on = true
 	town_opened = true
 	music.fade_music_in(music.get_audio(music.audio.TOWN))
 	$Popup.popup()
 
 func _process(_delta):
-	if town_opened:
-		$Popup.set_position(get_node("../Camera2D").get_camera_position() - Vector2(resolution/2))
+#	if town_opened:
+#		$Popup.set_position(get_node("../Camera2D").get_camera_position() - Vector2(resolution/2))
+	pass
 
 func _on_Button_button_up():
 	music.fade_music_in(music.get_audio(music.audio.FOREST_MAZE))

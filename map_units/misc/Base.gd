@@ -15,3 +15,8 @@ func focus_camera():
 
 func get_tile_position() -> Vector2:
 	return MovementUtils.map.world_to_map(get_global_position())
+
+func get_vision():
+	if GameVariables.daytime == GameVariables.day_cycle.NIGHT:
+		return vision_range - 1
+	return vision_range
